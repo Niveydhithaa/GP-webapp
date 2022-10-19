@@ -93,6 +93,18 @@ const rows = [
     "No further investigation needed"
   ),
 ];
+const rows_two = [
+  createData_StepTwo(
+    "Ultrasound",
+    "Normal",
+    "Assess her careflly for other causes"
+  ),
+  createData_StepTwo(
+    "Ultrasound",
+    "Abnormal",
+    "Refer to oncologist"
+  ),
+];
 
 const Dashboard = () => {
   const [topic, setTopic] = useState("all");
@@ -207,7 +219,7 @@ const Dashboard = () => {
 
         {/* Data found */}
         <Card sx={{ mt: 3}}>
-          <Box width="80%" minHeight="500px" p={3} sx={{ml: 10}}>
+          <Box width="75%" minHeight="500px" p={3}>
             <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
@@ -281,13 +293,13 @@ const Dashboard = () => {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {rows.map((row) => (
+                        {rows_two.map((row) => (
                           <StyledTableRow key={row.name}>
                             <StyledTableCell component="th" scope="row">
                               {row.name}
                             </StyledTableCell>
-                            <StyledTableCell>{row.calories}</StyledTableCell>
-                            <StyledTableCell>{row.fat}</StyledTableCell>
+                            <StyledTableCell>{row.result}</StyledTableCell>
+                            <StyledTableCell>{row.action}</StyledTableCell>
                           </StyledTableRow>
                         ))}
                       </TableBody>
@@ -369,13 +381,13 @@ const Dashboard = () => {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {rows.map((row) => (
+                        {rows_two.map((row) => (
                           <StyledTableRow key={row.name}>
                             <StyledTableCell component="th" scope="row">
                               {row.name}
                             </StyledTableCell>
-                            <StyledTableCell>{row.calories}</StyledTableCell>
-                            <StyledTableCell>{row.fat}</StyledTableCell>
+                            <StyledTableCell>{row.result}</StyledTableCell>
+                            <StyledTableCell>{row.action}</StyledTableCell>
                           </StyledTableRow>
                         ))}
                       </TableBody>
@@ -457,13 +469,13 @@ const Dashboard = () => {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {rows.map((row) => (
+                        {rows_two.map((row) => (
                           <StyledTableRow key={row.name}>
                             <StyledTableCell component="th" scope="row">
                               {row.name}
                             </StyledTableCell>
-                            <StyledTableCell>{row.calories}</StyledTableCell>
-                            <StyledTableCell>{row.fat}</StyledTableCell>
+                            <StyledTableCell>{row.result}</StyledTableCell>
+                            <StyledTableCell>{row.action}</StyledTableCell>
                           </StyledTableRow>
                         ))}
                       </TableBody>
