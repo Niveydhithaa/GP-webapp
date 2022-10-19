@@ -29,16 +29,16 @@ import Paper from "@mui/material/Paper";
 
 const topSearchResults = () => [
   {
-    title: "result 1",
+    title: "symptom 1",
   },
   {
-    title: "result 2",
+    title: "symptom 2",
   },
   {
-    title: "result 3",
+    title: "symptom 3",
   },
   {
-    title: "result 4",
+    title: "symptom 4",
   },
 ];
 
@@ -77,10 +77,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 function createData(name: string, calories: string, fat: string) {
   return { name, calories, fat };
 }
+function createData_StepTwo(name: string, result: string, action: string) {
+  return { name, result, action };
+}
 
 const rows = [
   createData(
-    "Mesure Cerum",
+    "Measure serum CA125",
     "Serum CA125 level is less than 35 IU/ml",
     "Perform Ultrasound"
   ),
@@ -203,22 +206,40 @@ const Dashboard = () => {
         </Box>
 
         {/* Data found */}
-        <Card sx={{ mt: 3 }}>
-          <Box width="75%" minHeight="500px" p={3}>
+        <Card sx={{ mt: 3}}>
+          <Box width="80%" minHeight="500px" p={3} sx={{ml: 10}}>
             <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
-                <Typography fontWeight="bold">Title</Typography>
+                <Typography fontWeight="bold">Symptom 1</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                  eget.
+                  Description of Symptom 1
                 </Typography>
+                <Box mt={5} width="25%">
+                  <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 100}} aria-label="customized table">
+                      <TableHead>
+                        <TableRow>
+                          <StyledTableCell>
+                            Possible Cancer
+                          </StyledTableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                          <StyledTableRow>
+                            <StyledTableCell component="th" scope="row">
+                              Lung
+                            </StyledTableCell>
+                          </StyledTableRow>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Box>
                 <Box mt={5}>
                   <Typography fontWeight="bold">Step 01</Typography>
                   <TableContainer component={Paper}>
@@ -228,8 +249,8 @@ const Dashboard = () => {
                           <StyledTableCell>
                             Test /Investigations
                           </StyledTableCell>
-                          <StyledTableCell>Calories</StyledTableCell>
-                          <StyledTableCell>Fat&nbsp;(g)</StyledTableCell>
+                          <StyledTableCell>Result</StyledTableCell>
+                          <StyledTableCell>Action</StyledTableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -255,8 +276,8 @@ const Dashboard = () => {
                           <StyledTableCell>
                             Test /Investigations
                           </StyledTableCell>
-                          <StyledTableCell>Calories</StyledTableCell>
-                          <StyledTableCell>Fat&nbsp;(g)</StyledTableCell>
+                          <StyledTableCell>Result</StyledTableCell>
+                          <StyledTableCell>Action</StyledTableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -281,14 +302,32 @@ const Dashboard = () => {
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
-                <Typography fontWeight="bold">Title</Typography>
+                <Typography fontWeight="bold">Symptom 2</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                  eget.
+                  Description of Symptom 2
                 </Typography>
+                <Box mt={5} width="25%">
+                  <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 100}} aria-label="customized table">
+                      <TableHead>
+                        <TableRow>
+                          <StyledTableCell>
+                            Possible Cancer
+                          </StyledTableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                          <StyledTableRow>
+                            <StyledTableCell component="th" scope="row">
+                              Breast
+                            </StyledTableCell>
+                          </StyledTableRow>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Box>
                 <Box mt={5}>
                   <Typography fontWeight="bold">Step 01</Typography>
                   <TableContainer component={Paper}>
@@ -298,8 +337,8 @@ const Dashboard = () => {
                           <StyledTableCell>
                             Test /Investigations
                           </StyledTableCell>
-                          <StyledTableCell>Calories</StyledTableCell>
-                          <StyledTableCell>Fat&nbsp;(g)</StyledTableCell>
+                          <StyledTableCell>Result</StyledTableCell>
+                          <StyledTableCell>Action</StyledTableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -325,8 +364,96 @@ const Dashboard = () => {
                           <StyledTableCell>
                             Test /Investigations
                           </StyledTableCell>
-                          <StyledTableCell>Calories</StyledTableCell>
-                          <StyledTableCell>Fat&nbsp;(g)</StyledTableCell>
+                          <StyledTableCell>Result</StyledTableCell>
+                          <StyledTableCell>Action</StyledTableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {rows.map((row) => (
+                          <StyledTableRow key={row.name}>
+                            <StyledTableCell component="th" scope="row">
+                              {row.name}
+                            </StyledTableCell>
+                            <StyledTableCell>{row.calories}</StyledTableCell>
+                            <StyledTableCell>{row.fat}</StyledTableCell>
+                          </StyledTableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Box>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography fontWeight="bold">Symptom 3</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                  Description of Symptom 3
+                </Typography>
+                <Box mt={5} width="25%">
+                  <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 100}} aria-label="customized table">
+                      <TableHead>
+                        <TableRow>
+                          <StyledTableCell>
+                            Possible Cancer
+                          </StyledTableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                          <StyledTableRow>
+                            <StyledTableCell component="th" scope="row">
+                              Lung
+                            </StyledTableCell>
+                          </StyledTableRow>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Box>
+                <Box mt={5}>
+                  <Typography fontWeight="bold">Step 01</Typography>
+                  <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                      <TableHead>
+                        <TableRow>
+                          <StyledTableCell>
+                            Test /Investigations
+                          </StyledTableCell>
+                          <StyledTableCell>Result</StyledTableCell>
+                          <StyledTableCell>Action</StyledTableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {rows.map((row) => (
+                          <StyledTableRow key={row.name}>
+                            <StyledTableCell component="th" scope="row">
+                              {row.name}
+                            </StyledTableCell>
+                            <StyledTableCell>{row.calories}</StyledTableCell>
+                            <StyledTableCell>{row.fat}</StyledTableCell>
+                          </StyledTableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Box>
+                <Box mt={5}>
+                  <Typography fontWeight="bold">Step 02</Typography>
+                  <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                      <TableHead>
+                        <TableRow>
+                          <StyledTableCell>
+                            Test /Investigations
+                          </StyledTableCell>
+                          <StyledTableCell>Result</StyledTableCell>
+                          <StyledTableCell>Action</StyledTableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
