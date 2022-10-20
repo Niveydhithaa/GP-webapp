@@ -3,6 +3,7 @@ import {
   Box,
   Typography,
   Container,
+  Button,
   ToggleButtonGroup,
   ToggleButton,
   FormControl,
@@ -20,6 +21,7 @@ import {
   TableRow,
   TableBody,
 } from "@mui/material";
+import MultiSelect from 'components/MultiSelect'
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Navbar from "components/Navbar";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -198,7 +200,7 @@ const Dashboard = () => {
           {/* Search */}
           <Box sx={{ flexGrow: 1 }}>
             <Typography fontWeight="bold" mb={2}>Search Symptoms</Typography>
-            <Autocomplete
+            {/* <Autocomplete
               freeSolo
               disableClearable
               options={topSearchResults().map((option) => option.title)}
@@ -212,8 +214,12 @@ const Dashboard = () => {
                   }}
                 />
               )}
-            />
+            /> */}
+            <MultiSelect></MultiSelect>
           </Box>
+          <Button variant="contained">
+                Search
+          </Button>
         </Box>
 
         {/* Data found */}
