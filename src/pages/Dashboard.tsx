@@ -21,13 +21,16 @@ import {
   TableRow,
   TableBody,
 } from "@mui/material";
-import MultiSelect from 'components/MultiSelect'
+// import MultiSelect from 'components/MultiSelect'
+import MultiSelect from 'react-select'
+import {symptomOptions} from './data'
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Navbar from "components/Navbar";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import Paper from "@mui/material/Paper";
+import AccordionExample from "components/AccordionExample";
 
 const topSearchResults = () => [
   {
@@ -108,11 +111,12 @@ const rows_two = [
   ),
 ];
 
-const Dashboard = () => {
-  const [topic, setTopic] = useState("all");
+export default function Dashboard() {
+  const [topic, setTopic] = useState("symptom");
   const [gender, setGender] = useState("");
   const [age, setAge] = useState("");
-
+  const [symptoms_selected, setSymptomsSelected] = useState<string[]>([])
+  const [noofsymptoms, setNoOfSymptoms] = useState<number>(0)
   const handleTopic = (
     event: React.MouseEvent<HTMLElement>,
     newTopic: string
@@ -130,6 +134,22 @@ const Dashboard = () => {
   const handleAge = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
   };
+  const handleSearchSymptom = () => {
+    const selected_options = (document.getElementById("multiselect") as HTMLInputElement)
+    const children_options = (selected_options.getElementsByClassName("css-12jo7m5 select__multi-value__label") as HTMLCollection);
+    console.log(children_options)
+    let temp_array : string[] = []
+    let item_select : string;
+    for(let i= 0 ; i<children_options.length; i++)
+    {
+      item_select = children_options[i].innerHTML
+      console.log(item_select)
+      temp_array.push(item_select)
+    }
+    setSymptomsSelected(temp_array)
+    setNoOfSymptoms(temp_array.length)
+    // console.log(pswd)
+  }
   return (
     <Box
       width="100%"
@@ -149,8 +169,10 @@ const Dashboard = () => {
                 exclusive
                 onChange={handleTopic}
                 aria-label="Platform"
+                defaultValue={"symptom"}
+                
               >
-                <ToggleButton value="symptom">Symptom</ToggleButton>
+                <ToggleButton value="symptom" id="toggle_symptom">Symptom</ToggleButton>
                 <ToggleButton value="site">Site</ToggleButton>
                 <ToggleButton value="primaryCare">
                   Primary care Investigations
@@ -198,7 +220,7 @@ const Dashboard = () => {
           </Box>
 
           {/* Search */}
-          <Box sx={{ flexGrow: 1 }}>
+          <Box sx={{width:"40%"}}>
             <Typography fontWeight="bold" mb={2}>Search Symptoms</Typography>
             {/* <Autocomplete
               freeSolo
@@ -215,15 +237,24 @@ const Dashboard = () => {
                 />
               )}
             /> */}
-            <MultiSelect></MultiSelect>
-          </Box>
-          <Button variant="contained">
+            <MultiSelect
+              // defaultValue={[symptomOptions[2], symptomOptions[3]]}
+                isMulti
+                name="symptoms"
+                options={symptomOptions}
+                className="basic-multi-select"
+                classNamePrefix="select"
+                id="multiselect"
+                
+            />
+            <Button variant="contained" onClick={handleSearchSymptom}> 
                 Search
           </Button>
+          </Box>
+          
         </Box>
-
         {/* Data found */}
-        <Card sx={{ mt: 3}}>
+        {/* <Card sx={{ mt: 3}}>
           <Box width="75%" minHeight="500px" p={3}>
             <Accordion>
               <AccordionSummary
@@ -490,23 +521,33 @@ const Dashboard = () => {
               </AccordionDetails>
             </Accordion>
           </Box>
-        </Card>
+        </Card> */}
 
         {/* No data section */}
         <Card sx={{ mt: 3 }}>
+        <Box>
+              <Typography>Testing Reusable Accordion</Typography>
+              <br></br>
+            </Box>
           <Box
             width="100%"
-            height="500px"
             display="flex"
             justifyContent="center"
             alignItems="center"
           >
-            <Typography>No Data Found</Typography>
+            <Box>
+            
+            {
+              symptoms_selected.map((symptom) => (
+                <Box>
+                  <AccordionExample></AccordionExample>
+                  <br></br>
+                </Box>
+              ))}
+            </Box>
           </Box>
         </Card>
       </Container>
     </Box>
   );
 };
-
-export default Dashboard;
