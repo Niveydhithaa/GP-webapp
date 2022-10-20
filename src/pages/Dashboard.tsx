@@ -148,7 +148,6 @@ const Dashboard = () => {
                 onChange={handleTopic}
                 aria-label="Platform"
               >
-                <ToggleButton value="all">All</ToggleButton>
                 <ToggleButton value="symptom">Symptom</ToggleButton>
                 <ToggleButton value="site">Site</ToggleButton>
                 <ToggleButton value="primaryCare">
