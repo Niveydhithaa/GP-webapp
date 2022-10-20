@@ -61,9 +61,6 @@ export default function Login() {
                 Sign in
               </Button>
             </Box>
-            <Box textAlign="center" mt={4}>
-              <Typography fontSize={14}>Forget Password?</Typography>
-            </Box>
           </Box>
       </Box>
     </Box>
