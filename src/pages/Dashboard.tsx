@@ -23,7 +23,7 @@ import {
 } from "@mui/material";
 // import MultiSelect from 'components/MultiSelect'
 import MultiSelect from 'react-select'
-import {symptomOptions} from './data'
+import { symptomOptions } from './data'
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Navbar from "components/Navbar";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -138,10 +138,9 @@ export default function Dashboard() {
     const selected_options = (document.getElementById("multiselect") as HTMLInputElement)
     const children_options = (selected_options.getElementsByClassName("css-12jo7m5 select__multi-value__label") as HTMLCollection);
     console.log(children_options)
-    let temp_array : string[] = []
-    let item_select : string;
-    for(let i= 0 ; i<children_options.length; i++)
-    {
+    let temp_array: string[] = []
+    let item_select: string;
+    for (let i = 0; i < children_options.length; i++) {
       item_select = children_options[i].innerHTML
       console.log(item_select)
       temp_array.push(item_select)
@@ -157,7 +156,7 @@ export default function Dashboard() {
       sx={{ backgroundColor: "#ECEFF1", pb: 5 }}
     >
       <Navbar />
-      <Container maxWidth="xl">
+      <Container>
         <Box display="flex" flexWrap="wrap" gap={2} mt={6}>
           {/* Topic */}
           <Box>
@@ -170,7 +169,7 @@ export default function Dashboard() {
                 onChange={handleTopic}
                 aria-label="Platform"
                 defaultValue={"symptom"}
-                
+
               >
                 <ToggleButton value="symptom" id="toggle_symptom">Symptom</ToggleButton>
                 <ToggleButton value="site">Site</ToggleButton>
@@ -218,317 +217,36 @@ export default function Dashboard() {
               sx={{ width: "100px" }}
             />
           </Box>
-
-          {/* Search */}
-          <Box sx={{width:"40%"}}>
-            <Typography fontWeight="bold" mb={2}>Search Symptoms</Typography>
-            {/* <Autocomplete
-              freeSolo
-              disableClearable
-              options={topSearchResults().map((option) => option.title)}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Search input"
-                  InputProps={{
-                    ...params.InputProps,
-                    type: "search",
-                  }}
-                />
-              )}
-            /> */}
-            <MultiSelect
-              // defaultValue={[symptomOptions[2], symptomOptions[3]]}
-                isMulti
-                name="symptoms"
-                options={symptomOptions}
-                className="basic-multi-select"
-                classNamePrefix="select"
-                id="multiselect"
-                
-            />
-            <Button variant="contained" onClick={handleSearchSymptom}> 
-                Search
-          </Button>
-          </Box>
-          
         </Box>
-        {/* Data found */}
-        {/* <Card sx={{ mt: 3}}>
-          <Box width="75%" minHeight="500px" p={3}>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography fontWeight="bold">Symptom 1</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>
-                  Description of Symptom 1
-                </Typography>
-                <Box mt={5} width="25%">
-                  <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 100}} aria-label="customized table">
-                      <TableHead>
-                        <TableRow>
-                          <StyledTableCell>
-                            Possible Cancer
-                          </StyledTableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                          <StyledTableRow>
-                            <StyledTableCell component="th" scope="row">
-                              Lung
-                            </StyledTableCell>
-                          </StyledTableRow>
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                </Box>
-                <Box mt={5}>
-                  <Typography fontWeight="bold">Step 01</Typography>
-                  <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                      <TableHead>
-                        <TableRow>
-                          <StyledTableCell>
-                            Test /Investigations
-                          </StyledTableCell>
-                          <StyledTableCell>Result</StyledTableCell>
-                          <StyledTableCell>Action</StyledTableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {rows.map((row) => (
-                          <StyledTableRow key={row.name}>
-                            <StyledTableCell component="th" scope="row">
-                              {row.name}
-                            </StyledTableCell>
-                            <StyledTableCell>{row.calories}</StyledTableCell>
-                            <StyledTableCell>{row.fat}</StyledTableCell>
-                          </StyledTableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                </Box>
-                <Box mt={5}>
-                  <Typography fontWeight="bold">Step 02</Typography>
-                  <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                      <TableHead>
-                        <TableRow>
-                          <StyledTableCell>
-                            Test /Investigations
-                          </StyledTableCell>
-                          <StyledTableCell>Result</StyledTableCell>
-                          <StyledTableCell>Action</StyledTableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {rows_two.map((row) => (
-                          <StyledTableRow key={row.name}>
-                            <StyledTableCell component="th" scope="row">
-                              {row.name}
-                            </StyledTableCell>
-                            <StyledTableCell>{row.result}</StyledTableCell>
-                            <StyledTableCell>{row.action}</StyledTableCell>
-                          </StyledTableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                </Box>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography fontWeight="bold">Symptom 2</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>
-                  Description of Symptom 2
-                </Typography>
-                <Box mt={5} width="25%">
-                  <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 100}} aria-label="customized table">
-                      <TableHead>
-                        <TableRow>
-                          <StyledTableCell>
-                            Possible Cancer
-                          </StyledTableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                          <StyledTableRow>
-                            <StyledTableCell component="th" scope="row">
-                              Breast
-                            </StyledTableCell>
-                          </StyledTableRow>
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                </Box>
-                <Box mt={5}>
-                  <Typography fontWeight="bold">Step 01</Typography>
-                  <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                      <TableHead>
-                        <TableRow>
-                          <StyledTableCell>
-                            Test /Investigations
-                          </StyledTableCell>
-                          <StyledTableCell>Result</StyledTableCell>
-                          <StyledTableCell>Action</StyledTableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {rows.map((row) => (
-                          <StyledTableRow key={row.name}>
-                            <StyledTableCell component="th" scope="row">
-                              {row.name}
-                            </StyledTableCell>
-                            <StyledTableCell>{row.calories}</StyledTableCell>
-                            <StyledTableCell>{row.fat}</StyledTableCell>
-                          </StyledTableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                </Box>
-                <Box mt={5}>
-                  <Typography fontWeight="bold">Step 02</Typography>
-                  <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                      <TableHead>
-                        <TableRow>
-                          <StyledTableCell>
-                            Test /Investigations
-                          </StyledTableCell>
-                          <StyledTableCell>Result</StyledTableCell>
-                          <StyledTableCell>Action</StyledTableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {rows_two.map((row) => (
-                          <StyledTableRow key={row.name}>
-                            <StyledTableCell component="th" scope="row">
-                              {row.name}
-                            </StyledTableCell>
-                            <StyledTableCell>{row.result}</StyledTableCell>
-                            <StyledTableCell>{row.action}</StyledTableCell>
-                          </StyledTableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                </Box>
-              </AccordionDetails>
-            </Accordion>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography fontWeight="bold">Symptom 3</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>
-                  Description of Symptom 3
-                </Typography>
-                <Box mt={5} width="25%">
-                  <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 100}} aria-label="customized table">
-                      <TableHead>
-                        <TableRow>
-                          <StyledTableCell>
-                            Possible Cancer
-                          </StyledTableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                          <StyledTableRow>
-                            <StyledTableCell component="th" scope="row">
-                              Lung
-                            </StyledTableCell>
-                          </StyledTableRow>
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                </Box>
-                <Box mt={5}>
-                  <Typography fontWeight="bold">Step 01</Typography>
-                  <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                      <TableHead>
-                        <TableRow>
-                          <StyledTableCell>
-                            Test /Investigations
-                          </StyledTableCell>
-                          <StyledTableCell>Result</StyledTableCell>
-                          <StyledTableCell>Action</StyledTableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {rows.map((row) => (
-                          <StyledTableRow key={row.name}>
-                            <StyledTableCell component="th" scope="row">
-                              {row.name}
-                            </StyledTableCell>
-                            <StyledTableCell>{row.calories}</StyledTableCell>
-                            <StyledTableCell>{row.fat}</StyledTableCell>
-                          </StyledTableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                </Box>
-                <Box mt={5}>
-                  <Typography fontWeight="bold">Step 02</Typography>
-                  <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                      <TableHead>
-                        <TableRow>
-                          <StyledTableCell>
-                            Test /Investigations
-                          </StyledTableCell>
-                          <StyledTableCell>Result</StyledTableCell>
-                          <StyledTableCell>Action</StyledTableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {rows_two.map((row) => (
-                          <StyledTableRow key={row.name}>
-                            <StyledTableCell component="th" scope="row">
-                              {row.name}
-                            </StyledTableCell>
-                            <StyledTableCell>{row.result}</StyledTableCell>
-                            <StyledTableCell>{row.action}</StyledTableCell>
-                          </StyledTableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                </Box>
-              </AccordionDetails>
-            </Accordion>
-          </Box>
-        </Card> */}
+        {/* SEARCH COMPONENT */}
+        <Box display="flex" flexWrap="wrap" gap={2} mt={4}>
+            <Box minWidth="50%" maxWidth="80%">
+              <MultiSelect
+                    // defaultValue={[symptomOptions[2], symptomOptions[3]]}
+                    isMulti
+                    name="symptoms"
+                    options={symptomOptions}
+                    className="basic-multi-select"
+                    classNamePrefix="select"
+                    id="multiselect"
+                    
+                  />
+            </Box>
 
+          
+            <Box>
+              <Button variant="contained" onClick={handleSearchSymptom}>
+                Search
+              </Button>
+            </Box>
+        </Box>
+        
         {/* No data section */}
         <Card sx={{ mt: 3 }}>
-        <Box>
-              <Typography>Testing Reusable Accordion</Typography>
-              <br></br>
-            </Box>
+          <Box>
+            <Typography>Testing Reusable Accordion</Typography>
+            <br></br>
+          </Box>
           <Box
             width="100%"
             display="flex"
@@ -536,14 +254,14 @@ export default function Dashboard() {
             alignItems="center"
           >
             <Box>
-            
-            {
-              symptoms_selected.map((symptom) => (
-                <Box>
-                  <AccordionExample></AccordionExample>
-                  <br></br>
-                </Box>
-              ))}
+
+              {
+                symptoms_selected.map((symptom) => (
+                  <Box>
+                    <AccordionExample></AccordionExample>
+                    <br></br>
+                  </Box>
+                ))}
             </Box>
           </Box>
         </Card>

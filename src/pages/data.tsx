@@ -7,11 +7,11 @@ export interface SymptomOption {
   }
   
   export const symptomOptions: readonly SymptomOption[] = [
-    { value: 'symptom1', label: 'Symptom 1', color: '#00B8D9'},
-    { value: 'symptom2', label: 'Symptom 2', color: '#0052CC'},
-    { value: 'symptom3', label: 'Symptom 3', color: '#5243AA' },
-    { value: 'symptom4', label: 'Symptom 4', color: '#FF5630' },
-    { value: 'symptom5', label: 'Symptom 5', color: '#FF8B00' },
+    { value: 'symptom1', label: 'Abdominal distension (persistent or frequent particularly more than 12 times per month) in women especially if 50 and over', color: '#00B8D9'},
+    { value: 'symptom2', label: 'Abdominal or pelvic mass identified by physical examination (which is not obviously uterine fibroids) in women', color: '#0052CC'},
+    { value: 'symptom3', label: 'Splenomegaly (Unexplained) in adults', color: '#5243AA' },
+    { value: 'symptom4', label: 'Upper abdominal pain with low haemoglobin levels or raised platelet count or nausea or vomiting', color: '#FF5630' },
+    { value: 'symptom5', label: 'Reflux with raised platelet count or nausea or vomiting', color: '#FF8B00' },
     // { value: 'yellow', label: 'Symptom 2', color: '#FFC400' },
     // { value: 'green', label: 'Symptom 2', color: '#36B37E' },
     // { value: 'forest', label: 'Symptom 2', color: '#00875A' },
