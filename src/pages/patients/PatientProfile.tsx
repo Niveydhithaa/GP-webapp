@@ -76,33 +76,36 @@ export default function PatientProfile() {
     return (
         <div>
             <Navbar></Navbar>
-            <Box mt={5}>
-                <TableContainer component={Paper}>
-                    <Table sx={{ width: 700 }} aria-label="customized table">
-                        <TableHead>
-                            <TableRow>
-                                <StyledTableCell>
-                                    Patient Name
+            <Box maxWidth="60%" m="auto">
+                <Box mt={5} mb={4}>
+                    <TableContainer component={Paper}>
+                        <Table aria-label="customized table">
+                            <TableHead>
+                                <TableRow>
+                                    <StyledTableCell>
+                                        Patient Name
                           </StyledTableCell>
-                                <StyledTableCell>Mobile</StyledTableCell>
-                                <StyledTableCell>Last Consulted</StyledTableCell>
-                                <StyledTableCell>Action</StyledTableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            <StyledTableRow>
-                                <StyledTableCell component="th" scope="row">
-                                    Niveydhithaa
+                                    <StyledTableCell>Mobile</StyledTableCell>
+                                    <StyledTableCell>Last Consulted</StyledTableCell>
+                                    <StyledTableCell>Action</StyledTableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <StyledTableRow>
+                                    <StyledTableCell component="th" scope="row">
+                                        Niveydhithaa
                             </StyledTableCell>
-                                <StyledTableCell>9888890038556</StyledTableCell>
-                                <StyledTableCell>20/10/2022</StyledTableCell>
-                                <StyledTableCell>Edit/Delete</StyledTableCell>
-                            </StyledTableRow>
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                                    <StyledTableCell>9888890038556</StyledTableCell>
+                                    <StyledTableCell>20/10/2022</StyledTableCell>
+                                    <StyledTableCell>Edit/Delete</StyledTableCell>
+                                </StyledTableRow>
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Box>
+                <SymptomTracker></SymptomTracker>
             </Box>
-            <SymptomTracker></SymptomTracker>
         </div>
+
     )
 }

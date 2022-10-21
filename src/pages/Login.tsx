@@ -17,7 +17,7 @@ export default function Login() {
     input_dict['uname_input'] = uname
     input_dict['pswd_input'] = pswd
     // API work
-    navigate("/dashboard")
+    navigate("/home")
   }
   const bull = (
       <Box

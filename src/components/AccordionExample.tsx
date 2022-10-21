@@ -16,6 +16,7 @@ import {
   TextField,
   ToggleButtonGroup,
   ToggleButton,
+  Link,
 } from "@mui/material";
 import Navbar from "components/Navbar";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -97,7 +98,7 @@ export default function AccordionExample() {
     };
 
 
-    const testClickHandler = (e: React.MouseEvent<HTMLButtonElement>, test_name: string) => {
+    const testClickHandler = (e: React.MouseEvent<HTMLSpanElement> | React.MouseEvent<HTMLAnchorElement>, test_name: string) => {
       setPatientDialogOpen(true)
       console.log("Testname selected: " +test_name)
       localStorage.setItem("selected_test_for_prescription", test_name)
@@ -114,7 +115,7 @@ export default function AccordionExample() {
       setPatientDialogOpen(false)
     }
     return(
-        <div>
+        <Box mt={3}>
           {/* {arr.map((arr_el) => ( */}
               <Accordion>
               <AccordionSummary
@@ -126,9 +127,9 @@ export default function AccordionExample() {
               </AccordionSummary>
               <AccordionDetails>
                 <Typography>
-                  Symptom Description -- Version 1 -- <b>Tabular</b>.
+                  Symptom Description
                 </Typography>
-                <Box mt={5} width="25%">
+                <Box mt={3} width="25%">
                   <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 100}} aria-label="customized table">
                       <TableHead>
@@ -148,7 +149,7 @@ export default function AccordionExample() {
                     </Table>
                   </TableContainer>
                 </Box>
-                <Box mt={5}>
+                <Box mt={3}>
                   <Typography fontWeight="bold">Step 01</Typography>
                   <TableContainer component={Paper}>
                     <Table sx={{ width: 700 }} aria-label="customized table">
@@ -165,10 +166,12 @@ export default function AccordionExample() {
                         {rows.map((row) => (
                           <StyledTableRow key={row.name}>
                             <StyledTableCell component="th" scope="row">
-                              <Button onClick={(e) => testClickHandler(e, row.name)}>{row.name}</Button>
+                              <Link onClick={(e) => testClickHandler(e, row.name)}>{row.name}</Link>
                             </StyledTableCell>
                             <StyledTableCell>{row.calories}</StyledTableCell>
-                            <StyledTableCell>{row.fat}</StyledTableCell>
+                            <StyledTableCell>
+                              <Link onClick={(e) => testClickHandler(e, row.fat)}>{row.fat}</Link>
+                            </StyledTableCell>
                           </StyledTableRow>
                         ))}
                       </TableBody>
@@ -191,12 +194,12 @@ export default function AccordionExample() {
                           <ToggleButton value="symptom" id="toggle_patient">New Patient</ToggleButton>
                           <ToggleButton value="site">Existing Patient</ToggleButton>
                         </ToggleButtonGroup> */}
-                        <Box mt={5}>
+                        <Box>
                           <Box>
                             <TextField
                               label="Mobile"
                               id="mobile_num"
-                              style={{minWidth: "350px"}}
+                              style={{minWidth: "350px", marginBottom: "12px"}}
                             />
                           </Box>
                           <Box>
@@ -242,7 +245,7 @@ export default function AccordionExample() {
                     </DialogActions>
                 </Dialog>
                 </Card>
-                <Box mt={5}>
+                <Box mt={3}>
                   <Typography fontWeight="bold">Step 02</Typography>
                   <TableContainer component={Paper}>
                     <Table sx={{ width: 700 }} aria-label="customized table">
@@ -269,12 +272,12 @@ export default function AccordionExample() {
                     </Table>
                   </TableContainer>
                 </Box>
-                <Box mt={5}>
+                {/* <Box mt={5}>
                   <Typography>
                     Symptom Description -- Version 2 -- <b>Stepper</b>
                   </Typography>
                   <CustomStepper></CustomStepper>
-                </Box>
+                </Box> */}
               </AccordionDetails>
             </Accordion>
             {/* <Accordion>
@@ -290,6 +293,6 @@ export default function AccordionExample() {
               </AccordionDetails>
             </Accordion> */}
           {/* ))} */}
-        </div>
+        </Box>
     )
 }

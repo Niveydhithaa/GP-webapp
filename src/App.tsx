@@ -5,6 +5,7 @@ import DashboardV2 from "pages/Dashboard copy";
 import AccordionExample from "components/AccordionExample";
 import Patients from "pages/patients/Patients"
 import PatientProfile from "pages/patients/PatientProfile"
+import Home from "pages/Homepage"
 function App() {
   return (
     <BrowserRouter>
@@ -15,6 +16,7 @@ function App() {
         <Route path="/accordion_reusable" element={<AccordionExample />} />
         <Route path="/patientslist" element={<Patients />} />
         <Route path="/patientprofile" element={<PatientProfile />} />
+        <Route path="/home" element={<Home />} />
       </Routes>
     </BrowserRouter>
   );

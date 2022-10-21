@@ -153,11 +153,11 @@ export default function Dashboard() {
     <Box
       width="100%"
       minHeight="100vh"
-      sx={{ backgroundColor: "#ECEFF1", pb: 5 }}
+      sx={{ pb: 5 }}
     >
-      <Navbar />
+      {/* <Navbar /> */}
       <Container>
-        <Box display="flex" flexWrap="wrap" gap={2} mt={6}>
+        <Box display="flex" flexWrap="wrap" gap={2}>
           {/* Topic */}
           <Box>
             <Typography fontWeight="bold" mb={2}>Topic</Typography>
@@ -208,6 +208,9 @@ export default function Dashboard() {
                 <TextField
                   {...params}
                   label="Age"
+                  // size="small"
+                  // multiline={true}
+                  // rows={2}
                   InputProps={{
                     ...params.InputProps,
                     type: "Age",
@@ -242,29 +245,37 @@ export default function Dashboard() {
         </Box>
         
         {/* No data section */}
-        <Card sx={{ mt: 3 }}>
-          <Box>
-            <Typography>Testing Reusable Accordion</Typography>
-            <br></br>
-          </Box>
-          <Box
-            width="100%"
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Box>
-
-              {
-                symptoms_selected.map((symptom) => (
-                  <Box>
-                    <AccordionExample></AccordionExample>
-                    <br></br>
-                  </Box>
-                ))}
-            </Box>
-          </Box>
-        </Card>
+        <Box sx={{ mt: 2, minHeight:"50px"}}>
+          
+            {
+              noofsymptoms==0 &&
+              <Box m="auto" display="flex" alignItems="center" justifyContent="center" sx={{verticalAlign: "middle"}}>
+                <Typography fontFamily="sans-serif" fontSize="14px" >No Symptom Selected!</Typography>
+              </Box>               
+            }
+            {
+              noofsymptoms>0 &&
+              <Box
+                width="100%"
+                // display="flex"
+                // justifyContent="center"
+                // alignItems="center"
+              >
+                <Box>
+                  {/* <Box m="auto">
+                    <Typography fontSize="14px">Matched Symptoms: </Typography>
+                  </Box>  */}
+                  {
+                    symptoms_selected.map((symptom) => (
+                      <Box>
+                        <AccordionExample></AccordionExample>
+                      </Box>
+                    ))}
+                </Box>
+              </Box>
+            }
+          
+        </Box>
       </Container>
     </Box>
   );

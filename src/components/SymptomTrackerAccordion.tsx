@@ -116,7 +116,7 @@ export default function AccordionExample() {
       setPatientDialogOpen(false)
     }
     return(
-        <div>
+        <Box>
           {/* {arr.map((arr_el) => ( */}
               <Accordion>
               <AccordionSummary
@@ -153,6 +153,6 @@ export default function AccordionExample() {
                 <DefaultStepper></DefaultStepper>
               </AccordionDetails>
               </Accordion>
-        </div>
+        </Box>
     )
 }
