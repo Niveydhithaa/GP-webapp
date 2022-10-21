@@ -10,12 +10,17 @@ import {
   TableHead,
   TableRow,
   TableBody,
+  Stepper,
+  Step,
+  StepLabel,
+  StepContent,
+  Paper
 } from "@mui/material";
 import Navbar from "components/Navbar";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import Paper from "@mui/material/Paper";
+import CustomStepper from "components/CustomStepper"
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -83,7 +88,7 @@ export default function AccordionExample() {
               </AccordionSummary>
               <AccordionDetails>
                 <Typography>
-                  Symptom Description.
+                  Symptom Description -- Version 1 -- <b>Tabular</b>.
                 </Typography>
                 <Box mt={5} width="25%">
                   <TableContainer component={Paper}>
@@ -159,8 +164,26 @@ export default function AccordionExample() {
                     </Table>
                   </TableContainer>
                 </Box>
+                <Box mt={5}>
+                  <Typography>
+                    Symptom Description -- Version 2 -- <b>Stepper</b>
+                  </Typography>
+                  <CustomStepper></CustomStepper>
+                </Box>
               </AccordionDetails>
             </Accordion>
+            {/* <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography fontWeight="bold">Symptom Title - Version 2</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                
+              </AccordionDetails>
+            </Accordion> */}
           {/* ))} */}
         </div>
     )
