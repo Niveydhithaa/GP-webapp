@@ -10,17 +10,27 @@ import {
   TableHead,
   TableRow,
   TableBody,
-  Stepper,
-  Step,
-  StepLabel,
-  StepContent,
-  Paper
+  Button,
+  Paper,
+  Card,
+  TextField,
+  ToggleButtonGroup,
+  ToggleButton,
 } from "@mui/material";
 import Navbar from "components/Navbar";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import CustomStepper from "components/CustomStepper"
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import dayjs, { Dayjs } from 'dayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -73,8 +83,36 @@ function createData(name: string, calories: string, fat: string) {
     ),
   ];
 export default function AccordionExample() {
+    const [topic, setTopic] = useState("New Patient");
+    const [patientDialogOpen, setPatientDialogOpen] = useState<boolean>(false);
+    const [testNameSelected, setTestNameSelected] = useState<string>("");
     const [noofsymptoms, setNoofSymptoms] = useState(sessionStorage.getItem("noofsymptopms"))
     let arr = new Array(Number(noofsymptoms))
+    const [value, setValue] = useState<Dayjs | null>(
+      dayjs('2022-10-21T19:00:00'),
+    );
+  
+    const handleChange = (newValue: Dayjs | null) => {
+      setValue(newValue);
+    };
+
+
+    const testClickHandler = (e: React.MouseEvent<HTMLButtonElement>, test_name: string) => {
+      setPatientDialogOpen(true)
+      console.log("Testname selected: " +test_name)
+      localStorage.setItem("selected_test_for_prescription", test_name)
+      // setTestNameSelected(test_name)
+    }
+    const handleClosePrescribeDialog = () => {
+      setPatientDialogOpen(false)
+    }
+    const handlePrescribeModuleOpen = () => {
+      console.log(document.getElementById("mobile_num"))
+      console.log(document.getElementById("name_input"))
+      console.log(localStorage.getItem("selected_test_for_prescription"))
+
+      setPatientDialogOpen(false)
+    }
     return(
         <div>
           {/* {arr.map((arr_el) => ( */}
@@ -127,7 +165,7 @@ export default function AccordionExample() {
                         {rows.map((row) => (
                           <StyledTableRow key={row.name}>
                             <StyledTableCell component="th" scope="row">
-                              {row.name}
+                              <Button onClick={(e) => testClickHandler(e, row.name)}>{row.name}</Button>
                             </StyledTableCell>
                             <StyledTableCell>{row.calories}</StyledTableCell>
                             <StyledTableCell>{row.fat}</StyledTableCell>
@@ -137,6 +175,73 @@ export default function AccordionExample() {
                     </Table>
                   </TableContainer>
                 </Box>
+                <Card>
+                <Dialog open={patientDialogOpen}>
+                    <DialogTitle>Prescribe</DialogTitle>
+                    <DialogContent >
+                        {/* <ToggleButtonGroup
+                          color="primary"
+                          value={topic}
+                          exclusive
+                          // onChange={handleTopic}
+                          aria-label="Platform"
+                          defaultValue={"symptom"}
+
+                        >
+                          <ToggleButton value="symptom" id="toggle_patient">New Patient</ToggleButton>
+                          <ToggleButton value="site">Existing Patient</ToggleButton>
+                        </ToggleButtonGroup> */}
+                        <Box mt={5}>
+                          <Box>
+                            <TextField
+                              label="Mobile"
+                              id="mobile_num"
+                              style={{minWidth: "350px"}}
+                            />
+                          </Box>
+                          <Box>
+                            <TextField
+                                label="Name"
+                                id="input_name"
+                                style={{minWidth: "350px"}}
+                              />
+                          </Box>
+                          <Table sx={{ minWidth: 100, marginTop: 3}} aria-label="customized table">
+                            <TableHead>
+                              <TableRow>
+                                <StyledTableCell>
+                                  Test /Investigation
+                                </StyledTableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <StyledTableRow>
+                                  <StyledTableCell component="th" scope="row">
+                                    {localStorage.getItem("selected_test_for_prescription")}
+                                  </StyledTableCell>
+                                </StyledTableRow>
+                            </TableBody>
+                          </Table>
+                        
+                          <Box mt={5}>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                              <DateTimePicker
+                                label="Next Appointment"
+                                value={value}
+                                onChange={handleChange}
+                                
+                                renderInput={(params) => <TextField {...params} />}
+                              />
+                            </LocalizationProvider>
+                          </Box>
+                        </Box>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClosePrescribeDialog}>Cancel</Button>
+                        <Button onClick={handlePrescribeModuleOpen}>Prescribe</Button>
+                    </DialogActions>
+                </Dialog>
+                </Card>
                 <Box mt={5}>
                   <Typography fontWeight="bold">Step 02</Typography>
                   <TableContainer component={Paper}>
