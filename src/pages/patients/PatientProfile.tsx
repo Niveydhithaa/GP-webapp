@@ -96,7 +96,7 @@ export default function PatientProfile() {
                                         Niveydhithaa
                             </StyledTableCell>
                                     <StyledTableCell>9888890038556</StyledTableCell>
-                                    <StyledTableCell>20/10/2022</StyledTableCell>
+                                    <StyledTableCell>17/10/2022</StyledTableCell>
                                     <StyledTableCell>Edit/Delete</StyledTableCell>
                                 </StyledTableRow>
                             </TableBody>
