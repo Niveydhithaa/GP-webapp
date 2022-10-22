@@ -250,7 +250,7 @@ export default function Dashboard() {
             {
               noofsymptoms==0 &&
               <Box m="auto" display="flex" alignItems="center" justifyContent="center" sx={{verticalAlign: "middle"}}>
-                <Typography fontFamily="sans-serif" fontSize="14px" >No Symptom Selected!</Typography>
+                <Typography fontFamily="sans-serif" fontSize="13px" >No Symptom Selected!</Typography>
               </Box>               
             }
             {
@@ -261,10 +261,11 @@ export default function Dashboard() {
                 // justifyContent="center"
                 // alignItems="center"
               >
+                
                 <Box>
-                  {/* <Box m="auto">
-                    <Typography fontSize="14px">Matched Symptoms: </Typography>
-                  </Box>  */}
+                  <Box>
+                    <Typography fontSize="13px">Showing {noofsymptoms} symptom result(s) </Typography>
+                  </Box> 
                   {
                     symptoms_selected.map((symptom) => (
                       <Box>
