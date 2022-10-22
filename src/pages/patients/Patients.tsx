@@ -16,7 +16,9 @@ import {
     TextField,
     ToggleButtonGroup,
     ToggleButton,
+    Link
 } from "@mui/material";
+import {useNavigate} from "react-router-dom"
 import Navbar from "components/Navbar"
 import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
@@ -70,7 +72,12 @@ const rows_two = [
         "Refer to oncologist"
     ),
 ];
+
 export default function Patients() {
+    const navigate = useNavigate();
+    const onClickPatient = () => {
+        navigate("/patientprofile")
+    }
     return (
         <div>
             {/* <Navbar></Navbar> */}
@@ -90,7 +97,8 @@ export default function Patients() {
                         <TableBody>
                             <StyledTableRow>
                                 <StyledTableCell component="th" scope="row">
-                                    <a href="/patientprofile">Niveydhithaa</a>
+                                    {/* <a href="/patientprofile">Niveydhithaa</a> */}
+                                    <Link onClick={onClickPatient}>Niveydhithaa</Link>
                                 </StyledTableCell>
                                 <StyledTableCell>9888890038556</StyledTableCell>
                                 <StyledTableCell>20/10/2022</StyledTableCell>
