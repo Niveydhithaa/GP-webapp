@@ -29,7 +29,7 @@ export default function BasicBreadcrumbs() {
         <Link
           underline="hover"
           color="inherit"
-          onClick={(e) => handleClickPatientsTab(e, "patientslist")}
+          onClick={(e) => handleClickPatientsTab(e, "home")}
         >
           Patients List
         </Link>
