@@ -1,10 +1,6 @@
 import { useState } from "react";
 import {
     Box,
-    Typography,
-    Accordion,
-    AccordionSummary,
-    AccordionDetails,
     TableContainer,
     Table,
     TableHead,
@@ -12,15 +8,13 @@ import {
     TableBody,
     Button,
     Paper,
-    Card,
-    TextField,
-    ToggleButtonGroup,
-    ToggleButton,
+    Typography
 } from "@mui/material";
 import Navbar from "components/Navbar"
 import SymptomTracker from "components/SymptomTrackerAccordion"
 import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import CustomBreadCrumb from "components/CustomBreadCrumb"
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: theme.palette.common.black,
@@ -76,6 +70,9 @@ export default function PatientProfile() {
     return (
         <div>
             <Navbar></Navbar>
+            <br></br>
+            
+            <CustomBreadCrumb></CustomBreadCrumb>
             <Box maxWidth="60%" m="auto">
                 <Box mt={5} mb={4}>
                     <TableContainer component={Paper}>
@@ -83,8 +80,11 @@ export default function PatientProfile() {
                             <TableHead>
                                 <TableRow>
                                     <StyledTableCell>
-                                        Patient Name
-                          </StyledTableCell>
+                                        Name
+                                    </StyledTableCell>
+                                    <StyledTableCell>Surname</StyledTableCell>
+                                    <StyledTableCell>Gender</StyledTableCell>
+                                    <StyledTableCell>Age</StyledTableCell>
                                     <StyledTableCell>Mobile</StyledTableCell>
                                     <StyledTableCell>Last Consulted</StyledTableCell>
                                     <StyledTableCell>Action</StyledTableCell>
@@ -94,7 +94,10 @@ export default function PatientProfile() {
                                 <StyledTableRow>
                                     <StyledTableCell component="th" scope="row">
                                         Niveydhithaa
-                            </StyledTableCell>
+                                    </StyledTableCell>
+                                    <StyledTableCell>Ramamoorthi</StyledTableCell>
+                                    <StyledTableCell>F</StyledTableCell>
+                                    <StyledTableCell>21</StyledTableCell>
                                     <StyledTableCell>9888890038556</StyledTableCell>
                                     <StyledTableCell>17/10/2022</StyledTableCell>
                                     <StyledTableCell>Edit/Delete</StyledTableCell>

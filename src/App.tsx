@@ -6,6 +6,8 @@ import AccordionExample from "components/AccordionExample";
 import Patients from "pages/patients/Patients"
 import PatientProfile from "pages/patients/PatientProfile"
 import Home from "pages/Homepage"
+import CustomBreadCrumb from "components/CustomBreadCrumb"
+import TwoStepBreadCrumb from "components/TwoStepBreadCrumb"
 function App() {
   return (
     <BrowserRouter>
@@ -17,6 +19,8 @@ function App() {
         <Route path="/patientslist" element={<Patients />} />
         <Route path="/patientprofile" element={<PatientProfile />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/breads" element={<CustomBreadCrumb />} />
+        <Route path="/twostepbread" element={<TwoStepBreadCrumb />} />
       </Routes>
     </BrowserRouter>
   );

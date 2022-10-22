@@ -18,7 +18,9 @@ import {
     ToggleButton,
     Link
 } from "@mui/material";
-import {useNavigate} from "react-router-dom"
+import TwoStepBreadCrumb from "components/TwoStepBreadCrumb"
+
+import { useNavigate } from "react-router-dom"
 import Navbar from "components/Navbar"
 import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
@@ -75,63 +77,92 @@ const rows_two = [
 
 export default function Patients() {
     const navigate = useNavigate();
+    const [patientClicked, setPatientClicked] = useState<boolean>(false);
     const onClickPatient = () => {
+        // setPatientClicked(true)
         navigate("/patientprofile")
     }
     return (
         <div>
             {/* <Navbar></Navbar> */}
-            <Box mt={5} mb={4} maxWidth="60%" m="auto">
-                <TableContainer component={Paper}>
-                    <Table aria-label="customized table">
-                        <TableHead>
-                            <TableRow>
-                                <StyledTableCell>
-                                    Patient Name
-                          </StyledTableCell>
-                                <StyledTableCell>Mobile</StyledTableCell>
-                                <StyledTableCell>Last Consulted</StyledTableCell>
-                                <StyledTableCell>Action</StyledTableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            <StyledTableRow>
-                                <StyledTableCell component="th" scope="row">
-                                    {/* <a href="/patientprofile">Niveydhithaa</a> */}
-                                    <Link onClick={onClickPatient}>Niveydhithaa</Link>
-                                </StyledTableCell>
-                                <StyledTableCell>9888890038556</StyledTableCell>
-                                <StyledTableCell>17/10/2022</StyledTableCell>
-                                <StyledTableCell>Edit/Delete</StyledTableCell>
-                            </StyledTableRow>
-                            <StyledTableRow>
-                                <StyledTableCell component="th" scope="row">
-                                    Logesh
-                                </StyledTableCell>
-                                <StyledTableCell>9888890038556</StyledTableCell>
-                                <StyledTableCell>17/11/2022</StyledTableCell>
-                                <StyledTableCell>Edit/Delete</StyledTableCell>
-                            </StyledTableRow>
-                            <StyledTableRow>
-                                <StyledTableCell component="th" scope="row">
-                                    Karthik
-                                </StyledTableCell>
-                                <StyledTableCell>9888890038556</StyledTableCell>
-                                <StyledTableCell>17/09/2022</StyledTableCell>
-                                <StyledTableCell>Edit/Delete</StyledTableCell>
-                            </StyledTableRow>
-                            <StyledTableRow>
-                                <StyledTableCell component="th" scope="row">
-                                    Pooja
-                                </StyledTableCell>
-                                <StyledTableCell>9888890038556</StyledTableCell>
-                                <StyledTableCell>07/08/2022</StyledTableCell>
-                                <StyledTableCell>Edit/Delete</StyledTableCell>
-                            </StyledTableRow>
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </Box>
+            {!patientClicked &&
+                <Box>
+                    <TwoStepBreadCrumb></TwoStepBreadCrumb>
+                    <Box mt={5} mb={4} maxWidth="60%" m="auto">
+                        <Typography></Typography>
+                        <TableContainer component={Paper}>
+                            <Table aria-label="customized table">
+                                <TableHead>
+                                    <TableRow>
+                                        <StyledTableCell>
+                                            Patient Name
+                                    </StyledTableCell>
+                                        <StyledTableCell>Surname</StyledTableCell>
+                                        <StyledTableCell>Gender</StyledTableCell>
+                                        <StyledTableCell>Age</StyledTableCell>
+                                        <StyledTableCell>Mobile</StyledTableCell>
+                                        <StyledTableCell>Last Consulted</StyledTableCell>
+                                        <StyledTableCell>Action</StyledTableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    <StyledTableRow>
+                                        <StyledTableCell component="th" scope="row">
+                                            {/* <a href="/patientprofile">Niveydhithaa</a> */}
+                                            <Link onClick={onClickPatient}>Niveydhithaa</Link>
+                                        </StyledTableCell>
+                                        <StyledTableCell>Ramamoorthi</StyledTableCell>
+                                        <StyledTableCell>F</StyledTableCell>
+                                        <StyledTableCell>21</StyledTableCell>
+                                        <StyledTableCell>9888890038556</StyledTableCell>
+                                        <StyledTableCell>17/10/2022</StyledTableCell>
+                                        <StyledTableCell>Edit/Delete</StyledTableCell>
+                                    </StyledTableRow>
+                                    <StyledTableRow>
+                                        <StyledTableCell component="th" scope="row">
+                                            Logesh
+                                 </StyledTableCell>
+                                        <StyledTableCell>Mani</StyledTableCell>
+                                        <StyledTableCell>M</StyledTableCell>
+                                        <StyledTableCell>35</StyledTableCell>
+                                        <StyledTableCell>9888890038556</StyledTableCell>
+                                        <StyledTableCell>17/11/2022</StyledTableCell>
+                                        <StyledTableCell>Edit/Delete</StyledTableCell>
+                                    </StyledTableRow>
+                                    <StyledTableRow>
+                                        <StyledTableCell component="th" scope="row">
+                                            Karthik
+                                 </StyledTableCell>
+                                        <StyledTableCell>Kannan</StyledTableCell>
+                                        <StyledTableCell>M</StyledTableCell>
+                                        <StyledTableCell>24</StyledTableCell>
+                                        <StyledTableCell>9888890038556</StyledTableCell>
+                                        <StyledTableCell>17/09/2022</StyledTableCell>
+                                        <StyledTableCell>Edit/Delete</StyledTableCell>
+                                    </StyledTableRow>
+                                    <StyledTableRow>
+                                        <StyledTableCell component="th" scope="row">
+                                            Pooja
+                                 </StyledTableCell>
+                                        <StyledTableCell>Yuvaraj</StyledTableCell>
+                                        <StyledTableCell>M</StyledTableCell>
+                                        <StyledTableCell>23</StyledTableCell>
+                                        <StyledTableCell>9888890038556</StyledTableCell>
+                                        <StyledTableCell>07/08/2022</StyledTableCell>
+                                        <StyledTableCell>Edit/Delete</StyledTableCell>
+                                    </StyledTableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </Box>
+                </Box>
+            }
+            {
+                patientClicked &&
+                <Box>
+                    {/* <PatientProfile></PatientProfile> */}
+                </Box>
+            }
         </div>
     )
 }

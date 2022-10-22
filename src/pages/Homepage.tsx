@@ -32,6 +32,7 @@ export default function NavTabs() {
   const location = useLocation();
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setIndexValue(newValue);
+    localStorage.setItem("tabIndex", newValue.toString())
   };
 
   return (
