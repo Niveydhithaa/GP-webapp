@@ -16,7 +16,8 @@ import {
     TextField,
     ToggleButtonGroup,
     ToggleButton,
-    Link
+    Link,
+    Autocomplete
 } from "@mui/material";
 import TwoStepBreadCrumb from "components/TwoStepBreadCrumb"
 
@@ -74,7 +75,24 @@ const rows_two = [
         "Refer to oncologist"
     ),
 ];
-
+interface Patient {
+    readonly value: string;
+    readonly label: string;
+    readonly color: string;
+    readonly isFixed?: boolean;
+    readonly isDisabled?: boolean;
+  }
+const patientOptions: readonly Patient[] = [
+    { value: 'Niveydhithaa', label: 'Niveydhithaa', color: '#00B8D9'},
+    { value: 'Pooja', label: 'Pooja', color: '#0052CC'},
+    { value: 'Logesh', label: 'Logesh', color: '#5243AA' },
+    { value: 'Karthik', label: 'Karthik', color: '#FF5630' },
+    // { value: 'yellow', label: 'Symptom 2', color: '#FFC400' },
+    // { value: 'green', label: 'Symptom 2', color: '#36B37E' },
+    // { value: 'forest', label: 'Symptom 2', color: '#00875A' },
+    // { value: 'slate', label: 'Symptom 2', color: '#253858' },
+    // { value: 'silver', label: 'Symptom 2', color: '#666666' },
+  ];
 export default function Patients() {
     const navigate = useNavigate();
     const [patientClicked, setPatientClicked] = useState<boolean>(false);
@@ -89,7 +107,28 @@ export default function Patients() {
                 <Box>
                     <TwoStepBreadCrumb></TwoStepBreadCrumb>
                     <Box mt={5} mb={4} maxWidth="60%" m="auto">
-                        <Typography></Typography>
+                        <Box>
+                            <br></br>
+                            <Autocomplete
+                                freeSolo
+                                disableClearable
+                                options={patientOptions}
+                                fullWidth
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        label="Search patient"
+                                        // size="small"
+                                        // multiline={true}
+                                        // rows={2}
+                                        InputProps={{
+                                            ...params.InputProps,
+                                            type: "Age",
+                                        }}
+                                    />
+                                )} />
+                                <br></br>
+                        </Box>
                         <TableContainer component={Paper}>
                             <Table aria-label="customized table">
                                 <TableHead>
