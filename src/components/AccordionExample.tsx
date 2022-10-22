@@ -105,6 +105,7 @@ export default function AccordionExample() {
     const [patientDialogOpen, setPatientDialogOpen] = useState<boolean>(false);
     const [suggeDialog, setSuggestionsDialog] = useState<boolean>(false)
     const [testNameSelected, setTestNameSelected] = useState<string>("");
+    const [gender, setGender] = useState("");
     const [noofsymptoms, setNoofSymptoms] = useState(sessionStorage.getItem("noofsymptopms"))
     let arr = new Array(Number(noofsymptoms))
     const [value, setValue] = useState<Dayjs | null>(
@@ -114,7 +115,12 @@ export default function AccordionExample() {
     const handleChange = (newValue: Dayjs | null) => {
       setValue(newValue);
     };
-
+    const handleGender = (
+      event: React.MouseEvent<HTMLElement>,
+      newGender: string
+    ) => {
+      setGender(newGender);
+    };
 
     const testClickHandler = (e: React.MouseEvent<HTMLSpanElement> | React.MouseEvent<HTMLAnchorElement>, test_name: string) => {
       setPatientDialogOpen(true)
@@ -414,17 +420,48 @@ export default function AccordionExample() {
                         <Box>
                           <Box>
                             <TextField
-                              label="Mobile"
-                              id="mobile_num"
+                                label="Name"
+                                id="input_name"
+                                required
+                                style={{minWidth: "350px"}}
+                              />
+                          </Box>
+                          <Box>
+                            <TextField
+                                label="Surname"
+                                id="input_surname"
+                                required
+                                style={{minWidth: "350px"}}
+                              />
+                          </Box>
+                          <Box>
+                            <TextField
+                              label="Age"
+                              id="age"
+                              required
                               style={{minWidth: "350px", marginBottom: "12px"}}
                             />
                           </Box>
                           <Box>
+                          <Box>
+                            <ToggleButtonGroup
+                              color="primary"
+                              value={gender}
+                              exclusive
+                              onChange={handleGender}
+                              aria-label="Platform"
+                            >
+                              <ToggleButton value="male">Male</ToggleButton>
+                              <ToggleButton value="female">Female</ToggleButton>
+                            </ToggleButtonGroup>
+                          </Box>
+                          </Box>
+                          <Box mt={2}>
                             <TextField
-                                label="Name"
-                                id="input_name"
-                                style={{minWidth: "350px"}}
-                              />
+                              label="Mobile"
+                              id="mobile_num"
+                              style={{minWidth: "350px", marginBottom: "12px"}}
+                            />
                           </Box>
                           <Table sx={{ minWidth: 100, marginTop: 3}} aria-label="customized table">
                             <TableHead>
