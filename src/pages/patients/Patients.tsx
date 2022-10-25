@@ -2,29 +2,29 @@ import { useState } from "react";
 import {
     Box,
     Typography,
-    Accordion,
-    AccordionSummary,
-    AccordionDetails,
     TableContainer,
     Table,
+    Stack,
     TableHead,
     TableRow,
     TableBody,
     Button,
     Paper,
-    Card,
     TextField,
-    ToggleButtonGroup,
-    ToggleButton,
     Link,
     Autocomplete
 } from "@mui/material";
 import TwoStepBreadCrumb from "components/TwoStepBreadCrumb"
-
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import { useNavigate } from "react-router-dom"
 import Navbar from "components/Navbar"
 import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import PatientDialog from "components/hooks/PatientDialog";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: theme.palette.common.black,
@@ -87,18 +87,26 @@ const patientOptions: readonly Patient[] = [
     { value: 'Pooja', label: 'Pooja', color: '#0052CC'},
     { value: 'Logesh', label: 'Logesh', color: '#5243AA' },
     { value: 'Karthik', label: 'Karthik', color: '#FF5630' },
-    // { value: 'yellow', label: 'Symptom 2', color: '#FFC400' },
-    // { value: 'green', label: 'Symptom 2', color: '#36B37E' },
-    // { value: 'forest', label: 'Symptom 2', color: '#00875A' },
-    // { value: 'slate', label: 'Symptom 2', color: '#253858' },
-    // { value: 'silver', label: 'Symptom 2', color: '#666666' },
   ];
 export default function Patients() {
     const navigate = useNavigate();
+    
     const [patientClicked, setPatientClicked] = useState<boolean>(false);
+    const [addPatientDialog, setAddPatientDialog] = useState<boolean>(false)
     const onClickPatient = () => {
         // setPatientClicked(true)
         navigate("/patientprofile")
+    }
+    const handleSavePatient = () => {
+        console.log("API integration to validate and save the new patient with given details")
+        setAddPatientDialog(false)
+    }
+    const handleCloseAddPatientDialog = () => {
+        setAddPatientDialog(false)
+    }
+    const addNewPatientHandler = () => {
+        console.log("On Add patient button click")
+        setAddPatientDialog(true)
     }
     return (
         <div>
@@ -130,6 +138,18 @@ export default function Patients() {
                                 <br></br>
                         </Box>
                         <TableContainer component={Paper}>
+                            <Box
+                                component="span"
+                                m={1}
+                                display="flex"
+                                justifyContent="space-between"
+                                alignItems="center"
+                                >
+                                <Typography>List of Patients</Typography>
+                                <Button variant="contained" color="primary" onClick={addNewPatientHandler}>
+                                    Add New Patient
+                                </Button>
+                            </Box>
                             <Table aria-label="customized table">
                                 <TableHead>
                                     <TableRow>
@@ -193,6 +213,18 @@ export default function Patients() {
                                 </TableBody>
                             </Table>
                         </TableContainer>
+                        <Dialog open={addPatientDialog}>
+                            <DialogTitle>Add New Patient</DialogTitle>
+                            <DialogContent >
+                                <Box>
+                                    <PatientDialog></PatientDialog>
+                                </Box>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleCloseAddPatientDialog}>Cancel</Button>
+                                <Button onClick={handleSavePatient}>Save</Button>
+                            </DialogActions>
+                        </Dialog>
                     </Box>
                 </Box>
             }
