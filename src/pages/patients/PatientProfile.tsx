@@ -7,14 +7,21 @@ import {
     TableRow,
     TableBody,
     Button,
+    Typography,
     Paper,
-    Typography
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle
 } from "@mui/material";
 import Navbar from "components/Navbar"
 import SymptomTracker from "components/SymptomTrackerAccordion"
 import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import CustomBreadCrumb from "components/CustomBreadCrumb"
+import AccordionExample from "components/AccordionExample";
+import Dashboard from "pages/Dashboard";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: theme.palette.common.black,
@@ -67,6 +74,16 @@ const rows_two = [
 ];
 // input is a patient nameit can be the IDENTITY or  selected from the list
 export default function PatientProfile() {
+    const [symptomDialog, setSymptomDialog] = useState<boolean>(false)
+    const handleSuggeModuleOpen = () => {
+        setSymptomDialog(false)
+      }
+      const handleCloseSuggeDialog = () => {
+        setSymptomDialog(false)
+      }
+      const addNewPatient = () => {
+          setSymptomDialog(true)
+      }
     return (
         <div>
             <Navbar></Navbar>
@@ -76,6 +93,18 @@ export default function PatientProfile() {
             <Box maxWidth="60%" m="auto">
                 <Box mt={5} mb={4}>
                     <TableContainer component={Paper}>
+                        <Box
+                            component="span"
+                            m={1}
+                            display="flex"
+                            justifyContent="space-between"
+                            alignItems="center"
+                            >
+                            <Typography>Patient Profile</Typography>
+                            <Button variant="outlined"  color="secondary" sx={{ height: 40 }} onClick={addNewPatient}>
+                                Add New Symptom
+                            </Button>
+                        </Box>
                         <Table aria-label="customized table">
                             <TableHead>
                                 <TableRow>
@@ -105,6 +134,18 @@ export default function PatientProfile() {
                             </TableBody>
                         </Table>
                     </TableContainer>
+                    <Dialog open={symptomDialog}>
+                        <DialogTitle>Add Symptom</DialogTitle>
+                        <DialogContent >
+                            <Box>
+                                <Dashboard></Dashboard>
+                            </Box>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleCloseSuggeDialog}>Cancel</Button>
+                            <Button onClick={handleSuggeModuleOpen}>Add</Button>
+                        </DialogActions>
+                    </Dialog>
                 </Box>
                 <SymptomTracker></SymptomTracker>
             </Box>
