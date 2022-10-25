@@ -264,7 +264,7 @@ export default function Dashboard() {
                 
                 <Box>
                   <Box>
-                    <Typography fontSize="13px">Showing {noofsymptoms} symptom result(s) </Typography>
+                    <Typography fontSize="13px">Showing {noofsymptoms} symptom result(s) based on NICE Guidelines v2022. </Typography>
                   </Box> 
                   {
                     symptoms_selected.map((symptom) => (
