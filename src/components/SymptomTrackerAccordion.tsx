@@ -84,7 +84,7 @@ function createData(name: string, calories: string, fat: string) {
       "Refer to oncologist"
     ),
   ];
-export default function AccordionExample() {
+export default function SymptomTracker() {
     const [topic, setTopic] = useState("New Patient");
     const [patientDialogOpen, setPatientDialogOpen] = useState<boolean>(false);
     const [testNameSelected, setTestNameSelected] = useState<string>("");
