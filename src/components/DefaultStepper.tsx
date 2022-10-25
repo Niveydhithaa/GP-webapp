@@ -76,7 +76,7 @@ export default function VerticalLinearStepper() {
                 <FormLabel id="demo-radio-buttons-group-label">Results</FormLabel>
                 <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    defaultValue="female"
+                    // defaultValue="female"
                     name="radio-buttons-group"
                 >
                     <FormControlLabel value="female" control={<Radio onClick={handleSerumLess}/>} label="Serum CA125 level is less than 35 IU/ml" />
@@ -90,7 +90,7 @@ export default function VerticalLinearStepper() {
                 <FormLabel id="demo-radio-buttons-group-label">Results</FormLabel>
                 <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    defaultValue="female"
+                    // defaultValue="female"
                     name="radio-buttons-group"
                 >
                     <FormControlLabel value="female" control={<Radio onClick={handleSerumLess}/>} label="Normal" />
