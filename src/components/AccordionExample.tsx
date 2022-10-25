@@ -112,7 +112,7 @@ export default function AccordionExample() {
       dayjs('2022-10-21T19:00:00'),
     );
   
-    const handleChange = (newValue: Dayjs | null) => {
+    const handleChangeDate = (newValue: Dayjs | null) => {
       setValue(newValue);
     };
     const handleGender = (
@@ -222,71 +222,7 @@ export default function AccordionExample() {
                   </TableContainer>
                 </Box>
                 <Card>
-                <Dialog open={patientDialogOpen}>
-                    <DialogTitle>Prescribe</DialogTitle>
-                    <DialogContent >
-                        {/* <ToggleButtonGroup
-                          color="primary"
-                          value={topic}
-                          exclusive
-                          // onChange={handleTopic}
-                          aria-label="Platform"
-                          defaultValue={"symptom"}
-
-                        >
-                          <ToggleButton value="symptom" id="toggle_patient">New Patient</ToggleButton>
-                          <ToggleButton value="site">Existing Patient</ToggleButton>
-                        </ToggleButtonGroup> */}
-                        <Box>
-                          <Box>
-                            <TextField
-                              label="Mobile"
-                              id="mobile_num"
-                              style={{minWidth: "350px", marginBottom: "12px"}}
-                            />
-                          </Box>
-                          <Box>
-                            <TextField
-                                label="Name"
-                                id="input_name"
-                                style={{minWidth: "350px"}}
-                              />
-                          </Box>
-                          <Table sx={{ minWidth: 100, marginTop: 3}} aria-label="customized table">
-                            <TableHead>
-                              <TableRow>
-                                <StyledTableCell>
-                                  Test /Investigation
-                                </StyledTableCell>
-                              </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                <StyledTableRow>
-                                  <StyledTableCell component="th" scope="row">
-                                    {localStorage.getItem("selected_test_for_prescription")}
-                                  </StyledTableCell>
-                                </StyledTableRow>
-                            </TableBody>
-                          </Table>
-                        
-                          <Box mt={5}>
-                            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                              <DateTimePicker
-                                label="Next Appointment"
-                                value={value}
-                                onChange={handleChange}
-                                
-                                renderInput={(params) => <TextField {...params} />}
-                              />
-                            </LocalizationProvider>
-                          </Box>
-                        </Box>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={handleClosePrescribeDialog}>Cancel</Button>
-                        <Button onClick={handlePrescribeModuleOpen}>Prescribe</Button>
-                    </DialogActions>
-                </Dialog>
+                
                 </Card>
                 <Box mt={3}>
                   <Typography fontWeight="bold">Step 02</Typography>
@@ -485,7 +421,7 @@ export default function AccordionExample() {
                               <DateTimePicker
                                 label="Next Appointment"
                                 value={value}
-                                onChange={handleChange}
+                                onChange={handleChangeDate}
                                 
                                 renderInput={(params) => <TextField {...params} />}
                               />
