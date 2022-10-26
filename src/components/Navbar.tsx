@@ -38,7 +38,7 @@ const Navbar = () => {
               textDecoration: "none",
             }}
           >
-            GP
+            <img src="App Bar Logo.png"></img>
           </Typography>
           <Box flexGrow={1}></Box>
           <Box flexGrow={0}>

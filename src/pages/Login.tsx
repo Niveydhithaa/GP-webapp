@@ -3,8 +3,8 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import { useNavigate } from "react-router-dom";
 import axios from "axios"
+import { useState} from "react"
 import { Link } from "react-router-dom";
-
 
 export default function Login() {
   const navigate = useNavigate();
@@ -14,9 +14,45 @@ export default function Login() {
     console.log(uname)
     console.log(pswd)
     const input_dict : Record<string, string> = {};
-    input_dict['uname_input'] = uname
-    input_dict['pswd_input'] = pswd
+    input_dict['Username'] = uname
+    input_dict['Password'] = pswd
     // API work
+    // axios
+    // .get('https://localhost:44370/GPValues')
+    // .then(result => {
+    //     // console.log(result);
+    //     console.log(result.data);
+    //     let res_Dict = result.data
+    //     let isSuccess = res_Dict.isSuccess
+    //     console.log(isSuccess)
+        
+    //     // ({
+    //     //     repos: result.data,
+    //     //     isLoading: false
+    //     // });
+    //     return String(result.data);
+    // })
+    // .catch(error =>
+    //     console.log(error)
+    // );
+    axios
+        .post('https://localhost:44370/GPValues/GPLogin', input_dict)
+        .then(result => {
+            // console.log(result);
+            console.log(result.data);
+            let res_Dict = result.data
+            let isSuccess = res_Dict.isSuccess
+            console.log(isSuccess)
+            
+            // ({
+            //     repos: result.data,
+            //     isLoading: false
+            // });
+            return String(result.data);
+        })
+        .catch(error =>
+            console.log(error)
+        );
     navigate("/home")
   }
   const bull = (
@@ -36,6 +72,7 @@ export default function Login() {
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           Kindly Login here to proceed
         </Typography>
+        
       </CardContent>
   );
   return (
@@ -45,23 +82,32 @@ export default function Login() {
       display="flex"
       flexDirection="row"
       alignItems="center"
+      style={{backgroundColor: "#1F51B1"}}
     >
       <Box ml={20} width="40%">
-        <Card variant="outlined">{card}</Card>
+        {/* <Card variant="outlined">{card}</Card> */}
+        <Box>
+          <img src="Optimal Oncology Logo - Full.png"></img>
+        </Box>
       </Box>
-      <Box ml={20}>
+      <Box ml={16}>
+          <Card variant="outlined" sx={{minWidth: 450, minHeight: 420, borderRadius:"30px"}} >
           <Box px={3} py={4}>
-            <Typography fontSize={16} mb={2}>
+            <Typography fontSize={32} mb={2}>
               Sign in
             </Typography>
             <Box display="flex" flexDirection="column" gap={3}>
               <TextField label="Username" variant="outlined" type="text" id="username_input"/>
               <TextField label="Password" variant="outlined" type="password" id="password_input"/>
               <Button variant="contained" sx={{ borderRadius: "50px" }} onClick={handleOnSignin}>
-                Sign in
+                <Typography fontSize="16px">Sign in</Typography>
               </Button>
+              <Box margin="auto">
+                <Typography fontSize="10px">@Copyright Optimal Oncology</Typography>
+              </Box>
             </Box>
           </Box>
+          </Card>
       </Box>
     </Box>
   );

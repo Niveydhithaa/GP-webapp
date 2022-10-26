@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import {useNavigate} from "react-router-dom"
+import Box from "@mui/material/Box"
 
 
 
@@ -22,19 +23,21 @@ export default function BasicBreadcrumbs() {
       }
   return (
     <div role="presentation">
-      <Breadcrumbs aria-label="breadcrumb">
-        <Link underline="hover" color="inherit" onClick={(e) => handleClick(e, "home")}>
-          NICE Guidelines Search
-        </Link>
-        <Link
-          underline="hover"
-          color="inherit"
-          onClick={(e) => handleClickPatientsTab(e, "patientslist")}
-        >
-          Patients List
-        </Link>
-        <Typography color="Highlight">Patient Profile </Typography>
-      </Breadcrumbs>
+      <Box ml={16}>
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link underline="hover" color="inherit" onClick={(e) => handleClick(e, "home")}>
+            NICE Guidelines Search
+          </Link>
+          <Link
+            underline="hover"
+            color="inherit"
+            onClick={(e) => handleClickPatientsTab(e, "patientslist")}
+          >
+            Patients List
+          </Link>
+          <Typography>Patient Profile </Typography>
+        </Breadcrumbs>
+      </Box>
     </div>
   );
 }
