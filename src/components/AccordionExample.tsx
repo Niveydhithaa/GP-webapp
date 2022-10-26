@@ -185,8 +185,8 @@ export default function AccordionExample() {
                 </Box>
                 <Box mt={3}>
                   <Typography fontWeight="bold">Step 01</Typography>
-                  <TableContainer component={Paper}>
-                    <Table sx={{ width: 700 }} aria-label="customized table">
+                  <TableContainer component={Paper} sx={{width: "60%"}}>
+                    <Table aria-label="customized table">
                       <TableHead>
                         <TableRow>
                           <StyledTableCell>
@@ -221,13 +221,10 @@ export default function AccordionExample() {
                     </Table>
                   </TableContainer>
                 </Box>
-                <Card>
-                
-                </Card>
                 <Box mt={3}>
                   <Typography fontWeight="bold">Step 02</Typography>
-                  <TableContainer component={Paper}>
-                    <Table sx={{ width: 700 }} aria-label="customized table">
+                  <TableContainer component={Paper} sx={{width: "60%"}}>
+                    <Table aria-label="customized table">
                       <TableHead>
                         <TableRow>
                           <StyledTableCell>
