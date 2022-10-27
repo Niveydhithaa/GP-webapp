@@ -83,10 +83,10 @@ interface Patient {
     readonly isDisabled?: boolean;
   }
 const patientOptions: readonly Patient[] = [
-    { value: 'Niveydhithaa', label: 'Niveydhithaa', color: '#00B8D9'},
-    { value: 'Pooja', label: 'Pooja', color: '#0052CC'},
-    { value: 'Logesh', label: 'Logesh', color: '#5243AA' },
-    { value: 'Karthik', label: 'Karthik', color: '#FF5630' },
+    { value: 'Patient1', label: 'Patient1', color: '#00B8D9'},
+    { value: 'Patient2', label: 'Patient2', color: '#0052CC'},
+    { value: 'Patient3', label: 'Patient3', color: '#5243AA' },
+    { value: 'Patient4', label: 'Patient4', color: '#FF5630' },
   ];
 export default function Patients() {
     const navigate = useNavigate();
@@ -168,45 +168,45 @@ export default function Patients() {
                                     <StyledTableRow>
                                         <StyledTableCell component="th" scope="row">
                                             {/* <a href="/patientprofile">Niveydhithaa</a> */}
-                                            <Link onClick={onClickPatient}>Niveydhithaa</Link>
+                                            <Link onClick={onClickPatient}>Patient1</Link>
                                         </StyledTableCell>
-                                        <StyledTableCell>Ramamoorthi</StyledTableCell>
+                                        <StyledTableCell>Surname1</StyledTableCell>
                                         <StyledTableCell>F</StyledTableCell>
-                                        <StyledTableCell>21</StyledTableCell>
-                                        <StyledTableCell>9888890038556</StyledTableCell>
+                                        <StyledTableCell>XX</StyledTableCell>
+                                        <StyledTableCell>88890038556</StyledTableCell>
                                         <StyledTableCell>17/10/2022</StyledTableCell>
                                         <StyledTableCell>Edit/Delete</StyledTableCell>
                                     </StyledTableRow>
                                     <StyledTableRow>
                                         <StyledTableCell component="th" scope="row">
-                                            Logesh
+                                            Patient2
                                  </StyledTableCell>
-                                        <StyledTableCell>Mani</StyledTableCell>
+                                        <StyledTableCell>Surname2</StyledTableCell>
                                         <StyledTableCell>M</StyledTableCell>
-                                        <StyledTableCell>35</StyledTableCell>
-                                        <StyledTableCell>9888890038556</StyledTableCell>
+                                        <StyledTableCell>XX</StyledTableCell>
+                                        <StyledTableCell>890038556187</StyledTableCell>
                                         <StyledTableCell>17/11/2022</StyledTableCell>
                                         <StyledTableCell>Edit/Delete</StyledTableCell>
                                     </StyledTableRow>
                                     <StyledTableRow>
                                         <StyledTableCell component="th" scope="row">
-                                            Karthik
+                                            Patient3
                                  </StyledTableCell>
-                                        <StyledTableCell>Kannan</StyledTableCell>
+                                        <StyledTableCell>Surname3</StyledTableCell>
                                         <StyledTableCell>M</StyledTableCell>
-                                        <StyledTableCell>24</StyledTableCell>
-                                        <StyledTableCell>9888890038556</StyledTableCell>
+                                        <StyledTableCell>XX</StyledTableCell>
+                                        <StyledTableCell>788901238556</StyledTableCell>
                                         <StyledTableCell>17/09/2022</StyledTableCell>
                                         <StyledTableCell>Edit/Delete</StyledTableCell>
                                     </StyledTableRow>
                                     <StyledTableRow>
                                         <StyledTableCell component="th" scope="row">
-                                            Pooja
+                                            Patient4
                                  </StyledTableCell>
-                                        <StyledTableCell>Yuvaraj</StyledTableCell>
+                                        <StyledTableCell>Surname4</StyledTableCell>
                                         <StyledTableCell>M</StyledTableCell>
-                                        <StyledTableCell>23</StyledTableCell>
-                                        <StyledTableCell>9888890038556</StyledTableCell>
+                                        <StyledTableCell>XX</StyledTableCell>
+                                        <StyledTableCell>665432256890</StyledTableCell>
                                         <StyledTableCell>07/08/2022</StyledTableCell>
                                         <StyledTableCell>Edit/Delete</StyledTableCell>
                                     </StyledTableRow>

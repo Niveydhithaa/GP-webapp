@@ -122,12 +122,12 @@ export default function PatientProfile() {
                             <TableBody>
                                 <StyledTableRow>
                                     <StyledTableCell component="th" scope="row">
-                                        Niveydhithaa
+                                        Patient1
                                     </StyledTableCell>
-                                    <StyledTableCell>Ramamoorthi</StyledTableCell>
+                                    <StyledTableCell>Surname1</StyledTableCell>
                                     <StyledTableCell>F</StyledTableCell>
-                                    <StyledTableCell>21</StyledTableCell>
-                                    <StyledTableCell>9888890038556</StyledTableCell>
+                                    <StyledTableCell>XX</StyledTableCell>
+                                    <StyledTableCell>88890038556</StyledTableCell>
                                     <StyledTableCell>17/10/2022</StyledTableCell>
                                     <StyledTableCell>Edit/Delete</StyledTableCell>
                                 </StyledTableRow>
