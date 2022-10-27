@@ -289,9 +289,9 @@ export default function AccordionExample() {
                 <Typography>
                   Symptom Description
                 </Typography>
-                <Box mt={3} width="40%">
+                <Box mt={3} width="30%">
                   <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 100}} aria-label="customized table">
+                    <Table aria-label="customized table">
                       <TableHead>
                         <TableRow>
                           <StyledTableCell>
@@ -317,10 +317,10 @@ export default function AccordionExample() {
                     </Table>
                   </TableContainer>
                 </Box>
-                <Box mt={3}>
+                <Box mt={3}  width="50%">
                   <Typography fontWeight="bold">{step_names[0]}</Typography>
                   <TableContainer component={Paper}>
-                    <Table sx={{ width: 700 }} aria-label="customized table">
+                    <Table aria-label="customized table">
                       <TableHead>
                         <TableRow>
                           {/* <StyledTableCell>
@@ -447,10 +447,10 @@ export default function AccordionExample() {
                     </DialogActions>
                 </Dialog>
                 </Card>
-                <Box mt={3}>
+                <Box mt={3}  width="50%">
                   <Typography fontWeight="bold">{step_names[1]}</Typography>
                   <TableContainer component={Paper}>
-                    <Table sx={{ width: 700 }} aria-label="customized table">
+                    <Table aria-label="customized table">
                       <TableHead>
                         <TableRow>
                           {/* <StyledTableCell>
