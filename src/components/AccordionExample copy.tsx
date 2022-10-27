@@ -19,7 +19,6 @@ import {
   ToggleButtonGroup,
   ToggleButton,
   Link,
-  Stack,
 } from "@mui/material";
 import Navbar from "components/Navbar";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -32,7 +31,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-// import DatePicker from 'material-ui/DatePicker';
 import dayjs, { Dayjs } from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -102,20 +100,16 @@ function createData(name: string, calories: string, fat: string) {
     "Serum CA125",
     "Ultrasound"
   ]
-  function disableRandomDates() {
-    return Math.random() > 0.7;
-  }
 export default function AccordionExample() {
     const [topic, setTopic] = useState("New Patient");
     const [patientDialogOpen, setPatientDialogOpen] = useState<boolean>(false);
     const [suggeDialog, setSuggestionsDialog] = useState<boolean>(false)
-    const [oncologyReferralPopup, setOncologyReferralPopup] = useState<boolean>(false)
     const [testNameSelected, setTestNameSelected] = useState<string>("");
     const [gender, setGender] = useState("");
     const [noofsymptoms, setNoofSymptoms] = useState(sessionStorage.getItem("noofsymptopms"))
     let arr = new Array(Number(noofsymptoms))
     const [value, setValue] = useState<Dayjs | null>(
-      dayjs(),
+      dayjs('2022-10-21T19:00:00'),
     );
   
     const handleChangeDate = (newValue: Dayjs | null) => {
@@ -138,10 +132,6 @@ export default function AccordionExample() {
       setSuggestionsDialog(true)
       console.log("Other symptom action " + other_symp_action)
     }
-    const testClick_OpenOncologistPopup = (e: React.MouseEvent<HTMLSpanElement> | React.MouseEvent<HTMLAnchorElement>, other_symp_action: string) => {
-      setOncologyReferralPopup(true)
-      console.log("Other symptom action " + other_symp_action)
-    }
     const handleClosePrescribeDialog = () => {
       setPatientDialogOpen(false)
     }
@@ -158,16 +148,10 @@ export default function AccordionExample() {
     const handleCloseSuggeDialog = () => {
       setSuggestionsDialog(false)
     }
-    const handleOncoRefer = () => {
-      setOncologyReferralPopup(false)
-    }
-    const handleCloseOncoRefer = () => {
-      setOncologyReferralPopup(false)
-    }
     return(
         <Box mt={3}>
           {/* {arr.map((arr_el) => ( */}
-              {/* <Accordion>
+              <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
@@ -192,7 +176,7 @@ export default function AccordionExample() {
                       <TableBody>
                           <StyledTableRow>
                             <StyledTableCell component="th" scope="row">
-                              Breast
+                              Ovarian
                             </StyledTableCell>
                           </StyledTableRow>
                       </TableBody>
@@ -201,82 +185,34 @@ export default function AccordionExample() {
                 </Box>
                 <Box mt={3}>
                   <Typography fontWeight="bold">Step 01</Typography>
-                  <TableContainer component={Paper} sx={{width: "60%"}}>
-                    <Table aria-label="customized table">
+                  <TableContainer component={Paper}>
+                  <Table sx={{ width: "auto"}} aria-label="customized table">
                       <TableHead>
                         <TableRow>
                           <StyledTableCell>
-                            Test /Investigations
+                            Action
                           </StyledTableCell>
-                          <StyledTableCell>Result</StyledTableCell>
-                          <StyledTableCell>Action</StyledTableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {rows.map((row) => (
-                          <StyledTableRow key={row.name}>
-                            <StyledTableCell component="th" scope="row">
-                              <Link onClick={(e) => testClickHandler(e, row.name)}>{row.name}</Link>
+                          <StyledTableRow>
+                            <StyledTableCell component="th" scope="row" style={{color:"red"}}>
+                              Urgent Referral to Oncologist
                             </StyledTableCell>
-                            <StyledTableCell>{row.calories}</StyledTableCell>
-                            {
-                                row.fat!=="No further investigation needed" && 
-                                <StyledTableCell>
-                                  <Link onClick={(e) => testClickHandler(e, row.fat)}>{row.fat}</Link>
-                                </StyledTableCell>
-                              }
-                              {
-                                row.fat==="No further investigation needed" && 
-                                <StyledTableCell>
-                                  {row.fat}
-                                </StyledTableCell>
-                              }
                           </StyledTableRow>
-                        ))}
                       </TableBody>
                     </Table>
                   </TableContainer>
                 </Box>
-                <Box mt={3}>
-                  <Typography fontWeight="bold">Step 02</Typography>
-                  <TableContainer component={Paper} sx={{width: "60%"}}>
-                    <Table aria-label="customized table">
-                      <TableHead>
-                        <TableRow>
-                          <StyledTableCell>
-                            Test /Investigations
-                          </StyledTableCell>
-                          <StyledTableCell>Result</StyledTableCell>
-                          <StyledTableCell>Action</StyledTableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {rows_two.map((row) => (
-                          <StyledTableRow key={row.name}>
-                            <StyledTableCell component="th" scope="rows2">
-                              <Link onClick={(e) => testClickHandler(e, row.name)}>{row.name}</Link>
-                            </StyledTableCell>
-                            <StyledTableCell>{row.result}</StyledTableCell>
-                            {
-                                row.action!=="Refer to oncologist" && 
-                                <StyledTableCell>
-                                  <Link onClick={(e) => testClick_AssessOtherSymptomsHandler(e, row.action)}>{row.action}</Link>
-                                </StyledTableCell>
-                              }
-                              {
-                                row.action==="Refer to oncologist" && 
-                                <StyledTableCell style={{color:"red"}}>
-                                  {row.action}
-                                </StyledTableCell>
-                              }
-                          </StyledTableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                </Box>
+                
+                {/* <Box mt={5}>
+                  <Typography>
+                    Symptom Description -- Version 2 -- <b>Stepper</b>
+                  </Typography>
+                  <CustomStepper></CustomStepper>
+                </Box> */}
               </AccordionDetails>
-            </Accordion> */}
+            </Accordion>
             <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
@@ -358,10 +294,9 @@ export default function AccordionExample() {
                 </Box>
                 <Card>
                 <Dialog open={patientDialogOpen}>
-                    <DialogTitle>Prescribe (Coming Soon...)</DialogTitle>
+                    <DialogTitle>Prescribe</DialogTitle>
                     <DialogContent >
-                        <Stack>
-                          <br></br>
+                        <Box>
                           <Box>
                             <TextField
                                 label="Name"
@@ -370,7 +305,6 @@ export default function AccordionExample() {
                                 style={{minWidth: "350px"}}
                               />
                           </Box>
-                          <br></br>
                           <Box>
                             <TextField
                                 label="Surname"
@@ -379,16 +313,15 @@ export default function AccordionExample() {
                                 style={{minWidth: "350px"}}
                               />
                           </Box>
-                          <br></br>
                           <Box>
                             <TextField
                               label="Age"
                               id="age"
                               required
-                              style={{minWidth: "350px"}}
+                              style={{minWidth: "350px", marginBottom: "12px"}}
                             />
                           </Box>
-                          <br></br>
+                          <Box>
                           <Box>
                             <ToggleButtonGroup
                               color="primary"
@@ -401,15 +334,15 @@ export default function AccordionExample() {
                               <ToggleButton value="female">Female</ToggleButton>
                             </ToggleButtonGroup>
                           </Box>
-                          <br></br>
-                          <Box>
+                          </Box>
+                          <Box mt={2}>
                             <TextField
                               label="Mobile"
                               id="mobile_num"
                               style={{minWidth: "350px", marginBottom: "12px"}}
                             />
                           </Box>
-                          <Table sx={{ minWidth: 100}} aria-label="customized table">
+                          <Table sx={{ minWidth: 100, marginTop: 3}} aria-label="customized table">
                             <TableHead>
                               <TableRow>
                                 <StyledTableCell>
@@ -425,25 +358,23 @@ export default function AccordionExample() {
                                 </StyledTableRow>
                             </TableBody>
                           </Table>
-                          <br></br>
-                          <Box>
+                        
+                          <Box mt={5}>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                               <DateTimePicker
                                 label="Next Appointment"
                                 value={value}
                                 onChange={handleChangeDate}
-                                shouldDisableDate={disableRandomDates}
-                                shouldDisableTime={disableRandomDates}
+                                
                                 renderInput={(params) => <TextField {...params} />}
                               />
-                              {/* <DatePicker hintText="Random Dates Disabled" shouldDisableDate={disableRandomDates} /> */}
                             </LocalizationProvider>
                           </Box>
-                        </Stack>
+                        </Box>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleClosePrescribeDialog}>Cancel</Button>
-                        <Button onClick={handlePrescribeModuleOpen}>Save</Button>
+                        <Button onClick={handlePrescribeModuleOpen}>Prescribe</Button>
                     </DialogActions>
                 </Dialog>
                 </Card>
@@ -476,7 +407,7 @@ export default function AccordionExample() {
                               {
                                 row.action==="Refer to oncologist" && 
                                 <StyledTableCell style={{color:"red"}}>
-                                  <Link onClick={(e) => testClick_OpenOncologistPopup(e, row.action)} style={{color: "red"}}>{row.action}</Link>
+                                  {row.action}
                                 </StyledTableCell>
                               }
                           </StyledTableRow>
@@ -485,25 +416,6 @@ export default function AccordionExample() {
                     </Table>
                   </TableContainer>
                 </Box>
-                <Dialog open={oncologyReferralPopup}>
-                    <DialogTitle>Oncology referral (Coming Soon...)</DialogTitle>
-                    <DialogContent >
-                        <Box>
-                          <Stack display="flex" >
-                            <br></br>
-                              <TextField label="Hospital Name"></TextField>
-                              <br></br>
-                              <TextField label="Doctor"></TextField>
-                              <br></br>
-                              <TextField label="Notes about patient"></TextField>
-                          </Stack>
-                        </Box>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={handleCloseOncoRefer}>Cancel</Button>
-                        <Button onClick={handleOncoRefer} variant="contained" color="success">Submit</Button>
-                    </DialogActions>
-                </Dialog>
                 <Dialog open={suggeDialog}>
                     <DialogTitle>Search Other Symptoms</DialogTitle>
                     <DialogContent >
