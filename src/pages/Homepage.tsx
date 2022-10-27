@@ -40,7 +40,7 @@ export default function NavTabs() {
       <Navbar></Navbar>
       <Box sx={{ width: '80%', alignItems: "center"}} mt={4} mb={4} ml={16} >
         <Tabs value={tabIndex} onChange={handleChange} aria-label="nav tabs example">
-          <LinkTab label="NICE Guidelines" href="/dashboard" />
+          <LinkTab label="Search Guidelines" href="/dashboard" />
           <LinkTab label="Patients" href="/patientslist" />
         </Tabs>
       </Box>
