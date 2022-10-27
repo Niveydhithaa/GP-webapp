@@ -29,9 +29,9 @@ export default function Login() {
             let res_Dict = result.data
             let isSuccess = res_Dict.isSuccess
             console.log(isSuccess)
-            if(isSuccess) {
-              navigate("/home")
-            }
+            // if(isSuccess) {
+            //   navigate("/home")
+            // }
             // ({
             //     repos: result.data,
             //     isLoading: false
@@ -41,7 +41,7 @@ export default function Login() {
         .catch(error =>
             console.log(error)
         );
-    // navigate("/home")
+    navigate("/home")
   }
   const bull = (
       <Box

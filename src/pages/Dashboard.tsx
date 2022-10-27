@@ -262,7 +262,7 @@ export default function Dashboard() {
                     // defaultValue={[symptomOptions[2], symptomOptions[3]]}
                     isMulti
                     name="symptoms"
-                    options={multiSelectOptions || symptomOptions}
+                    options={symptomOptions}
                     className="basic-multi-select"
                     classNamePrefix="select"
                     id="multiselect"
