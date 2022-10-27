@@ -31,6 +31,7 @@ import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import Paper from "@mui/material/Paper";
 import AccordionExample from "components/AccordionExample";
+import axios from "axios";
 
 const topSearchResults = () => [
   {
@@ -117,13 +118,46 @@ export default function Dashboard() {
   const [age, setAge] = useState("");
   const [symptoms_selected, setSymptomsSelected] = useState<string[]>([])
   const [noofsymptoms, setNoOfSymptoms] = useState<number>(0)
+  const [multiSelectOptions, setMultiSelectOptions] = useState<Record<string, string>[]>([])
   const handleTopic = (
     event: React.MouseEvent<HTMLElement>,
     newTopic: string
   ) => {
     setTopic(newTopic);
   };
+  const CreateDict = (label: string, sympname: string) =>
+  {
+    return {label: sympname, value: sympname.toLowerCase()}
+  }
+  const fetchData = (e: React.FocusEvent<HTMLInputElement, Element>, topic: string) => {
+    //for now topic is only symptom
+    axios
+      .get('https://localhost:44370/GPValues/Getsymptomdata')
+      .then(result => {
+          // console.log(result);
+          console.log(result.data);
+          let symptomdata_Details = result.data.symptomdata_Details;
+          console.log(symptomdata_Details)
+          var symptoms_temp_dict :Record<string, string>[] = [];
+          symptomdata_Details.forEach(function (value : any) {
+            // console.log(value);
+            let v = CreateDict("label", value.symptom)
+            // console.log(v)
+            symptoms_temp_dict.push(v)
 
+          });
+          console.log(symptoms_temp_dict)
+          setMultiSelectOptions(symptoms_temp_dict)
+          // ({
+          //     repos: result.data,
+          //     isLoading: false
+          // });
+          return String(result.data);
+      })
+      .catch(error =>
+          console.log(error)
+      );
+  }
   const handleGender = (
     event: React.MouseEvent<HTMLElement>,
     newGender: string
@@ -228,11 +262,11 @@ export default function Dashboard() {
                     // defaultValue={[symptomOptions[2], symptomOptions[3]]}
                     isMulti
                     name="symptoms"
-                    options={symptomOptions}
+                    options={multiSelectOptions || symptomOptions}
                     className="basic-multi-select"
                     classNamePrefix="select"
                     id="multiselect"
-                    
+                    onFocus = {(e) => fetchData(e, topic)}
                   />
             </Box>
 
