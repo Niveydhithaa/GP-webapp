@@ -6,6 +6,10 @@ import axios from "axios"
 import { useState} from "react"
 import { Link } from "react-router-dom";
 
+interface Login {
+  Username: string,
+  Password: string
+}
 export default function Login() {
   const navigate = useNavigate();
   const handleOnSignin = () => {
@@ -17,24 +21,6 @@ export default function Login() {
     input_dict['Username'] = uname
     input_dict['Password'] = pswd
     // API work
-    // axios
-    // .get('https://localhost:44370/GPValues')
-    // .then(result => {
-    //     // console.log(result);
-    //     console.log(result.data);
-    //     let res_Dict = result.data
-    //     let isSuccess = res_Dict.isSuccess
-    //     console.log(isSuccess)
-        
-    //     // ({
-    //     //     repos: result.data,
-    //     //     isLoading: false
-    //     // });
-    //     return String(result.data);
-    // })
-    // .catch(error =>
-    //     console.log(error)
-    // );
     axios
         .post('https://localhost:44370/GPValues/GPLogin', input_dict)
         .then(result => {
@@ -43,7 +29,9 @@ export default function Login() {
             let res_Dict = result.data
             let isSuccess = res_Dict.isSuccess
             console.log(isSuccess)
-            
+            if(isSuccess) {
+              navigate("/home")
+            }
             // ({
             //     repos: result.data,
             //     isLoading: false
@@ -53,7 +41,7 @@ export default function Login() {
         .catch(error =>
             console.log(error)
         );
-    navigate("/home")
+    // navigate("/home")
   }
   const bull = (
       <Box
