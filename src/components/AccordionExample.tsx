@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState , ReactNode} from "react";
 import {
   Box,
   Typography,
@@ -32,12 +32,22 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 // import DatePicker from 'material-ui/DatePicker';
 import dayjs, { Dayjs } from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { symptomOptions } from "pages/data";
-
+interface Props {
+  selectedSymp: string  
+  possible_cancer: string
+  gender_specific: string
+  step1: string
+  response1: string
+  no_of_steps: string
+  step2: string
+  // any props that come into the component
+}
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -105,15 +115,20 @@ function createData(name: string, calories: string, fat: string) {
   function disableRandomDates() {
     return Math.random() > 0.7;
   }
-export default function AccordionExample() {
+export default function AccordionExample({selectedSymp, possible_cancer, gender_specific, step1, response1, no_of_steps, step2, ...props} : Props) {
     const [topic, setTopic] = useState("New Patient");
     const [patientDialogOpen, setPatientDialogOpen] = useState<boolean>(false);
     const [suggeDialog, setSuggestionsDialog] = useState<boolean>(false)
     const [oncologyReferralPopup, setOncologyReferralPopup] = useState<boolean>(false)
     const [testNameSelected, setTestNameSelected] = useState<string>("");
     const [gender, setGender] = useState("");
+    const [timeSlot, setTimeSlot] = useState("");
     const [noofsymptoms, setNoofSymptoms] = useState(sessionStorage.getItem("noofsymptopms"))
     let arr = new Array(Number(noofsymptoms))
+    const new_arr = new Array(parseInt(no_of_steps)) 
+    
+    for(let i=0; i< parseInt(no_of_steps); i++)
+      new_arr.push(`${i}`)
     const [value, setValue] = useState<Dayjs | null>(
       dayjs(),
     );
@@ -125,11 +140,18 @@ export default function AccordionExample() {
       event: React.MouseEvent<HTMLElement>,
       newGender: string
     ) => {
+      
       setGender(newGender);
     };
-
+    const handleTimeSlot = (
+      event: React.MouseEvent<HTMLElement>,
+      newTimeSlot: string
+    ) => {
+      setTimeSlot(newTimeSlot);
+    };
     const testClickHandler = (e: React.MouseEvent<HTMLSpanElement> | React.MouseEvent<HTMLAnchorElement>, test_name: string) => {
       setPatientDialogOpen(true)
+      console.log(selectedSymp)
       console.log("Testname selected: " +test_name)
       localStorage.setItem("selected_test_for_prescription", test_name)
       // setTestNameSelected(test_name)
@@ -165,167 +187,36 @@ export default function AccordionExample() {
       setOncologyReferralPopup(false)
     }
     return(
+        
         <Box mt={3}>
-          {/* {arr.map((arr_el) => ( */}
-              {/* <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography fontWeight="bold">Symptom Title - Version 1</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>
-                  Symptom Description
-                </Typography>
-                <Box mt={3} width="25%">
-                  <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 100}} aria-label="customized table">
-                      <TableHead>
-                        <TableRow>
-                          <StyledTableCell>
-                            Possible Cancer
-                          </StyledTableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                          <StyledTableRow>
-                            <StyledTableCell component="th" scope="row">
-                              Breast
-                            </StyledTableCell>
-                          </StyledTableRow>
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                </Box>
-                <Box mt={3}>
-                  <Typography fontWeight="bold">Step 01</Typography>
-                  <TableContainer component={Paper} sx={{width: "60%"}}>
-                    <Table aria-label="customized table">
-                      <TableHead>
-                        <TableRow>
-                          <StyledTableCell>
-                            Test /Investigations
-                          </StyledTableCell>
-                          <StyledTableCell>Result</StyledTableCell>
-                          <StyledTableCell>Action</StyledTableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {rows.map((row) => (
-                          <StyledTableRow key={row.name}>
-                            <StyledTableCell component="th" scope="row">
-                              <Link onClick={(e) => testClickHandler(e, row.name)}>{row.name}</Link>
-                            </StyledTableCell>
-                            <StyledTableCell>{row.calories}</StyledTableCell>
-                            {
-                                row.fat!=="No further investigation needed" && 
-                                <StyledTableCell>
-                                  <Link onClick={(e) => testClickHandler(e, row.fat)}>{row.fat}</Link>
-                                </StyledTableCell>
-                              }
-                              {
-                                row.fat==="No further investigation needed" && 
-                                <StyledTableCell>
-                                  {row.fat}
-                                </StyledTableCell>
-                              }
-                          </StyledTableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                </Box>
-                <Box mt={3}>
-                  <Typography fontWeight="bold">Step 02</Typography>
-                  <TableContainer component={Paper} sx={{width: "60%"}}>
-                    <Table aria-label="customized table">
-                      <TableHead>
-                        <TableRow>
-                          <StyledTableCell>
-                            Test /Investigations
-                          </StyledTableCell>
-                          <StyledTableCell>Result</StyledTableCell>
-                          <StyledTableCell>Action</StyledTableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {rows_two.map((row) => (
-                          <StyledTableRow key={row.name}>
-                            <StyledTableCell component="th" scope="rows2">
-                              <Link onClick={(e) => testClickHandler(e, row.name)}>{row.name}</Link>
-                            </StyledTableCell>
-                            <StyledTableCell>{row.result}</StyledTableCell>
-                            {
-                                row.action!=="Refer to oncologist" && 
-                                <StyledTableCell>
-                                  <Link onClick={(e) => testClick_AssessOtherSymptomsHandler(e, row.action)}>{row.action}</Link>
-                                </StyledTableCell>
-                              }
-                              {
-                                row.action==="Refer to oncologist" && 
-                                <StyledTableCell style={{color:"red"}}>
-                                  {row.action}
-                                </StyledTableCell>
-                              }
-                          </StyledTableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                </Box>
-              </AccordionDetails>
-            </Accordion> */}
             <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
-                <Typography fontWeight="bold">Symptom Title - Version 2</Typography>
+                <Typography fontWeight="bold">{selectedSymp}</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography>
-                  Symptom Description
+                  {selectedSymp}
                 </Typography>
-                <Box mt={3} width="30%">
-                  <TableContainer component={Paper}>
-                    <Table aria-label="customized table">
-                      <TableHead>
-                        <TableRow>
-                          <StyledTableCell>
-                            Possible Cancer
-                          </StyledTableCell>
-                          <StyledTableCell>
-                            Action
-                          </StyledTableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                          {possible_tablerow.map((row) => (
-                          <StyledTableRow key={row.possible_cancer}>
-                            <StyledTableCell component="th" scope="row">
-                              {row.possible_cancer}
-                            </StyledTableCell>
-                            <StyledTableCell>
-                              <Link onClick={(e) => testClickHandler(e, row.step1)}>{row.step1}</Link>
-                            </StyledTableCell>
-                          </StyledTableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                </Box>
-                <Box mt={3}  width="50%">
+                <Typography>
+                  {!gender_specific &&
+                        <Typography fontSize="10px">Not gender specific!</Typography>
+                  }
+                  {gender_specific &&
+                        <Typography fontSize="10px">Specific to: {gender_specific}</Typography>
+                  }
+                </Typography>
+                
+                {/* <Typography>{response1}</Typography> */}
+                {/* <Box mt={3}  width="50%">
                   <Typography fontWeight="bold">{step_names[0]}</Typography>
                   <TableContainer component={Paper}>
                     <Table aria-label="customized table">
                       <TableHead>
                         <TableRow>
-                          {/* <StyledTableCell>
-                            Test /Investigations
-                          </StyledTableCell> */}
                           <StyledTableCell>Result</StyledTableCell>
                           <StyledTableCell>Action</StyledTableCell>
                         </TableRow>
@@ -333,9 +224,6 @@ export default function AccordionExample() {
                       <TableBody>
                         {rows.map((row) => (
                           <StyledTableRow key={row.name}>
-                            {/* <StyledTableCell component="th" scope="row">
-                              <Link onClick={(e) => testClickHandler(e, row.name)}>{row.name}</Link>
-                            </StyledTableCell> */}
                             <StyledTableCell>{row.calories}</StyledTableCell>
                             
                               {
@@ -355,41 +243,36 @@ export default function AccordionExample() {
                       </TableBody>
                     </Table>
                   </TableContainer>
-                </Box>
+                </Box> */}
                 <Card>
                 <Dialog open={patientDialogOpen}>
                     <DialogTitle>Prescribe (Coming Soon...)</DialogTitle>
                     <DialogContent >
                         <Stack>
                           <br></br>
-                          <Box>
+                          <Box display="flex">
                             <TextField
                                 label="Name"
                                 id="input_name"
                                 required
-                                style={{minWidth: "350px"}}
+                                // style={{minWidth: "350px"}}
                               />
-                          </Box>
-                          <br></br>
-                          <Box>
+                              &nbsp; &nbsp;
                             <TextField
                                 label="Surname"
                                 id="input_surname"
                                 required
-                                style={{minWidth: "350px"}}
+                                // style={{minWidth: "350px"}}
                               />
                           </Box>
                           <br></br>
-                          <Box>
+                          <Box display="flex">
                             <TextField
                               label="Age"
                               id="age"
                               required
-                              style={{minWidth: "350px"}}
                             />
-                          </Box>
-                          <br></br>
-                          <Box>
+                            &nbsp; &nbsp;
                             <ToggleButtonGroup
                               color="primary"
                               value={gender}
@@ -428,17 +311,41 @@ export default function AccordionExample() {
                           <br></br>
                           <Box>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                              <DateTimePicker
+                              {/* <DateTimePicker
                                 label="Next Appointment"
                                 value={value}
                                 onChange={handleChangeDate}
                                 shouldDisableDate={disableRandomDates}
                                 shouldDisableTime={disableRandomDates}
                                 renderInput={(params) => <TextField {...params} />}
+                              /> */}
+                              <DatePicker
+                                label="Next Appointment"
+                                value={value}
+                                onChange={handleChangeDate}
+                                shouldDisableDate={disableRandomDates}
+                                renderInput={(params) => <TextField {...params} />}
                               />
                               {/* <DatePicker hintText="Random Dates Disabled" shouldDisableDate={disableRandomDates} /> */}
                             </LocalizationProvider>
+                            
                           </Box>
+                          <br></br>
+                            <Box>
+                              <ToggleButtonGroup
+                                color="primary"
+                                value={timeSlot}
+                                exclusive
+                                onChange={handleTimeSlot}
+                                aria-label="Platform"
+                              >
+                                <ToggleButton value="9amto10am">9:00 - 10: 00</ToggleButton>
+                                <ToggleButton value="11.30amto12.30pm">11:30 - 12:30</ToggleButton>
+                                <ToggleButton value="3pmto4pm" disabled={true}>15:00 - 16:00</ToggleButton>
+                                <ToggleButton value="4.30pmto5pm">16:30 - 17:00</ToggleButton>
+                                <ToggleButton value="6.30pmto7.30pm" disabled={true}>18:30 - 19:30</ToggleButton>
+                              </ToggleButtonGroup>
+                            </Box>
                         </Stack>
                     </DialogContent>
                     <DialogActions>
@@ -447,43 +354,183 @@ export default function AccordionExample() {
                     </DialogActions>
                 </Dialog>
                 </Card>
-                <Box mt={3}  width="50%">
-                  <Typography fontWeight="bold">{step_names[1]}</Typography>
-                  <TableContainer component={Paper}>
-                    <Table aria-label="customized table">
-                      <TableHead>
-                        <TableRow>
-                          {/* <StyledTableCell>
-                            Test /Investigations
-                          </StyledTableCell> */}
-                          <StyledTableCell>Result</StyledTableCell>
-                          <StyledTableCell>Action</StyledTableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {rows_two.map((row) => (
-                          <StyledTableRow key={row.name}>
-                            <StyledTableCell>{row.result}</StyledTableCell>
-                            {/* <StyledTableCell>
-                              <Link onClick={(e) => testClickHandler(e, row.action)}>{row.action}</Link>
-                            </StyledTableCell> */}
-                            {
-                                row.action!=="Refer to oncologist" && 
+                <Box mt={3} width="30%">
+                {
+                  parseInt(no_of_steps)==1 &&
+                    <Box>
+                      <TableContainer component={Paper}>
+                        <Table aria-label="customized table">
+                          <TableHead>
+                            <TableRow>
+                              <StyledTableCell>
+                                Possible Cancer
+                              </StyledTableCell>
+                              <StyledTableCell>
+                                Action
+                              </StyledTableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                              <StyledTableRow >
+                                <StyledTableCell component="th" scope="row">
+                                  {possible_cancer}
+                                </StyledTableCell>
                                 <StyledTableCell>
-                                  <Link onClick={(e) => testClick_AssessOtherSymptomsHandler(e, row.action)}>{row.action}</Link>
+                                  <Link onClick={(e) => testClickHandler(e, step1)} style={{color: "red"}}>{step1.replace("message: ", "")}</Link>
                                 </StyledTableCell>
-                              }
-                              {
-                                row.action==="Refer to oncologist" && 
-                                <StyledTableCell style={{color:"red"}}>
-                                  <Link onClick={(e) => testClick_OpenOncologistPopup(e, row.action)} style={{color: "red"}}>{row.action}</Link>
+                              </StyledTableRow>
+                          </TableBody>
+                        </Table>
+                      </TableContainer>
+                    </Box>
+                }
+                </Box>
+                 <Box mt={3}  width="50%">
+                {
+                    parseInt(no_of_steps)==2 &&
+                      <Box>
+                        <TableContainer component={Paper}>
+                          <Table aria-label="customized table">
+                            <TableHead>
+                              <TableRow>
+                                <StyledTableCell>
+                                  Possible Cancer
                                 </StyledTableCell>
-                              }
-                          </StyledTableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
+                                <StyledTableCell>
+                                  Action
+                                </StyledTableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <StyledTableRow >
+                                  <StyledTableCell component="th" scope="row">
+                                    {possible_cancer}
+                                  </StyledTableCell>
+                                  <StyledTableCell>
+                                    <Link onClick={(e) => testClickHandler(e, step1)}>{step1.replace("message: ", "")}</Link>
+                                  </StyledTableCell>
+                                </StyledTableRow>
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
+                        <Typography fontWeight="bold">{step1}</Typography>
+                        <TableContainer component={Paper}>
+                          <Table aria-label="customized table">
+                            <TableHead>
+                              <TableRow>
+                                {/* <StyledTableCell>
+                                  Test /Investigations
+                                </StyledTableCell> */}
+                                <StyledTableCell>Result</StyledTableCell>
+                                <StyledTableCell>Action</StyledTableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <StyledTableRow>
+                                  {/* <StyledTableCell component="th" scope="row">
+                                    <Link onClick={(e) => testClickHandler(e, row.name)}>{row.name}</Link>
+                                  </StyledTableCell> */}
+                                  <StyledTableCell>{response1.replace("message: ", "")}</StyledTableCell>
+                                  <StyledTableCell>
+                                        <Link onClick={(e) => testClickHandler(e, step2)}>{step2.replace("result: ", "")}</Link>
+                                  </StyledTableCell>
+                                </StyledTableRow>
+                                <StyledTableRow>
+                                  {/* <StyledTableCell component="th" scope="row">
+                                    <Link onClick={(e) => testClickHandler(e, row.name)}>{row.name}</Link>
+                                  </StyledTableCell> */}
+                                  <StyledTableCell>{response1.replace("message: ", "")}</StyledTableCell>
+                                  <StyledTableCell>
+                                        <Link onClick={(e) => testClickHandler(e, step2)}>{step2.replace("result: ", "")}</Link>
+                                  </StyledTableCell>
+                                </StyledTableRow>
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
+                        </Box>
+                    }
+                </Box>
+                <Box mt={3} width="50%">
+                {
+                    parseInt(no_of_steps)==3 &&
+                      <Box>
+                        <TableContainer component={Paper}>
+                          <Table aria-label="customized table">
+                            <TableHead>
+                              <TableRow>
+                                <StyledTableCell>
+                                  Possible Cancer
+                                </StyledTableCell>
+                                <StyledTableCell>
+                                  Action
+                                </StyledTableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <StyledTableRow >
+                                  <StyledTableCell component="th" scope="row">
+                                    {possible_cancer}
+                                  </StyledTableCell>
+                                  <StyledTableCell>
+                                    <Link onClick={(e) => testClickHandler(e, step1)}>{step1.replace("message: ", "")}</Link>
+                                  </StyledTableCell>
+                                </StyledTableRow>
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
+                        <Typography fontWeight="bold">{step1}</Typography>
+                        <TableContainer component={Paper}>
+                          <Table aria-label="customized table">
+                            <TableHead>
+                              <TableRow>
+                                {/* <StyledTableCell>
+                                  Test /Investigations
+                                </StyledTableCell> */}
+                                <StyledTableCell>Result</StyledTableCell>
+                                <StyledTableCell>Action</StyledTableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <StyledTableRow>
+                                  {/* <StyledTableCell component="th" scope="row">
+                                    <Link onClick={(e) => testClickHandler(e, row.name)}>{row.name}</Link>
+                                  </StyledTableCell> */}
+                                  <StyledTableCell>{response1.replace("message: ", "")}</StyledTableCell>
+                                  <StyledTableCell>
+                                        <Link onClick={(e) => testClickHandler(e, step2)}>{step2.replace("result: ", "")}</Link>
+                                  </StyledTableCell>
+                                </StyledTableRow>
+                                <StyledTableRow>
+                                  {/* <StyledTableCell component="th" scope="row">
+                                    <Link onClick={(e) => testClickHandler(e, row.name)}>{row.name}</Link>
+                                  </StyledTableCell> */}
+                                  <StyledTableCell>{response1.replace("message: ", "")}</StyledTableCell>
+                                  <StyledTableCell>
+                                        <Link onClick={(e) => testClickHandler(e, step2)}>{step2.replace("result: ", "")}</Link>
+                                  </StyledTableCell>
+                                </StyledTableRow>
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
+                        <Typography fontWeight="bold">{step2}</Typography>
+                        <TableContainer component={Paper}>
+                          <Table aria-label="customized table">
+                            <TableHead>
+                              <TableRow>
+                                {/* <StyledTableCell>
+                                  Test /Investigations
+                                </StyledTableCell> */}
+                                <StyledTableCell>Result</StyledTableCell>
+                                <StyledTableCell>Action</StyledTableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
+                        </Box>
+                    }
                 </Box>
                 <Dialog open={oncologyReferralPopup}>
                     <DialogTitle>Oncology referral (Coming Soon...)</DialogTitle>

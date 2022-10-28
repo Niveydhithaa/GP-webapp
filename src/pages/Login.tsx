@@ -5,13 +5,19 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios"
 import { useState} from "react"
 import { Link } from "react-router-dom";
+import Snackbar from '@mui/material/Snackbar';
 
 interface Login {
   Username: string,
   Password: string
 }
+
 export default function Login() {
   const navigate = useNavigate();
+  const [openLoginFail, setOpenLoginFail] = useState(false)  
+  const handleClose = () => {
+    setOpenLoginFail(false);
+}
   const handleOnSignin = () => {
     const uname = (document.getElementById("username_input") as HTMLInputElement).value
     const pswd = (document.getElementById("password_input") as HTMLInputElement).value
@@ -29,9 +35,15 @@ export default function Login() {
             let res_Dict = result.data
             let isSuccess = res_Dict.isSuccess
             console.log(isSuccess)
-            // if(isSuccess) {
-            //   navigate("/home")
-            // }
+            if(isSuccess) {
+              sessionStorage.setItem("user", "true")
+              navigate("/home")
+            }
+            else
+            {
+              sessionStorage.setItem("user", "false")
+              setOpenLoginFail(true)
+            }
             // ({
             //     repos: result.data,
             //     isLoading: false
@@ -41,7 +53,7 @@ export default function Login() {
         .catch(error =>
             console.log(error)
         );
-    navigate("/home")
+    // navigate("/home")
   }
   const bull = (
       <Box
@@ -97,6 +109,12 @@ export default function Login() {
           </Box>
           </Card>
       </Box>
+      <Snackbar
+                open={openLoginFail}
+                autoHideDuration={6000}
+                onClose={handleClose}
+                message="Login Failed. Please Try Again!"
+            />
     </Box>
   );
 };
