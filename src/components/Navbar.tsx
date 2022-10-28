@@ -10,14 +10,19 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
+import {useNavigate} from "react-router-dom"
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+  const handleOpenGPProfile = () => {
+    navigate("/gpprofile")
   };
   return (
     <AppBar position="static">
@@ -27,7 +32,7 @@ const Navbar = () => {
             variant="h6"
             noWrap
             component="a"
-            href="/"
+            href="/home"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -39,6 +44,7 @@ const Navbar = () => {
             }}
           >
             <img src="App Bar Logo.png"></img>
+            <Typography sx={{fontFamily: "arial", backgroundColor: "cornsilk", color: "black",}} fontSize="12px" >BETA</Typography>
           </Typography>
           <Box flexGrow={1}></Box>
           <Box flexGrow={0}>
@@ -61,7 +67,7 @@ const Navbar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem onClick={handleCloseUserMenu}>
+              <MenuItem onClick={handleOpenGPProfile}>
                 <Typography textAlign="center">Profile</Typography>
               </MenuItem>
               <MenuItem onClick={handleCloseUserMenu}>
