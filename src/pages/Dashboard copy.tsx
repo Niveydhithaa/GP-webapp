@@ -198,7 +198,7 @@ const Dashboard = () => {
         {/* Data found */}
         <Card sx={{ mt: 3}}>
           <Box width="80%" minHeight="500px" p={3} sx={{ml: 10}}>
-            <AccordionExample></AccordionExample>           
+            {/* <AccordionExample selectedSymp={""}></AccordionExample>            */}
           </Box>
         </Card>
 
