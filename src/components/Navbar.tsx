@@ -48,7 +48,7 @@ const Navbar = () => {
             }}
           >
             <img src="App Bar Logo.png"></img>
-            <Typography sx={{fontFamily: "arial", backgroundColor: "cornsilk", color: "black",}} fontSize="12px" >BETA</Typography>
+            <Typography className="beta" >BETA</Typography>
           </Typography>
           <Box flexGrow={1}></Box>
           <Box flexGrow={0}>

@@ -22,8 +22,8 @@ export default function BasicBreadcrumbs() {
         navigate("/" + url)
       }
   return (
-    <div role="presentation">
-      <Box ml={16}>
+    <Box role="presentation">
+      <Box>
         <Breadcrumbs aria-label="breadcrumb">
           <Link underline="hover" color="inherit" onClick={(e) => handleClick(e, "home")}>
             NICE Guidelines Search
@@ -31,13 +31,13 @@ export default function BasicBreadcrumbs() {
           <Link
             underline="hover"
             color="inherit"
-            onClick={(e) => handleClickPatientsTab(e, "patientslist")}
+            onClick={(e) => handleClickPatientsTab(e, "home")}
           >
             Patients List
           </Link>
           <Typography>Patient Profile </Typography>
         </Breadcrumbs>
       </Box>
-    </div>
+    </Box>
   );
 }

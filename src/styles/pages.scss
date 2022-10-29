@@ -1,3 +1,33 @@
 .breadcrumb {
 	font-size: 12px !important;
 }
+.card-title {
+	font-size: 16px;
+	font-weight: 700;
+}
+.patient-name {
+	font-size: 18px;
+	font-weight: 700;
+	marigin-bottom: 5px;
+}
+.patient-details {
+	font-size: 14px;
+}
+.patient-id {
+	font-size: 14px;
+	color: #aaa;
+}
+.beta {
+	font-family: "arial";
+	background-color: cornsilk;
+	color: black;
+	font-size: 12px !important;
+	height: fit-content;
+	padding: 0 10px;
+	border-radius: 8px;
+	margin-left: 10px;
+}
+
+.MuiToggleButton-root {
+	padding: 15px !important;
+}

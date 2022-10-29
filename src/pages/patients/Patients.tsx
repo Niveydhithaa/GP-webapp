@@ -12,7 +12,10 @@ import {
     Paper,
     TextField,
     Link,
-    Autocomplete
+    Autocomplete,
+    IconButton,
+    Divider,
+    InputBase
 } from "@mui/material";
 import TwoStepBreadCrumb from "components/TwoStepBreadCrumb"
 import Dialog from '@mui/material/Dialog';
@@ -25,6 +28,8 @@ import Navbar from "components/Navbar"
 import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import PatientDialog from "components/hooks/PatientDialog";
+import SearchIcon from '@mui/icons-material/Search';
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: theme.palette.common.black,
@@ -92,7 +97,8 @@ export default function Patients() {
     const navigate = useNavigate();
     
     const [patientClicked, setPatientClicked] = useState<boolean>(false);
-    const [addPatientDialog, setAddPatientDialog] = useState<boolean>(false)
+    const [addPatientDialog, setAddPatientDialog] = useState<boolean>(false);
+    const [searchValue, setSearchValue] = useState<any>("");
     const onClickPatient = () => {
         // setPatientClicked(true)
         navigate("/patientprofile")
@@ -113,10 +119,9 @@ export default function Patients() {
             {/* <Navbar></Navbar> */}
             {!patientClicked &&
                 <Box>
-                    <TwoStepBreadCrumb></TwoStepBreadCrumb>
                     <Box mb={4}>
                         <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-                            <Autocomplete
+                            { /*<Autocomplete
                                 freeSolo
                                 disableClearable
                                 options={patientOptions}
@@ -134,7 +139,23 @@ export default function Patients() {
                                     />
                                 )}
                                 sx={{width: "350px"}}
-                            />
+                            /> */}
+                            <Paper
+                              component="form"
+                              sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400, boxShadow: "none", outline: "1px solid #ccc" }}
+                            >
+                                <InputBase
+                                    sx={{ ml: 1, flex: 1 }}
+                                    placeholder="Search"
+                                    inputProps={{ 'aria-label': 'Search' }}
+                                    value={searchValue}
+                                    onChange={(e) => setSearchValue(e.target.value)}
+                                />
+                                <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+                                <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+                                    <SearchIcon />
+                                </IconButton>
+                            </Paper>
                             <Button variant="contained" color="primary" onClick={addNewPatientHandler}>
                                 Create Patient
                             </Button>

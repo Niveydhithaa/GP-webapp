@@ -13,7 +13,10 @@ import {
     DialogActions,
     DialogContent,
     DialogContentText,
-    DialogTitle
+    DialogTitle,
+    Grid,
+    Card,
+    Divider
 } from "@mui/material";
 import Navbar from "components/Navbar"
 import SymptomTracker from "components/SymptomTrackerAccordion"
@@ -85,71 +88,90 @@ export default function PatientProfile() {
           setSymptomDialog(true)
       }
     return (
-        <div>
+        <Box sx={{backgroundColor: "#EEEEEE", minHeight: "100vh"}}>
             <Navbar></Navbar>
-            <br></br>
-            
-            <CustomBreadCrumb></CustomBreadCrumb>
-            <Box maxWidth="60%" m="auto">
-                <Box mt={5} mb={4}>
-                    <TableContainer component={Paper}>
-                        <Box
-                            component="span"
-                            m={1}
-                            display="flex"
-                            justifyContent="space-between"
-                            alignItems="center"
-                            >
-                            <Typography>Patient Profile</Typography>
-                            <Button variant="outlined"  color="secondary" sx={{ height: 40 }} onClick={addNewPatient}>
-                                Add New Symptom
-                            </Button>
-                        </Box>
-                        <Table aria-label="customized table">
-                            <TableHead>
-                                <TableRow>
-                                    <StyledTableCell>
-                                        Name
-                                    </StyledTableCell>
-                                    <StyledTableCell>Surname</StyledTableCell>
-                                    <StyledTableCell>Gender</StyledTableCell>
-                                    <StyledTableCell>Age</StyledTableCell>
-                                    <StyledTableCell>Mobile</StyledTableCell>
-                                    <StyledTableCell>Last Consulted</StyledTableCell>
-                                    <StyledTableCell>Action</StyledTableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                <StyledTableRow>
-                                    <StyledTableCell component="th" scope="row">
-                                        Patient1
-                                    </StyledTableCell>
-                                    <StyledTableCell>Surname1</StyledTableCell>
-                                    <StyledTableCell>F</StyledTableCell>
-                                    <StyledTableCell>XX</StyledTableCell>
-                                    <StyledTableCell>88890038556</StyledTableCell>
-                                    <StyledTableCell>17/10/2022</StyledTableCell>
-                                    <StyledTableCell>Edit/Delete</StyledTableCell>
-                                </StyledTableRow>
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                    <Dialog open={symptomDialog}>
-                        <DialogTitle>Add Symptom</DialogTitle>
-                        <DialogContent >
-                            <Box>
-                                <Dashboard></Dashboard>
-                            </Box>
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={handleCloseSuggeDialog}>Cancel</Button>
-                            <Button onClick={handleSuggeModuleOpen}>Add</Button>
-                        </DialogActions>
-                    </Dialog>
-                </Box>
-                <SymptomTracker></SymptomTracker>
+            <Box width="100%">
+                <Grid container maxWidth="xl" sx={{margin: "0 auto"}}>
+                    <Grid item xs={12} sx={{p: 2}}>
+                        <CustomBreadCrumb></CustomBreadCrumb>
+                    </Grid>
+                    <Grid container item xs={12} spacing={2} sx={{px: 2}}>
+                        <Grid item xs={3}>
+                            <Card sx={{p:1, backgroundColor: "#fff"}}>
+                                <Box p={1.5}>
+                                    <p className="card-title">Patient Details</p>
+                                </Box>
+                                <Divider />
+                                <Box p={1.5}>
+                                    <p className="patient-name">Patient Name</p>
+                                    <p className="patient-details">32 | Male | Chennai</p>
+                                    <p className="patient-id">GP0001</p>
+                                </Box>
+                                <Divider />
+                                <Box p={1.5}>
+                                    <Box display="flex" flexWrap="nowrap">
+                                        <Box display="flex" flexWrap="nowrap" justifyContent="space-between" width="50%">
+                                            <p>Optimal ID</p>
+                                            <p>:</p>
+                                        </Box>
+                                        <Box width="50%">
+                                            BCHT00022
+                                        </Box>
+                                    </Box>
+                                    <Box display="flex" flexWrap="nowrap">
+                                        <Box display="flex" flexWrap="nowrap" justifyContent="space-between" width="50%">
+                                            <p>GP ID</p>
+                                            <p>:</p>
+                                        </Box>
+                                        <Box width="50%">
+                                            GP00022
+                                        </Box>
+                                    </Box>
+                                    <Box display="flex" flexWrap="nowrap">
+                                        <Box display="flex" flexWrap="nowrap" justifyContent="space-between" width="50%">
+                                            <p>Hospital ID</p>
+                                            <p>:</p>
+                                        </Box>
+                                        <Box width="50%">
+                                            HT00022
+                                        </Box>
+                                    </Box>
+                                </Box>
+                            </Card>
+                        </Grid>
+                        <Grid item xs={9}>
+                            <Card sx={{p: 2}}>
+                                <Box
+                                    component="span"
+                                    m={1}
+                                    display="flex"
+                                    justifyContent="space-between"
+                                    alignItems="center"
+                                    >
+                                    <Typography>Patient Profile</Typography>
+                                    <Button variant="outlined"  color="secondary" sx={{ height: 40 }} onClick={addNewPatient}>
+                                        Add New Symptom
+                                    </Button>
+                                </Box>
+                                <Dialog open={symptomDialog} onClose={handleCloseSuggeDialog}>
+                                    <DialogTitle>Add Symptom</DialogTitle>
+                                    <DialogContent >
+                                        <Box>
+                                            <Dashboard></Dashboard>
+                                        </Box>
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <Button onClick={handleCloseSuggeDialog}>Cancel</Button>
+                                        <Button onClick={handleSuggeModuleOpen}>Add</Button>
+                                    </DialogActions>
+                                </Dialog>
+                                <SymptomTracker></SymptomTracker>
+                            </Card>
+                        </Grid>
+                    </Grid>
+                </Grid>
             </Box>
-        </div>
+        </Box>
 
     )
 }
