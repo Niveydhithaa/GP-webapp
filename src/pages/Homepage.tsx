@@ -3,7 +3,9 @@ import {
   Box,
   Typography,
   Tabs,
-  Tab
+  Tab,
+  Grid,
+  Card
 } from "@mui/material";
 import Navbar from "components/Navbar"
 
@@ -36,33 +38,37 @@ export default function NavTabs() {
   };
 
   return (
-    <Box>
+    <Box sx={{backgroundColor: "#EEEEEE", minHeight: "100vh"}}>
       <Navbar></Navbar>
-      <Box sx={{ width: '80%', alignItems: "center"}} mt={4} mb={4} ml={16} >
-        <Tabs value={tabIndex} onChange={handleChange} aria-label="nav tabs example">
-          <LinkTab label="Search Guidelines" href="/dashboard" />
-          <LinkTab label="Patients" href="/patientslist" />
-        </Tabs>
-      </Box>
-      <Box sx={{ padding: 2 }}>
-        {tabIndex === 0 && (
-          <Box>
-            {/* <Typography>The first tab</Typography> */}
-            <Dashboard></Dashboard>
+      <Grid container maxWidth="xl" sx={{margin: "0 auto", p: 8}}>
+        <Card sx={{p: 2, borderRadius: 4}}>
+          <Box sx={{ width: '80%', alignItems: "center"}} >
+            <Tabs value={tabIndex} onChange={handleChange} aria-label="nav tabs example">
+              <LinkTab label="Search Guidelines" href="/dashboard" />
+              <LinkTab label="Patients" href="/patientslist" />
+            </Tabs>
           </Box>
-        )}
-        {tabIndex === 1 && (
-          <Box>
-            {/* <Typography>The second tab</Typography> */}
-            <Patients></Patients>
+          <Box sx={{ padding: 2 }}>
+            {tabIndex === 0 && (
+              <Box>
+                {/* <Typography>The first tab</Typography> */}
+                <Dashboard></Dashboard>
+              </Box>
+            )}
+            {tabIndex === 1 && (
+              <Box>
+                {/* <Typography>The second tab</Typography> */}
+                <Patients></Patients>
+              </Box>
+            )}
+            {tabIndex === 2 && (
+              <Box>
+                <Typography>The third tab</Typography>
+              </Box>
+            )}
           </Box>
-        )}
-        {tabIndex === 2 && (
-          <Box>
-            <Typography>The third tab</Typography>
-          </Box>
-        )}
-    </Box>
+        </Card>
+      </Grid>
     </Box>
   );
 }

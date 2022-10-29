@@ -11,7 +11,8 @@ import {
   MenuItem,
   Autocomplete,
   TextField,
-  IconButton
+  IconButton,
+  Grid
 } from "@mui/material";
 import ReplayIcon from '@mui/icons-material/Replay';
 // import MultiSelect from 'components/MultiSelect'
@@ -515,112 +516,114 @@ export default function Dashboard() {
   return (
     <Box
       width="100%"
-      minHeight="100vh"
       sx={{ pb: 5 }}
     >
       {/* <Navbar /> */}
-      <Container>
-        <Box display="flex" flexWrap="wrap" gap={2}>
-          {/* Topic */}
-          <Box>
-            <Typography fontWeight="bold" mb={2}>Topic</Typography>
+      <Grid container maxWidth="xl" sx={{margin: "0 auto"}}>
+        <Grid item xs={12} justifyContent="center">
+          <Box display="flex" flexWrap="wrap" justifyContent="start" width="100%" gap={2}>
+            {/* Topic */}
             <Box>
-              <ToggleButtonGroup
-                color="primary"
-                value={topic}
-                exclusive
-                onChange={handleTopic}
-                aria-label="Platform"
-                defaultValue={"symptom"}
+              <Typography fontWeight="bold" mb={2}>Topic</Typography>
+              <Box>
+                <ToggleButtonGroup
+                  color="primary"
+                  value={topic}
+                  exclusive
+                  onChange={handleTopic}
+                  aria-label="Platform"
+                  defaultValue={"symptom"}
 
-              >
-                <ToggleButton value="symptom" id="toggle_symptom">Symptom</ToggleButton>
-                <ToggleButton value="site">Site</ToggleButton>
-                <ToggleButton value="primaryCare">
-                  Primary care Investigations
-                </ToggleButton>
-              </ToggleButtonGroup>
+                >
+                  <ToggleButton value="symptom" id="toggle_symptom">Symptom</ToggleButton>
+                  <ToggleButton value="site">Site</ToggleButton>
+                  <ToggleButton value="primaryCare">
+                    Primary care Investigations
+                  </ToggleButton>
+                </ToggleButtonGroup>
+              </Box>
             </Box>
-          </Box>
 
-          {/* Gender */}
-          <Box>
-            <Typography fontWeight="bold" mb={2}>Gender</Typography>
+            {/* Gender */}
             <Box>
-              <ToggleButtonGroup
-                color="primary"
-                value={gender}
-                exclusive
-                onChange={handleGender}
-                aria-label="Platform"
-              >
-                <ToggleButton value="male">Male</ToggleButton>
-                <ToggleButton value="female">Female</ToggleButton>
-              </ToggleButtonGroup>
+              <Typography fontWeight="bold" mb={2}>Gender</Typography>
+              <Box>
+                <ToggleButtonGroup
+                  color="primary"
+                  value={gender}
+                  exclusive
+                  onChange={handleGender}
+                  aria-label="Platform"
+                >
+                  <ToggleButton value="male">Male</ToggleButton>
+                  <ToggleButton value="female">Female</ToggleButton>
+                </ToggleButtonGroup>
+              </Box>
             </Box>
-          </Box>
 
-          {/* Age */}
-          <Box>
-            <Typography fontWeight="bold" mb={2}>Age</Typography>
-            <Autocomplete
-              freeSolo
-              disableClearable
-              options={ageResult().map((option) => option.title)}
-              id="age_value"
-              value={age}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Age >"
-                  id="age_value"
-                  // size="small"
-                  // multiline={true}
-                  // rows={2}
-                  InputProps={{
-                    ...params.InputProps,
-                    type: "Age",
-                  }}
-                />
-              )}
-              sx={{ width: "100px" }}
-              onChange={handleAge}
-            />
-          </Box>
-          <Box>
-            <Typography fontWeight="bold" mb={2}>Age</Typography>
-            <Autocomplete
-              freeSolo
-              disableClearable
-              options={ageResult().map((option) => option.title)}
-              id="age_value_lt"
-              value={age_lt}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Age <"
-                  id="age_value_lt"
-                  // size="small"
-                  // multiline={true}
-                  // rows={2}
-                  InputProps={{
-                    ...params.InputProps,
-                    type: "Age",
-                  }}
-                />
-              )}
-              sx={{ width: "100px" }}
-              onChange={handleAgeLT}
-            />
-          </Box>
-          <Box>
-          <IconButton aria-label="refresh" onClick={refreshComponents}>
+            {/* Age */}
+            <Box>
+              <Typography fontWeight="bold" mb={2}>Age</Typography>
+              <Autocomplete
+                freeSolo
+                disableClearable
+                options={ageResult().map((option) => option.title)}
+                id="age_value"
+                value={age}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Age >"
+                    id="age_value"
+                    // size="small"
+                    // multiline={true}
+                    // rows={2}
+                    InputProps={{
+                      ...params.InputProps,
+                      type: "Age",
+                    }}
+                  />
+                )}
+                sx={{ width: "100px" }}
+                onChange={handleAge}
+              />
+            </Box>
+            <Box>
+              <Typography fontWeight="bold" mb={2}>Age</Typography>
+              <Autocomplete
+                freeSolo
+                disableClearable
+                options={ageResult().map((option) => option.title)}
+                id="age_value_lt"
+                value={age_lt}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Age <"
+                    id="age_value_lt"
+                    // size="small"
+                    // multiline={true}
+                    // rows={2}
+                    InputProps={{
+                      ...params.InputProps,
+                      type: "Age",
+                    }}
+                  />
+                )}
+                sx={{ width: "100px" }}
+                onChange={handleAgeLT}
+              />
+            </Box>
+            <Box>
+            <IconButton aria-label="refresh" onClick={refreshComponents}>
                 <ReplayIcon />
             </IconButton>
+            </Box>
           </Box>
-        </Box>
+        </Grid>
         {/* SEARCH COMPONENT */}
-        <Box display="flex" flexWrap="wrap" gap={2} mt={4}>
+        <Grid item xs={12}>
+          <Box display="flex" justifyContent="start" flexWrap="wrap" gap={2} mt={4}>
             <Box minWidth="50%" maxWidth="80%">
               <MultiSelect
                     // defaultValue={[symptomOptions[2], symptomOptions[3]]}
@@ -642,10 +645,12 @@ export default function Dashboard() {
                 Search
               </Button>
             </Box>
-        </Box>
+          </Box>
+        </Grid>
         
         {/* No data section */}
-        <Box sx={{ mt: 2, minHeight:"50px"}}>
+        <Grid item xs={12}>
+          <Box sx={{ mt: 2, minHeight:"50px"}}>
           
             {
               noofsymptoms==0 &&
@@ -676,8 +681,9 @@ export default function Dashboard() {
               </Box>
             }
           
-        </Box>
-      </Container>
+          </Box>
+        </Grid>
+      </Grid>
     </Box>
   );
 };
