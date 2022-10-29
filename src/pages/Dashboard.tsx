@@ -62,6 +62,7 @@ export default function Dashboard() {
   const [selectedFromMultiDict, setSelectedFromMultiDict] = useState<MultiValue<Record<string, string>>>([])
   const [noFilterPopup, setNoFiltersPopup] = useState<boolean>(false);
   const [resetComponent, setResetComponent] = useState<boolean>(false);
+  const [totalSymptomsinList, setTotalSymptomsinList] = useState<number>(0);
   const refreshComponents = () => {
     //version 1 hard refresh
     // window.location.reload();
@@ -446,6 +447,7 @@ export default function Dashboard() {
               });
               console.log(symptoms_temp_dict)
               setMultiSelectOptions(symptoms_temp_dict)
+              setTotalSymptomsinList(symptoms_temp_dict.length)
               symptoms_temp_dict = []
               // ({
               //     repos: result.data,
@@ -554,6 +556,7 @@ export default function Dashboard() {
                   exclusive
                   onChange={handleGender}
                   aria-label="Platform"
+                  
                 >
                   <ToggleButton value="male">Male</ToggleButton>
                   <ToggleButton value="female">Female</ToggleButton>
@@ -569,7 +572,7 @@ export default function Dashboard() {
                 disableClearable
                 options={ageResult().map((option) => option.title)}
                 id="age_value"
-                value={age}
+                value={age} 
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -621,6 +624,10 @@ export default function Dashboard() {
             </Box>
           </Box>
         </Grid>
+        {
+          totalSymptomsinList>0 && 
+        <Typography>Searching in {totalSymptomsinList} from the list</Typography>
+        }
         {/* SEARCH COMPONENT */}
         <Grid item xs={12}>
           <Box display="flex" justifyContent="start" flexWrap="wrap" gap={2} mt={4}>

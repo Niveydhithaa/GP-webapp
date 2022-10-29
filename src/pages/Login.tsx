@@ -98,8 +98,11 @@ export default function Login() {
               Sign in
             </Typography>
             <Box display="flex" flexDirection="column" gap={3}>
-              <TextField label="Username" variant="outlined" type="text" id="username_input"/>
-              <TextField label="Password" variant="outlined" type="password" id="password_input"/>
+              <TextField label="Username" variant="outlined" type="text" id="username_input" error={openLoginFail} onChange={(e) => setOpenLoginFail(false)}/>
+              <TextField label="Password" variant="outlined" type="password" id="password_input" error={openLoginFail} onChange={(e) => setOpenLoginFail(false)}/>
+              { openLoginFail &&
+                <Typography fontSize="12px" color="red">Please check login credentials</Typography>
+              }
               <Button variant="contained" sx={{ borderRadius: "50px" }} onClick={handleOnSignin}>
                 <Typography fontSize="16px">Sign in</Typography>
               </Button>
@@ -111,7 +114,7 @@ export default function Login() {
           </Card>
       </Box>
       <Snackbar
-                open={openLoginFail}
+                open={false}
                 autoHideDuration={6000}
                 onClose={handleClose}
                 message="Login Failed. Please Try Again!"

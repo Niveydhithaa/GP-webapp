@@ -60,7 +60,8 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
+    // backgroundColor: theme.palette.action.hover,
+    backgroundColor: "#F6F5F5",
   },
   // hide last border
   "&:last-child td, &:last-child th": {
@@ -188,10 +189,11 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
     }
     return(
         
-        <Box mt={3}>
+        <Box mt={3} >
             <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
+                sx={{backgroundColor: "#EEEEEE"}}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
@@ -385,10 +387,11 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                     </Box>
                 }
                 </Box>
-                 <Box mt={3}  width="50%">
+                 <Box  width="50%">
                 {
                     parseInt(no_of_steps)==2 &&
                       <Box>
+                        <Box mt={3}>
                         <TableContainer component={Paper}>
                           <Table aria-label="customized table">
                             <TableHead>
@@ -413,6 +416,10 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                             </TableBody>
                           </Table>
                         </TableContainer>
+                        </Box>
+                        
+                        
+                        <Box mt={3}>
                         <Typography fontWeight="bold">{step1}</Typography>
                         <TableContainer component={Paper}>
                           <Table aria-label="customized table">
@@ -448,12 +455,14 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                           </Table>
                         </TableContainer>
                         </Box>
+                      </Box>
                     }
                 </Box>
-                <Box mt={3} width="50%">
+                <Box width="50%">
                 {
                     parseInt(no_of_steps)==3 &&
                       <Box>
+                        <Box mt={3}>
                         <TableContainer component={Paper}>
                           <Table aria-label="customized table">
                             <TableHead>
@@ -478,6 +487,9 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                             </TableBody>
                           </Table>
                         </TableContainer>
+                        </Box>
+                        
+                        <Box mt={3} >
                         <Typography fontWeight="bold">{step1}</Typography>
                         <TableContainer component={Paper}>
                           <Table aria-label="customized table">
@@ -512,6 +524,9 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                             </TableBody>
                           </Table>
                         </TableContainer>
+                        </Box>
+                        
+                        <Box mt={3} >
                         <Typography fontWeight="bold">{step2}</Typography>
                         <TableContainer component={Paper}>
                           <Table aria-label="customized table">
@@ -530,6 +545,7 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                           </Table>
                         </TableContainer>
                         </Box>
+                      </Box>
                     }
                 </Box>
                 <Dialog open={oncologyReferralPopup}>
