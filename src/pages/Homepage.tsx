@@ -41,7 +41,7 @@ export default function NavTabs() {
     <Box sx={{backgroundColor: "#EEEEEE", minHeight: "100vh"}}>
       <Navbar></Navbar>
       <Grid container maxWidth="xl" sx={{margin: "0 auto", p: 8}}>
-        <Card sx={{p: 2, borderRadius: 4}}>
+        <Card sx={{p: 2, borderRadius: 4, minHeight: "calc(100vh - 128px)", minWidth: "100%"}}>
           <Box sx={{ width: '80%', alignItems: "center"}} >
             <Tabs value={tabIndex} onChange={handleChange} aria-label="nav tabs example">
               <LinkTab label="Search Guidelines" href="/dashboard" />

@@ -114,14 +114,12 @@ export default function Patients() {
             {!patientClicked &&
                 <Box>
                     <TwoStepBreadCrumb></TwoStepBreadCrumb>
-                    <Box mt={5} mb={4} maxWidth="60%" m="auto">
-                        <Box>
-                            <br></br>
+                    <Box mb={4}>
+                        <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
                             <Autocomplete
                                 freeSolo
                                 disableClearable
                                 options={patientOptions}
-                                fullWidth
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
@@ -134,8 +132,12 @@ export default function Patients() {
                                             type: "Age",
                                         }}
                                     />
-                                )} />
-                                <br></br>
+                                )}
+                                sx={{width: "350px"}}
+                            />
+                            <Button variant="contained" color="primary" onClick={addNewPatientHandler}>
+                                Create Patient
+                            </Button>
                         </Box>
                         <TableContainer component={Paper}>
                             <Box
@@ -146,9 +148,7 @@ export default function Patients() {
                                 alignItems="center"
                                 >
                                 <Typography>List of Patients</Typography>
-                                <Button variant="contained" color="primary" onClick={addNewPatientHandler}>
-                                    Add New Patient
-                                </Button>
+                                
                             </Box>
                             <Table aria-label="customized table">
                                 <TableHead>

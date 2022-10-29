@@ -655,7 +655,7 @@ export default function Dashboard() {
             {
               noofsymptoms==0 &&
               <Box m="auto" display="flex" alignItems="center" justifyContent="center" sx={{verticalAlign: "middle"}}>
-                <Typography fontFamily="sans-serif" fontSize="13px" >No Symptom Selected!</Typography>
+                <Typography fontFamily="sans-serif" fontSize="13px" mt={10}>No Symptom Selected!</Typography>
               </Box>               
             }
             {

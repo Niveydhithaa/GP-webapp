@@ -71,9 +71,9 @@ const Navbar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <MenuItem onClick={handleOpenGPProfile}>
+              {/* <MenuItem onClick={handleOpenGPProfile}>
                 <Typography textAlign="center">Profile</Typography>
-              </MenuItem>
+              </MenuItem> */}
               <MenuItem onClick={handleLogoutUser}>
                 <Typography textAlign="center">Logout</Typography>
               </MenuItem>

@@ -17,12 +17,12 @@ export default function BasicBreadcrumbs() {
       }
   return (
     <div role="presentation" >
-      <Box ml={16}>
+      <Box>
         <Breadcrumbs aria-label="breadcrumb">
           <Link underline="hover" color="inherit" onClick={(e) => handleClick(e, "home")}>
-            NICE Guidelines Search
+            <Typography className="breadcrumb">Guidelines Search</Typography>
           </Link>
-          <Typography >Patients List </Typography>
+          <Typography className="breadcrumb">Patients List </Typography>
         </Breadcrumbs>
       </Box>
     </div>
