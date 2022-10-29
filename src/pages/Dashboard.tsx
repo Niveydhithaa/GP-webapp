@@ -54,6 +54,7 @@ export default function Dashboard() {
   const [possibleCancer, setPossibleCancer]=useState("")
   const [step1_test, setStep1_Test] = useState("")
   const [age, setAge] = useState("");
+  const [age_lt, setAgeLt] = useState("");
   const [symptoms_selected, setSymptomsSelected] = useState<string[]>([])
   const [noofsymptoms, setNoOfSymptoms] = useState<number>(0)
   const [multiSelectOptions, setMultiSelectOptions] = useState<Record<string, string>[]>([])
@@ -61,8 +62,11 @@ export default function Dashboard() {
   const [noFilterPopup, setNoFiltersPopup] = useState<boolean>(false);
   const [resetComponent, setResetComponent] = useState<boolean>(false);
   const refreshComponents = () => {
+    //version 1 hard refresh
+    // window.location.reload();
     setGender("")
     setAge("")
+    setAgeLt("")
     setSelectedFromMultiDict([])
     setNoOfSymptoms(0)
     let a = document.getElementById("age_value") as HTMLInputElement
@@ -466,6 +470,7 @@ export default function Dashboard() {
     console.log(typeof(event.currentTarget.innerHTML))
     let age = event.currentTarget.innerHTML
     console.log(typeof(parseInt(age)))
+    setAge(age)
     age_global = parseInt(age)
   };
   const handleAgeLT = (event: React.SyntheticEvent<Element, Event>) => {
@@ -473,6 +478,7 @@ export default function Dashboard() {
     console.log(typeof(event.currentTarget.innerHTML))
     let age_lt = event.currentTarget.innerHTML
     console.log(typeof(parseInt(age_lt)))
+    setAgeLt(age_lt)
     age_global_lt = parseInt(age_lt)
     console.log(age_global_lt)
   };
@@ -562,6 +568,7 @@ export default function Dashboard() {
               disableClearable
               options={ageResult().map((option) => option.title)}
               id="age_value"
+              value={age}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -587,6 +594,7 @@ export default function Dashboard() {
               disableClearable
               options={ageResult().map((option) => option.title)}
               id="age_value_lt"
+              value={age_lt}
               renderInput={(params) => (
                 <TextField
                   {...params}

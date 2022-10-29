@@ -41,6 +41,7 @@ export default function Login() {
             }
             else
             {
+              //fail scenario: two branches 
               sessionStorage.setItem("user", "false")
               setOpenLoginFail(true)
             }

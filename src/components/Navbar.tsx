@@ -24,6 +24,10 @@ const Navbar = () => {
   const handleOpenGPProfile = () => {
     navigate("/gpprofile")
   };
+  const handleLogoutUser = () => {
+    sessionStorage.setItem("user", "false")
+    navigate("/")
+  }
   return (
     <AppBar position="static">
       <Container maxWidth="xl">
@@ -70,7 +74,7 @@ const Navbar = () => {
               <MenuItem onClick={handleOpenGPProfile}>
                 <Typography textAlign="center">Profile</Typography>
               </MenuItem>
-              <MenuItem onClick={handleCloseUserMenu}>
+              <MenuItem onClick={handleLogoutUser}>
                 <Typography textAlign="center">Logout</Typography>
               </MenuItem>
             </Menu>
