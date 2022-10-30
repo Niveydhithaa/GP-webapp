@@ -122,6 +122,7 @@ export default function SymptomTracker() {
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
+                sx={{backgroundColor: "#EEEEEE"}}
                 id="panel1a-header"
               >
                 <Typography fontWeight="bold">Symptom Title</Typography>

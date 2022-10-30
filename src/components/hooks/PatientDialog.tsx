@@ -9,6 +9,7 @@ import {
     TableBody,
     ToggleButtonGroup,
     ToggleButton,
+    Stack
 } from "@mui/material";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
@@ -50,7 +51,7 @@ export default function PatientDialog() {
     };
     return (
         <Box>
-            <Box>
+            {/* <Box>
                 <br></br>
                 <Box>
                     <TextField
@@ -100,7 +101,52 @@ export default function PatientDialog() {
                         style={{ minWidth: "350px", marginBottom: "12px" }}
                     />
                 </Box>
-            </Box>
+            </Box> */}
+            <Stack>
+                          <br></br>
+                          <Box display="flex">
+                            <TextField
+                                label="Name"
+                                id="input_name"
+                                required
+                                // style={{minWidth: "350px"}}
+                              />
+                              &nbsp; &nbsp;
+                            <TextField
+                                label="Surname"
+                                id="input_surname"
+                                required
+                                // style={{minWidth: "350px"}}
+                              />
+                          </Box>
+                          <br></br>
+                          <Box display="flex">
+                            <TextField
+                              label="Age"
+                              id="age"
+                              required
+                            />
+                            &nbsp; &nbsp;
+                            <ToggleButtonGroup
+                              color="primary"
+                              value={gender}
+                              exclusive
+                              onChange={handleGender}
+                              aria-label="Platform"
+                            >
+                              <ToggleButton value="male">Male</ToggleButton>
+                              <ToggleButton value="female">Female</ToggleButton>
+                            </ToggleButtonGroup>
+                          </Box>
+                          <br></br>
+                          <Box>
+                            <TextField
+                              label="Mobile"
+                              id="mobile_num"
+                              style={{minWidth: "350px", marginBottom: "12px"}}
+                            />
+                          </Box>
+                        </Stack>
         </Box>
     )
 }

@@ -15,7 +15,7 @@
 }
 .patient-id {
 	font-size: 14px;
-	color: #aaa;
+	// color: #aaa;
 }
 .beta {
 	font-family: "arial";
@@ -27,7 +27,9 @@
 	border-radius: 8px;
 	margin-left: 10px;
 }
-
+.patient-ids-group {
+	font-size: "12px";
+}
 .MuiToggleButton-root {
 	padding: 15px !important;
 }

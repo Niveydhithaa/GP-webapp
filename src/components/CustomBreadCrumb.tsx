@@ -26,14 +26,14 @@ export default function BasicBreadcrumbs() {
       <Box>
         <Breadcrumbs aria-label="breadcrumb">
           <Link underline="hover" color="inherit" onClick={(e) => handleClick(e, "home")}>
-            NICE Guidelines Search
+            Guidelines Search
           </Link>
           <Link
             underline="hover"
             color="inherit"
             onClick={(e) => handleClickPatientsTab(e, "home")}
           >
-            Patients List
+            Patients
           </Link>
           <Typography>Patient Profile </Typography>
         </Breadcrumbs>

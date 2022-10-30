@@ -29,6 +29,8 @@ import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import PatientDialog from "components/hooks/PatientDialog";
 import SearchIcon from '@mui/icons-material/Search';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -161,7 +163,7 @@ export default function Patients() {
                             </Button>
                         </Box>
                         <TableContainer component={Paper}>
-                            <Box
+                            {/* <Box
                                 component="span"
                                 m={1}
                                 display="flex"
@@ -170,13 +172,13 @@ export default function Patients() {
                                 >
                                 <Typography>List of Patients</Typography>
                                 
-                            </Box>
+                            </Box> */}
                             <Table aria-label="customized table">
                                 <TableHead>
                                     <TableRow>
                                         <StyledTableCell>
-                                            Patient Name
-                                    </StyledTableCell>
+                                            Name
+                                        </StyledTableCell>
                                         <StyledTableCell>Surname</StyledTableCell>
                                         <StyledTableCell>Gender</StyledTableCell>
                                         <StyledTableCell>Age</StyledTableCell>
@@ -193,10 +195,13 @@ export default function Patients() {
                                         </StyledTableCell>
                                         <StyledTableCell>Surname1</StyledTableCell>
                                         <StyledTableCell>F</StyledTableCell>
-                                        <StyledTableCell>XX</StyledTableCell>
+                                        <StyledTableCell>30</StyledTableCell>
                                         <StyledTableCell>88890038556</StyledTableCell>
                                         <StyledTableCell>17/10/2022</StyledTableCell>
-                                        <StyledTableCell>Edit/Delete</StyledTableCell>
+                                        <StyledTableCell>
+                                            <IconButton><EditIcon/></IconButton> 
+                                            <IconButton><DeleteIcon/></IconButton>
+                                        </StyledTableCell>
                                     </StyledTableRow>
                                     <StyledTableRow>
                                         <StyledTableCell component="th" scope="row">
@@ -204,10 +209,13 @@ export default function Patients() {
                                  </StyledTableCell>
                                         <StyledTableCell>Surname2</StyledTableCell>
                                         <StyledTableCell>M</StyledTableCell>
-                                        <StyledTableCell>XX</StyledTableCell>
+                                        <StyledTableCell>48</StyledTableCell>
                                         <StyledTableCell>890038556187</StyledTableCell>
                                         <StyledTableCell>17/11/2022</StyledTableCell>
-                                        <StyledTableCell>Edit/Delete</StyledTableCell>
+                                        <StyledTableCell>
+                                            <IconButton><EditIcon/></IconButton> 
+                                            <IconButton><DeleteIcon/></IconButton>
+                                        </StyledTableCell>
                                     </StyledTableRow>
                                     <StyledTableRow>
                                         <StyledTableCell component="th" scope="row">
@@ -215,10 +223,13 @@ export default function Patients() {
                                  </StyledTableCell>
                                         <StyledTableCell>Surname3</StyledTableCell>
                                         <StyledTableCell>M</StyledTableCell>
-                                        <StyledTableCell>XX</StyledTableCell>
+                                        <StyledTableCell>54</StyledTableCell>
                                         <StyledTableCell>788901238556</StyledTableCell>
                                         <StyledTableCell>17/09/2022</StyledTableCell>
-                                        <StyledTableCell>Edit/Delete</StyledTableCell>
+                                        <StyledTableCell>
+                                            <IconButton><EditIcon/></IconButton> 
+                                            <IconButton><DeleteIcon/></IconButton>
+                                        </StyledTableCell>
                                     </StyledTableRow>
                                     <StyledTableRow>
                                         <StyledTableCell component="th" scope="row">
@@ -226,16 +237,19 @@ export default function Patients() {
                                  </StyledTableCell>
                                         <StyledTableCell>Surname4</StyledTableCell>
                                         <StyledTableCell>M</StyledTableCell>
-                                        <StyledTableCell>XX</StyledTableCell>
+                                        <StyledTableCell>29</StyledTableCell>
                                         <StyledTableCell>665432256890</StyledTableCell>
                                         <StyledTableCell>07/08/2022</StyledTableCell>
-                                        <StyledTableCell>Edit/Delete</StyledTableCell>
+                                        <StyledTableCell>
+                                            <IconButton><EditIcon/></IconButton> 
+                                            <IconButton><DeleteIcon/></IconButton>
+                                        </StyledTableCell>
                                     </StyledTableRow>
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                        <Dialog open={addPatientDialog}>
-                            <DialogTitle>Add New Patient</DialogTitle>
+                        <Dialog open={addPatientDialog} onClose={handleCloseAddPatientDialog}>
+                            <DialogTitle>Create Patient (Coming Soon...)</DialogTitle>
                             <DialogContent >
                                 <Box>
                                     <PatientDialog></PatientDialog>

@@ -97,18 +97,18 @@ export default function PatientProfile() {
                     </Grid>
                     <Grid container item xs={12} spacing={2} sx={{px: 2}}>
                         <Grid item xs={3}>
-                            <Card sx={{p:1, backgroundColor: "#fff"}}>
+                            <Card sx={{p: 2, borderRadius: 4, minWidth: "100%", backgroundColor: "#fff"}}>
                                 <Box p={1.5}>
                                     <p className="card-title">Patient Details</p>
                                 </Box>
                                 <Divider />
                                 <Box p={1.5}>
-                                    <p className="patient-name">Patient Name</p>
-                                    <p className="patient-details">32 | Male | Chennai</p>
-                                    <p className="patient-id">GP0001</p>
+                                    <p className="patient-name">Patient1</p>
+                                    <p className="patient-details">32 | F | Chennai</p>
+                                    <p className="patient-id">88890038556</p>
                                 </Box>
                                 <Divider />
-                                <Box p={1.5}>
+                                <Box p={1.5} className="patient-ids-group">
                                     <Box display="flex" flexWrap="nowrap">
                                         <Box display="flex" flexWrap="nowrap" justifyContent="space-between" width="50%">
                                             <p>Optimal ID</p>
@@ -136,6 +136,15 @@ export default function PatientProfile() {
                                             HT00022
                                         </Box>
                                     </Box>
+                                    <Box display="flex" flexWrap="nowrap">
+                                        <Box display="flex" flexWrap="nowrap" justifyContent="space-between" width="50%">
+                                            <p>Last Consulted On</p>
+                                            <p>:</p>
+                                        </Box>
+                                        <Box width="50%">
+                                        17/10/2022
+                                        </Box>
+                                    </Box>
                                 </Box>
                             </Card>
                         </Grid>
@@ -148,9 +157,9 @@ export default function PatientProfile() {
                                     justifyContent="space-between"
                                     alignItems="center"
                                     >
-                                    <Typography>Patient Profile</Typography>
-                                    <Button variant="outlined"  color="secondary" sx={{ height: 40 }} onClick={addNewPatient}>
-                                        Add New Symptom
+                                    <Typography>Symptoms</Typography>
+                                    <Button variant="contained" sx={{ height: 40 }} onClick={addNewPatient}>
+                                        Add Symptom
                                     </Button>
                                 </Box>
                                 <Dialog open={symptomDialog} onClose={handleCloseSuggeDialog}>
@@ -165,6 +174,9 @@ export default function PatientProfile() {
                                         <Button onClick={handleSuggeModuleOpen}>Add</Button>
                                     </DialogActions>
                                 </Dialog>
+                                <SymptomTracker></SymptomTracker>
+                                <SymptomTracker></SymptomTracker>
+                                <SymptomTracker></SymptomTracker>
                                 <SymptomTracker></SymptomTracker>
                             </Card>
                         </Grid>

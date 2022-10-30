@@ -43,9 +43,15 @@ interface Props {
   possible_cancer: string
   gender_specific: string
   step1: string
-  response1: string
+  rsponse1_1: string
+  rsponse1_2: string
   no_of_steps: string
-  step2: string
+  step2_1: string
+  step2_2: string
+  response2_1: string
+  response2_2: string
+  step3_1: string
+  step3_2: string
   // any props that come into the component
 }
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -116,7 +122,7 @@ function createData(name: string, calories: string, fat: string) {
   function disableRandomDates() {
     return Math.random() > 0.7;
   }
-export default function AccordionExample({selectedSymp, possible_cancer, gender_specific, step1, response1, no_of_steps, step2, ...props} : Props) {
+export default function AccordionExample({selectedSymp, possible_cancer, gender_specific, step1, rsponse1_1, rsponse1_2, no_of_steps, step2_1, step2_2, response2_1, response2_2, step3_1, step3_2, ...props} : Props) {
     const [topic, setTopic] = useState("New Patient");
     const [patientDialogOpen, setPatientDialogOpen] = useState<boolean>(false);
     const [suggeDialog, setSuggestionsDialog] = useState<boolean>(false)
@@ -247,7 +253,7 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                   </TableContainer>
                 </Box> */}
                 <Card>
-                <Dialog open={patientDialogOpen}>
+                <Dialog open={patientDialogOpen} onClose={handleClosePrescribeDialog}>
                     <DialogTitle>Prescribe (Coming Soon...)</DialogTitle>
                     <DialogContent >
                         <Stack>
@@ -437,19 +443,19 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                                   {/* <StyledTableCell component="th" scope="row">
                                     <Link onClick={(e) => testClickHandler(e, row.name)}>{row.name}</Link>
                                   </StyledTableCell> */}
-                                  <StyledTableCell>{response1.replace("message: ", "")}</StyledTableCell>
+                                  <StyledTableCell>{rsponse1_1}</StyledTableCell>
                                   <StyledTableCell>
-                                        <Link onClick={(e) => testClickHandler(e, step2)}>{step2.replace("result: ", "")}</Link>
+                                        <Link onClick={(e) => testClickHandler(e, step2_1)}>{step2_1}</Link>
                                   </StyledTableCell>
                                 </StyledTableRow>
                                 <StyledTableRow>
                                   {/* <StyledTableCell component="th" scope="row">
                                     <Link onClick={(e) => testClickHandler(e, row.name)}>{row.name}</Link>
                                   </StyledTableCell> */}
-                                  <StyledTableCell>{response1.replace("message: ", "")}</StyledTableCell>
-                                  <StyledTableCell>
-                                        <Link onClick={(e) => testClickHandler(e, step2)}>{step2.replace("result: ", "")}</Link>
-                                  </StyledTableCell>
+                                  <StyledTableCell>{rsponse1_2}</StyledTableCell>
+                                    <StyledTableCell>
+                                      <Link onClick={(e) => testClick_OpenOncologistPopup(e, step2_2)} style={{color: "red"}}>{step2_2}</Link>
+                                    </StyledTableCell>
                                 </StyledTableRow>
                             </TableBody>
                           </Table>
@@ -507,18 +513,18 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                                   {/* <StyledTableCell component="th" scope="row">
                                     <Link onClick={(e) => testClickHandler(e, row.name)}>{row.name}</Link>
                                   </StyledTableCell> */}
-                                  <StyledTableCell>{response1.replace("message: ", "")}</StyledTableCell>
+                                  <StyledTableCell>{rsponse1_1}</StyledTableCell>
                                   <StyledTableCell>
-                                        <Link onClick={(e) => testClickHandler(e, step2)}>{step2.replace("result: ", "")}</Link>
+                                        <Link onClick={(e) => testClickHandler(e, step2_1)}>{step2_1}</Link>
                                   </StyledTableCell>
                                 </StyledTableRow>
                                 <StyledTableRow>
                                   {/* <StyledTableCell component="th" scope="row">
                                     <Link onClick={(e) => testClickHandler(e, row.name)}>{row.name}</Link>
                                   </StyledTableCell> */}
-                                  <StyledTableCell>{response1.replace("message: ", "")}</StyledTableCell>
+                                  <StyledTableCell>{rsponse1_2}</StyledTableCell>
                                   <StyledTableCell>
-                                        <Link onClick={(e) => testClickHandler(e, step2)}>{step2.replace("result: ", "")}</Link>
+                                        <Link onClick={(e) => testClickHandler(e, step2_2)}>{step2_2}</Link>
                                   </StyledTableCell>
                                 </StyledTableRow>
                             </TableBody>
@@ -527,7 +533,7 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                         </Box>
                         
                         <Box mt={3} >
-                        <Typography fontWeight="bold">{step2}</Typography>
+                        <Typography fontWeight="bold">{step2_1}</Typography>
                         <TableContainer component={Paper}>
                           <Table aria-label="customized table">
                             <TableHead>
@@ -540,7 +546,24 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                               </TableRow>
                             </TableHead>
                             <TableBody>
-                              
+                            <StyledTableRow>
+                                  {/* <StyledTableCell component="th" scope="row">
+                                    <Link onClick={(e) => testClickHandler(e, row.name)}>{row.name}</Link>
+                                  </StyledTableCell> */}
+                                  <StyledTableCell>{response2_1}</StyledTableCell>
+                                  <StyledTableCell>
+                                        <Link onClick={(e) => testClickHandler(e, step3_1)}>{step3_1}</Link>
+                                  </StyledTableCell>
+                                </StyledTableRow>
+                                <StyledTableRow>
+                                  {/* <StyledTableCell component="th" scope="row">
+                                    <Link onClick={(e) => testClickHandler(e, row.name)}>{row.name}</Link>
+                                  </StyledTableCell> */}
+                                  <StyledTableCell>{response2_2}</StyledTableCell>
+                                    <StyledTableCell>
+                                      <Link onClick={(e) => testClick_OpenOncologistPopup(e, step3_2)} style={{color: "red"}}>{step3_2}</Link>
+                                    </StyledTableCell>
+                                </StyledTableRow>
                             </TableBody>
                           </Table>
                         </TableContainer>
@@ -548,7 +571,7 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                       </Box>
                     }
                 </Box>
-                <Dialog open={oncologyReferralPopup}>
+                <Dialog open={oncologyReferralPopup} onClose={handleCloseOncoRefer}>
                     <DialogTitle>Oncology referral (Coming Soon...)</DialogTitle>
                     <DialogContent >
                         <Box>
@@ -567,7 +590,7 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                         <Button onClick={handleOncoRefer} variant="contained" color="success">Submit</Button>
                     </DialogActions>
                 </Dialog>
-                <Dialog open={suggeDialog}>
+                <Dialog open={suggeDialog} onClose={handleCloseSuggeDialog}>
                     <DialogTitle>Search Other Symptoms</DialogTitle>
                     <DialogContent >
                         <Box>
