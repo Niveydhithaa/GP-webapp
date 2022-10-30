@@ -15,6 +15,7 @@ interface Login {
 export default function Login() {
   const navigate = useNavigate();
   const [openLoginFail, setOpenLoginFail] = useState(false)  
+  const [openUnameFail, setOpenUnameFail] = useState(false)  
   const handleClose = () => {
     setOpenLoginFail(false);
 }
@@ -42,8 +43,16 @@ export default function Login() {
             else
             {
               //fail scenario: two branches 
-              sessionStorage.setItem("user", "false")
-              setOpenLoginFail(true)
+              if(res_Dict.message=="Please Register this User!")
+              {
+                sessionStorage.setItem("user", "false")
+                setOpenUnameFail(true)
+              }
+              if(res_Dict.message=="Incorrect Password")
+              {
+                sessionStorage.setItem("user", "false")
+                setOpenLoginFail(true)
+              }
             }
             // ({
             //     repos: result.data,
@@ -98,11 +107,14 @@ export default function Login() {
               Sign in
             </Typography>
             <Box display="flex" flexDirection="column" gap={3}>
-              <TextField label="Username" variant="outlined" type="text" id="username_input" error={openLoginFail} onChange={(e) => setOpenLoginFail(false)}/>
-              <TextField label="Password" variant="outlined" type="password" id="password_input" error={openLoginFail} onChange={(e) => setOpenLoginFail(false)}/>
-              { openLoginFail &&
-                <Typography fontSize="12px" color="red">Please check login credentials</Typography>
-              }
+              <TextField label="Username" variant="outlined" type="text" id="username_input" error={openUnameFail} onChange={(e) => setOpenUnameFail(false)} helperText={openUnameFail && "Username not found!"}/>
+              <TextField label="Password" variant="outlined" type="password" id="password_input" error={openLoginFail} onChange={(e) => setOpenLoginFail(false)} helperText={openLoginFail && "Incorrect password!"}/>
+              {/* { openLoginFail &&
+                <Typography fontSize="12px" color="red">Password incorrect</Typography>
+              } */}
+              {/* { openUnameFail &&
+                <Typography fontSize="12px" color="red">Username not found</Typography>
+              } */}
               <Button variant="contained" sx={{ borderRadius: "50px" }} onClick={handleOnSignin}>
                 <Typography fontSize="16px">Sign in</Typography>
               </Button>

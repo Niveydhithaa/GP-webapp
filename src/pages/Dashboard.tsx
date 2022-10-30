@@ -79,7 +79,7 @@ export default function Dashboard() {
   const [totalSymptomsinList, setTotalSymptomsinList] = useState<number>(0);
   const refreshComponents = () => {
     //version 1 hard refresh
-    // window.location.reload();
+    window.location.reload();
     setGender("")
     setAge("")
     setAgeLt("")
@@ -94,9 +94,9 @@ export default function Dashboard() {
   ) => {
     setTopic(newTopic);
   };
-  const CreateDict = (label: string, sympname: string, possible_cancer: string, gender: string, step1: string, rsponse1_1: string, rsponse1_2:string, nosteps: string, step2_1: string, step2_2: string, response2_1: string, response2_2: string, step3_1: string, step3_2: string) =>
+  const CreateDict = (label: string, sympname: string, possible_cancer: string, gender: string, step1: string, rsponse1_1: string, rsponse1_2:string, nosteps: string, step2_1: string, step2_2: string, response2_1: string, response2_2: string, step3_1: string, step3_2: string, step1_test: string, step2_test: string) =>
   {
-    return {label: sympname, value: sympname.toLowerCase(), possible_cancer: possible_cancer, gender: gender, step1: step1, rsponse1_1: rsponse1_1, rsponse1_2: rsponse1_2, nosteps: nosteps, step2_1: step2_1, step2_2: step2_2, response2_1: response2_1, response2_2: response2_2, step3_1: step3_1, step3_2: step3_2}
+    return {label: sympname, value: sympname.toLowerCase(), possible_cancer: possible_cancer, gender: gender, step1: step1, rsponse1_1: rsponse1_1, rsponse1_2: rsponse1_2, nosteps: nosteps, step2_1: step2_1, step2_2: step2_2, response2_1: response2_1, response2_2: response2_2, step3_1: step3_1, step3_2: step3_2, step1_test: step1_test, step2_test: step2_test}
   }
   const fetchData = (e: React.FocusEvent<HTMLInputElement, Element>, topic: string) => {
       if(age_global==0 && age_global_lt==0)
@@ -132,7 +132,7 @@ export default function Dashboard() {
                   {
                     console.log("yes age equal")
                   }
-                  let v = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.step1_test? value.step1_test : value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2)
+                  let v = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
                   console.log(value.rsponse1_1)
                   symptoms_temp_dict.push(v)
                 }
@@ -151,7 +151,7 @@ export default function Dashboard() {
                   if(g!="F")
                   {
                     console.log(value.symptom)
-                    let v1 = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.step1_test? value.step1_test : value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2)
+                    let v1 = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
                     symptoms_temp_dict.push(v1)
                   }
                 }
@@ -167,7 +167,7 @@ export default function Dashboard() {
                   }
                   if(g!="M")
                   {
-                    let v1 = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.step1_test? value.step1_test : value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2)
+                    let v1 = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
                     symptoms_temp_dict.push(v1)
                   }
                   
@@ -226,7 +226,7 @@ export default function Dashboard() {
                   {
                     console.log("yes age equal")
                   }
-                  let v = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.step1_test? value.step1_test : value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2)
+                  let v = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
                   symptoms_temp_dict.push(v)
                 }
                 //male and others without male
@@ -245,7 +245,7 @@ export default function Dashboard() {
                   if(g!="F")
                   {
                     console.log(value.symptom)
-                    let v1 = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.step1_test? value.step1_test : value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2)
+                    let v1 = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
                     symptoms_temp_dict.push(v1)
                   }
                 }
@@ -261,7 +261,7 @@ export default function Dashboard() {
                   }
                   if(g!="M")
                   {
-                    let v1 = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.step1_test? value.step1_test : value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2)
+                    let v1 = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
                     symptoms_temp_dict.push(v1)
                   }
                   
@@ -320,7 +320,7 @@ export default function Dashboard() {
                   {
                     console.log("yes age equal")
                   }
-                  let v = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.step1_test? value.step1_test : value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2)
+                  let v = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
                   symptoms_temp_dict.push(v)
                 }
                 //male and others without male
@@ -339,7 +339,7 @@ export default function Dashboard() {
                   if(g!="F")
                   {
                     console.log(value.symptom)
-                    let v1 = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.step1_test? value.step1_test : value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2)
+                    let v1 = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
                     symptoms_temp_dict.push(v1)
                   }
                 }
@@ -355,7 +355,7 @@ export default function Dashboard() {
                   }
                   if(g!="M")
                   {
-                    let v1 = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.step1_test? value.step1_test : value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2)
+                    let v1 = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
                     symptoms_temp_dict.push(v1)
                   }
                   
@@ -418,7 +418,7 @@ export default function Dashboard() {
                   {
                     console.log("yes age equal")
                   }
-                  let v = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.step1_test? value.step1_test : value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2)
+                  let v = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
                   symptoms_temp_dict.push(v)
                 }
                 //male and others without male
@@ -437,7 +437,7 @@ export default function Dashboard() {
                   if(g!="F")
                   {
                     console.log(value.symptom)
-                    let v1 = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.step1_test? value.step1_test : value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2)
+                    let v1 = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
                     symptoms_temp_dict.push(v1)
                   }
                 }
@@ -453,7 +453,7 @@ export default function Dashboard() {
                   }
                   if(g!="M")
                   {
-                    let v1 = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.step1_test? value.step1_test : value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2)
+                    let v1 = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
                     symptoms_temp_dict.push(v1)
                   }
                   
@@ -483,6 +483,8 @@ export default function Dashboard() {
     setGender(newGender);
     setMultiSelectOptions([]);
     console.log("gender is:" + newGender)
+    setSelectedFromMultiDict([])
+    setNoOfSymptoms(0)
   };
 
   const handleAge = (event: React.SyntheticEvent<Element, Event>) => {
@@ -698,7 +700,7 @@ export default function Dashboard() {
                   {
                     selectedFromMultiDict.map((symptom) => (
                       <Box>
-                        <AccordionExample selectedSymp={symptom.label} possible_cancer={symptom.possible_cancer} gender_specific={symptom.gender} step1={symptom.step1} rsponse1_1={symptom.rsponse1_1} rsponse1_2 = {symptom.rsponse1_2} no_of_steps={symptom.nosteps} step2_1={symptom.step2_1} step2_2={symptom.step2_2} response2_1={symptom.response2_1} response2_2={symptom.response2_2} step3_1={symptom.step3_1} step3_2={symptom.step3_2}></AccordionExample>
+                        <AccordionExample selectedSymp={symptom.label} possible_cancer={symptom.possible_cancer} gender_specific={symptom.gender} step1={symptom.step1} rsponse1_1={symptom.rsponse1_1} rsponse1_2 = {symptom.rsponse1_2} no_of_steps={symptom.nosteps} step2_1={symptom.step2_1} step2_2={symptom.step2_2} response2_1={symptom.response2_1} response2_2={symptom.response2_2} step3_1={symptom.step3_1} step3_2={symptom.step3_2} step1_test={symptom.step1_test} step2_test={symptom.step2_test}></AccordionExample>
                       </Box>
                     ))}
                 </Box>

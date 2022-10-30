@@ -12,32 +12,36 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+interface Props {
+  possible_cancer: string
+  // any props that come into the component
+}
 
-const steps = [
-  {
-    label: 'Possible Cancer',
-    description: `Breast`,
-  },
-  {
-    label: 'Test/Investigation',
-    description:
-      'Measure Serum CA125',
-  },
-  {
-    label: 'Serum CA125',
-    description: ``,
-  },
-  {
-    label: 'Serum CA125 level is less than 35 IU/ml',
-    description: `Perform Ultrasound`,
-  },
-  {
-    label: 'Ultrasound',
-    description: ``,
-  },
-];
 
-export default function VerticalLinearStepper() {
+export default function VerticalLinearStepper({possible_cancer, ...props} : Props) {
+  const steps = [
+    {
+      label: 'Possible Cancer',
+      description: `${possible_cancer}`,
+    },
+    {
+      label: 'Test/Investigation',
+      description:
+        'Measure Serum CA125',
+    },
+    {
+      label: 'Serum CA125',
+      description: ``,
+    },
+    {
+      label: 'Serum CA125 level is less than 35 IU/ml',
+      description: `Perform Ultrasound`,
+    },
+    {
+      label: 'Ultrasound',
+      description: ``,
+    },
+  ];
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {

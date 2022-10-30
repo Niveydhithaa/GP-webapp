@@ -34,57 +34,13 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import DefaultStepper from "components/DefaultStepper"
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
+interface Props {
+  selectedSymp: string  
+  possible_cancer: string
+  // any props that come into the component
+}
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  "&:last-child td, &:last-child th": {
-    border: 0,
-  },
-}));
-function createData(name: string, calories: string, fat: string) {
-    console.log(sessionStorage.getItem("noofsymptoms"))
-    return { name, calories, fat };
-  }
-  function createData_StepTwo(name: string, result: string, action: string) {
-    return { name, result, action };
-  }
-  const rows = [
-    createData(
-      "Measure serum CA125",
-      "Serum CA125 level is less than 35 IU/ml",
-      "Perform Ultrasound"
-    ),
-    createData(
-      "Measure serum CA125",
-      "Serum CA125 level is greater than or equal to 351U/ml",
-      "No further investigation needed"
-    ),
-  ];
-  const rows_two = [
-    createData_StepTwo(
-      "Ultrasound",
-      "Normal",
-      "Assess her careflly for other causes"
-    ),
-    createData_StepTwo(
-      "Ultrasound",
-      "Abnormal",
-      "Refer to oncologist"
-    ),
-  ];
-export default function SymptomTracker() {
+export default function SymptomTracker({selectedSymp, possible_cancer, ...props} : Props) {
     const [topic, setTopic] = useState("New Patient");
     const [patientDialogOpen, setPatientDialogOpen] = useState<boolean>(false);
     const [testNameSelected, setTestNameSelected] = useState<string>("");
@@ -125,7 +81,7 @@ export default function SymptomTracker() {
                 sx={{backgroundColor: "#EEEEEE"}}
                 id="panel1a-header"
               >
-                <Typography fontWeight="bold">Symptom Title</Typography>
+                <Typography fontWeight="bold">{selectedSymp}</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <Typography fontSize="12px">
@@ -151,7 +107,7 @@ export default function SymptomTracker() {
                     </Table>
                   </TableContainer> */}
                 </Box>
-                <DefaultStepper></DefaultStepper>
+                <DefaultStepper possible_cancer={possible_cancer}></DefaultStepper>
               </AccordionDetails>
               </Accordion>
         </Box>

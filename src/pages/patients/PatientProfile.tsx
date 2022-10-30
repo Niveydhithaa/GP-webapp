@@ -88,14 +88,14 @@ export default function PatientProfile() {
           setSymptomDialog(true)
       }
     return (
-        <Box sx={{backgroundColor: "#EEEEEE", minHeight: "100vh"}}>
+        <Box sx={{backgroundColor: "#EEEEEE", minHeight: "100vh"}} className="font">
             <Navbar></Navbar>
             <Box width="100%">
-                <Grid container maxWidth="xl" sx={{margin: "0 auto"}}>
+                <Grid container maxWidth="xl">
                     <Grid item xs={12} sx={{p: 2}}>
                         <CustomBreadCrumb></CustomBreadCrumb>
                     </Grid>
-                    <Grid container item xs={12} spacing={2} sx={{px: 2}}>
+                    <Grid container item xs={12} spacing={2} sx={{padding: "2rem"}}>
                         <Grid item xs={3}>
                             <Card sx={{p: 2, borderRadius: 4, minWidth: "100%", backgroundColor: "#fff"}}>
                                 <Box p={1.5}>
@@ -115,12 +115,12 @@ export default function PatientProfile() {
                                             <p>:</p>
                                         </Box>
                                         <Box width="50%">
-                                            BCHT00022
+                                            <p><b>BCHT00022</b></p>
                                         </Box>
                                     </Box>
                                     <Box display="flex" flexWrap="nowrap">
                                         <Box display="flex" flexWrap="nowrap" justifyContent="space-between" width="50%">
-                                            <p>GP ID</p>
+                                            <p><b>GP ID</b></p>
                                             <p>:</p>
                                         </Box>
                                         <Box width="50%">
@@ -129,11 +129,11 @@ export default function PatientProfile() {
                                     </Box>
                                     <Box display="flex" flexWrap="nowrap">
                                         <Box display="flex" flexWrap="nowrap" justifyContent="space-between" width="50%">
-                                            <p>Hospital ID</p>
+                                            <p><b>Hospital ID</b></p>
                                             <p>:</p>
                                         </Box>
                                         <Box width="50%">
-                                            HT00022
+                                            <p><b>HT00022</b></p>
                                         </Box>
                                     </Box>
                                     <Box display="flex" flexWrap="nowrap">
@@ -149,7 +149,7 @@ export default function PatientProfile() {
                             </Card>
                         </Grid>
                         <Grid item xs={9}>
-                            <Card sx={{p: 2}}>
+                            <Card sx={{p: 2, borderRadius: 4, minWidth: "100%", backgroundColor: "#fff"}}>
                                 <Box
                                     component="span"
                                     m={1}
@@ -174,10 +174,10 @@ export default function PatientProfile() {
                                         <Button onClick={handleSuggeModuleOpen}>Add</Button>
                                     </DialogActions>
                                 </Dialog>
-                                <SymptomTracker></SymptomTracker>
-                                <SymptomTracker></SymptomTracker>
-                                <SymptomTracker></SymptomTracker>
-                                <SymptomTracker></SymptomTracker>
+                                <SymptomTracker selectedSymp="Abdominal or pelvic pain (persistent or frequent particularly more than 12 times per month) in women" possible_cancer="Ovarian"></SymptomTracker>
+                                
+                                <SymptomTracker selectedSymp="Abdominal pain with weight loss (unexplained)" possible_cancer="Colorectal"></SymptomTracker>
+                                
                             </Card>
                         </Grid>
                     </Grid>

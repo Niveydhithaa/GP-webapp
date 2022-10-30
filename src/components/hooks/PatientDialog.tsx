@@ -43,7 +43,7 @@ export default function PatientDialog() {
     const handleGender = (
         event: React.MouseEvent<HTMLElement>,
         newGender: string
-      ) => {
+    ) => {
         setGender(newGender);
     };
     const handleChangeDate = (newValue: Dayjs | null) => {
@@ -103,50 +103,56 @@ export default function PatientDialog() {
                 </Box>
             </Box> */}
             <Stack>
-                          <br></br>
-                          <Box display="flex">
-                            <TextField
-                                label="Name"
-                                id="input_name"
-                                required
-                                // style={{minWidth: "350px"}}
-                              />
-                              &nbsp; &nbsp;
-                            <TextField
-                                label="Surname"
-                                id="input_surname"
-                                required
-                                // style={{minWidth: "350px"}}
-                              />
-                          </Box>
-                          <br></br>
-                          <Box display="flex">
-                            <TextField
-                              label="Age"
-                              id="age"
-                              required
-                            />
-                            &nbsp; &nbsp;
+                <br></br>
+                <Box>
+                    <TextField
+                        label="Name"
+                        id="input_name"
+                        required
+                        sx={{ width: "44%" }}
+                    // style={{minWidth: "350px"}}
+                    />
+
+                    <TextField
+                        label="Surname"
+                        id="input_surname"
+                        required
+                        sx={{ width: "44%", marginLeft: 2 }}
+                    // style={{minWidth: "350px"}}
+                    />
+                </Box>
+                <br></br>
+                <Box display="flex">
+                    <TextField
+                        label="Age"
+                        id="age"
+                        required
+                        sx={{ width: "44%" }}
+                    />
+                    &nbsp; &nbsp;
                             <ToggleButtonGroup
-                              color="primary"
-                              value={gender}
-                              exclusive
-                              onChange={handleGender}
-                              aria-label="Platform"
-                            >
-                              <ToggleButton value="male">Male</ToggleButton>
-                              <ToggleButton value="female">Female</ToggleButton>
-                            </ToggleButtonGroup>
-                          </Box>
-                          <br></br>
-                          <Box>
-                            <TextField
-                              label="Mobile"
-                              id="mobile_num"
-                              style={{minWidth: "350px", marginBottom: "12px"}}
-                            />
-                          </Box>
-                        </Stack>
+                        color="primary"
+                        value={gender}
+                        sx={{ width: "44%", marginLeft: 1 }}
+                        exclusive
+                        onChange={handleGender}
+                        aria-label="Platform"
+                    >
+                        <ToggleButton value="male">Male</ToggleButton>
+                        <ToggleButton value="female">Female</ToggleButton>
+                    </ToggleButtonGroup>
+                </Box>
+                <br></br>
+                <Box>
+                    <TextField
+                        label="Mobile"
+
+                        id="mobile_num"
+                        style={{ marginBottom: "12px", width: "44%" }}
+                    />
+                </Box>
+
+            </Stack>
         </Box>
     )
 }

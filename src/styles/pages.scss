@@ -1,9 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+* {
+	font-family: 'Roboto', sans-serif !important;
+}
 .breadcrumb {
 	font-size: 12px !important;
 }
 .card-title {
 	font-size: 16px;
-	font-weight: 700;
+	font-weight: 900;
 }
 .patient-name {
 	font-size: 18px;
@@ -18,7 +22,6 @@
 	// color: #aaa;
 }
 .beta {
-	font-family: "arial";
 	background-color: cornsilk;
 	color: black;
 	font-size: 12px !important;
@@ -28,8 +31,20 @@
 	margin-left: 10px;
 }
 .patient-ids-group {
-	font-size: "12px";
+	font-size: 12px;
 }
 .MuiToggleButton-root {
 	padding: 15px !important;
+}
+.prescribelink,
+.prescribelink:hover,
+.prescribelink:active,
+.prescribelink:visited,
+.prescribelink:focus {
+	text-decoration: none !important;
+	cursor: pointer;
+	color: "#1976d2";
+}
+.css-1ps4owl-MuiTypography-root-MuiLink-root {
+	text-decoration: none !important;
 }
