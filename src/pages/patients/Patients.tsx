@@ -32,6 +32,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PatientProfile from "./PatientProfile";
+import AlertJoy from "components/AlertJoyPrimary"
+import AlertJoyPrimary from "components/AlertJoyPrimary";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -163,7 +165,9 @@ export default function Patients() {
                         <Button variant="contained" color="primary" onClick={addNewPatientHandler}>
                             Create Patient
                             </Button>
+                        
                     </Box>
+                    <AlertJoyPrimary></AlertJoyPrimary>
                     <TableContainer component={Paper}>
                         {/* <Box
                                 component="span"
@@ -251,7 +255,9 @@ export default function Patients() {
                         </Table>
                     </TableContainer>
                     <Dialog open={addPatientDialog} onClose={handleCloseAddPatientDialog}>
-                        <DialogTitle>Create Patient (Coming Soon...)</DialogTitle>
+                        <DialogTitle>Create Patient (Coming Soon...)
+                        <AlertJoy></AlertJoy>
+                        </DialogTitle>
                         <DialogContent >
                             <Box>
                                 <PatientDialog></PatientDialog>

@@ -29,7 +29,7 @@ export default function Login() {
     input_dict['Password'] = pswd
     // API work
     axios
-        .post('https://localhost:44370/GPValues/GPLogin', input_dict)
+        .post('http://20.3.165.1/GPValues/GPLogin', input_dict)
         .then(result => {
             // console.log(result);
             console.log(result.data);

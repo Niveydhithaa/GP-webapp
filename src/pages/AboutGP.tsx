@@ -7,7 +7,9 @@ export default function GPProfile() {
         <div>
             <Box>
                 <Navbar></Navbar>
-                <Box></Box>
+                <Box>
+                    
+                </Box>
             </Box>
         </div>
     )

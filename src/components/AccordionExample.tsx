@@ -7,7 +7,7 @@ import {
   AccordionDetails,
   TableContainer,
   Autocomplete,
-
+  Tooltip,
   Table,
   TableHead,
   TableRow,
@@ -20,9 +20,14 @@ import {
   ToggleButton,
   Link,
   Stack,
+  IconButton,
 } from "@mui/material";
+import Alert from '@mui/joy/Alert';
+import Box1  from '@mui/joy/Box';
+import AlertJoy from "components/AlertJoyPrimary"
 import SelectHospitalStatic from "components/hooks/SelectHospitalStatic"
 import Navbar from "components/Navbar";
+import InfoIcon from '@mui/icons-material/Info';
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
@@ -222,7 +227,14 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                 </Typography>
                 <Card>
                 <Dialog open={patientDialogOpen} onClose={handleClosePrescribeDialog}>
-                    <DialogTitle>Prescribe (Coming Soon...)</DialogTitle>
+                    <DialogTitle>Prescribe (Coming Soon...)
+                      {/* <Tooltip title="Hospital Inegration is still onprocess. Once EMR is connected, this dialog will be activated" arrow>
+                        <IconButton><InfoIcon color="primary"/></IconButton>
+                      </Tooltip> */}
+                      <AlertJoy></AlertJoy>
+                    </DialogTitle>
+                    
+                    
                     <DialogContent >
                         <Stack>
                           <br></br>
@@ -545,7 +557,9 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                     }
                 </Box>
                 <Dialog open={oncologyReferralPopup} onClose={handleCloseOncoRefer}>
-                    <DialogTitle>Oncology referral (Coming Soon...)</DialogTitle>
+                    <DialogTitle>Oncology referral (Coming Soon...)
+                    <AlertJoy></AlertJoy>
+                    </DialogTitle>
                     <DialogContent >
                         <Box>
                           <Stack display="flex" >
@@ -554,7 +568,7 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                               <br></br>
                               <TextField label="Doctor"></TextField>
                               <br></br>
-                              <TextField label="Notes about patient"></TextField>
+                              <TextField multiline={true} label="Notes about patient"></TextField>
                           </Stack>
                         </Box>
                     </DialogContent>

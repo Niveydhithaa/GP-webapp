@@ -6,9 +6,11 @@ import AccordionExample from "components/AccordionExample";
 import Patients from "pages/patients/Patients"
 import PatientProfile from "pages/patients/PatientProfile"
 import Home from "pages/Homepage"
-import GPProfile from "pages/GPProfile"
+import AboutGP from "pages/AboutGP"
 import CustomBreadCrumb from "components/CustomBreadCrumb"
 import TwoStepBreadCrumb from "components/TwoStepBreadCrumb"
+import Accounts from "pages/Accounts"
+import Analytics from "pages/Analytics"
 import PrivateRoutesDashboard from './hooks/PrivateRouteDashboard'
 
 function App() {
@@ -27,7 +29,9 @@ function App() {
         </Route> */}
         <Route path="/breads" element={<CustomBreadCrumb />} />
         <Route path="/twostepbread" element={<TwoStepBreadCrumb />} />
-        <Route path="/gpprofile" element={<GPProfile />} />
+        <Route path="/aboutgp" element={<AboutGP />} />
+        <Route path="/accounts" element={<Accounts />} />
+        <Route path="/analytics" element={<Analytics />} />
       </Routes>
     </BrowserRouter>
   );

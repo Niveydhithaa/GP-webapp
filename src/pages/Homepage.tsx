@@ -7,7 +7,12 @@ import {
   Grid,
   Card
 } from "@mui/material";
+import Alert from '@mui/joy/Alert';
+import Box1  from '@mui/joy/Box';
 import Navbar from "components/Navbar"
+import Analytics from "pages/Analytics"
+import Accounts from "pages/Accounts"
+import AlertJoy from "components/AlertJoy"
 
 import {useLocation, Link} from "react-router-dom"
 import Dashboard from './Dashboard';
@@ -46,6 +51,8 @@ export default function NavTabs() {
             <Tabs value={tabIndex} onChange={handleChange} aria-label="nav tabs example">
               <LinkTab label="Search Guidelines" href="/dashboard" />
               <LinkTab label="Patients" href="/patientslist" />
+              <LinkTab label="Analytics" href="/" />
+              <LinkTab label="Accounts" href="/accounts" />
             </Tabs>
           </Box>
           <Box sx={{ padding: 2 }}>
@@ -63,7 +70,12 @@ export default function NavTabs() {
             )}
             {tabIndex === 2 && (
               <Box>
-                <Typography>The third tab</Typography>
+                <Analytics></Analytics>
+              </Box>
+            )}
+            {tabIndex === 3 && (
+              <Box>
+                <Accounts></Accounts>
               </Box>
             )}
           </Box>
