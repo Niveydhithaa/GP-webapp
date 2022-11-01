@@ -4,7 +4,7 @@ export default function AlertMUI() {
     return (
         <div>
             <Alert variant="filled" severity="warning">
-                This is a warning alert — check it out!
+            Your hospital ERP system is not configured. Please contact your admin
             </Alert>
         </div>
     )

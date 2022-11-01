@@ -92,11 +92,11 @@ export default function PatientProfile() {
         <Box sx={{backgroundColor: "#EEEEEE", minHeight: "100vh"}} className="font">
             <Navbar></Navbar>
             <Box width="100%">
-                <Grid container maxWidth="xl">
+                <Grid container maxWidth="xl" sx={{margin: "0 auto", p: 4}}>
                     <Grid item xs={12} sx={{p: 2}}>
                         <CustomBreadCrumb></CustomBreadCrumb>
-                        <AlertMUI></AlertMUI>
                     </Grid>
+                    <AlertMUI></AlertMUI>
                     <Grid container item xs={12} spacing={2} sx={{padding: "2rem"}}>
                         <Grid item xs={3}>
                             <Card sx={{p: 2, borderRadius: 4, minWidth: "100%", backgroundColor: "#fff"}}>

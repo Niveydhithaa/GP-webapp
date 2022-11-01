@@ -60,7 +60,10 @@ const Navbar = () => {
             }}
           >
             <img src="Early Detect@4x.png"></img>
+            <Box mt={2} ml={2}>
             <Typography className="beta" >BETA</Typography>
+            </Box>
+            
           </Typography>
           <Box flexGrow={1}></Box>
           <Box flexGrow={0}>
