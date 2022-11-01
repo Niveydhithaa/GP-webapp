@@ -27,6 +27,7 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import Paper from "@mui/material/Paper";
 import AccordionExample from "components/AccordionExample";
 import axios from "axios";
+import Spinner from "components/hooks/Spinner"
 
 // let age_global : any = 0;
 // let age_global_lt : any = 0;
@@ -64,6 +65,7 @@ const emptyOption : Record<string,string>[]= [
 ]
 
 export default function Dashboard() {
+  const [isLoading, setIsLoading] = useState(false)
   const [topic, setTopic] = useState("symptom");
   const [gender, setGender] = useState<any>(null);
   const [possibleCancer, setPossibleCancer]=useState("")
@@ -110,13 +112,16 @@ export default function Dashboard() {
     setMultiSelectOptions(temp_arr_record)
   }
   const fetchData = (e: React.FocusEvent<HTMLInputElement, Element>, topic: string) => {
+    // setIsLoading(true)  
+    const url = 'http://20.3.165.1/GPValues'
       if(ageV2==0 || isNaN(ageV2))
       {
         console.log('no age selected')
         axios
-          .get('https://localhost:7214/GPValues/Getsymptomdata')
+          .get(url +'/Getsymptomdata')
           .then(result => {
               // debugger;
+              setIsLoading(false)
               let symptomdata_Details = result.data.symptomdata_Details;
               // console.log(symptomdata_Details)
               var symptoms_temp_dict :Record<string, string>[] = [];
@@ -191,7 +196,7 @@ export default function Dashboard() {
       {
         console.log("age filter applied")
         axios
-          .get(`https://localhost:7214/GPValues/GetSymptomdatafilter?agegtlt=${ageV2}`)
+          .get(url + `/GetSymptomdatafilter?agegtlt=${ageV2}`)
           .then(result => {
               // console.log(result.data)
               let symptomdata_Details = result.data.symptomdata_Details
@@ -451,11 +456,17 @@ export default function Dashboard() {
                   />
             </Box>
 
-          
+            
             <Box>
-              <Button variant="contained" onClick={handleSearchSymptom}>
-                Search
-              </Button>
+            {
+                isLoading &&
+                <Spinner></Spinner>
+                }
+              {!isLoading &&
+                <Button variant="contained" onClick={handleSearchSymptom}>
+                   Search
+                </Button>
+              }
             </Box>
           </Box>
         </Grid>
