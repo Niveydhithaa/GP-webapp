@@ -114,7 +114,7 @@ export default function Dashboard() {
       {
         console.log('no age selected')
         axios
-          .get('https://localhost:44370/GPValues/Getsymptomdata')
+          .get('https://localhost:7214/GPValues/Getsymptomdata')
           .then(result => {
               // debugger;
               let symptomdata_Details = result.data.symptomdata_Details;
@@ -191,7 +191,7 @@ export default function Dashboard() {
       {
         console.log("age filter applied")
         axios
-          .get(`https://localhost:44370/GPValues/GetSymptomdatafilter?agegtlt=${ageV2}`)
+          .get(`https://localhost:7214/GPValues/GetSymptomdatafilter?agegtlt=${ageV2}`)
           .then(result => {
               // console.log(result.data)
               let symptomdata_Details = result.data.symptomdata_Details
@@ -394,6 +394,7 @@ export default function Dashboard() {
                 <Typography fontWeight="bold" mb={2}>Age</Typography>
                 <TextField 
                       hiddenLabel={true}
+                      type="number"
                       id="demo-simple-select"
                       // value={ageV2.toString()}
                       // label="Age"

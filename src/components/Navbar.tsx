@@ -59,7 +59,7 @@ const Navbar = () => {
               textDecoration: "none",
             }}
           >
-            <img src="App Bar Logo.png"></img>
+            <img src="Early Detect@4x.png"></img>
             <Typography className="beta" >BETA</Typography>
           </Typography>
           <Box flexGrow={1}></Box>

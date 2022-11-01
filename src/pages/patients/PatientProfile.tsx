@@ -25,7 +25,7 @@ import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import CustomBreadCrumb from "components/CustomBreadCrumb"
 import AccordionExample from "components/AccordionExample";
 import Dashboard from "pages/Dashboard";
-import AlertJoyPrimary from "components/AlertJoyPrimary";
+import AlertMUI from "components/alerts/AlertMUI";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: theme.palette.common.black,
@@ -95,7 +95,7 @@ export default function PatientProfile() {
                 <Grid container maxWidth="xl">
                     <Grid item xs={12} sx={{p: 2}}>
                         <CustomBreadCrumb></CustomBreadCrumb>
-                        <AlertJoyPrimary></AlertJoyPrimary>
+                        <AlertMUI></AlertMUI>
                     </Grid>
                     <Grid container item xs={12} spacing={2} sx={{padding: "2rem"}}>
                         <Grid item xs={3}>
@@ -166,7 +166,7 @@ export default function PatientProfile() {
                                 </Box>
                                 <Dialog open={symptomDialog} onClose={handleCloseSuggeDialog}>
                                     <DialogTitle>Add Symptom (Coming Soon...)
-                                        <AlertJoyPrimary></AlertJoyPrimary>
+                                        <AlertMUI></AlertMUI>
                                     </DialogTitle>
                                     <DialogContent >
                                         <Box>

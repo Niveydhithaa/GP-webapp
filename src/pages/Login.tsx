@@ -27,7 +27,7 @@ export default function Login() {
     const input_dict : Record<string, string> = {};
     input_dict['Username'] = uname
     input_dict['Password'] = pswd
-    const url = 'https://20.3.165.1/GPValues/GPLogin';
+    const url = 'http://20.3.165.1/GPValues/GPLogin';
     // API work
     axios
         .post(url, input_dict)

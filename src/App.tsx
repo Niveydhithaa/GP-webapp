@@ -12,6 +12,7 @@ import TwoStepBreadCrumb from "components/TwoStepBreadCrumb"
 import Accounts from "pages/Accounts"
 import Analytics from "pages/Analytics"
 import PrivateRoutesDashboard from './hooks/PrivateRouteDashboard'
+import MainPage from "components/charts/MainPage";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/aboutgp" element={<AboutGP />} />
         <Route path="/accounts" element={<Accounts />} />
         <Route path="/analytics" element={<Analytics />} />
+        <Route path="/main" element={<MainPage />} />
       </Routes>
     </BrowserRouter>
   );

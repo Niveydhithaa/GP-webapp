@@ -12,7 +12,7 @@ import Box1  from '@mui/joy/Box';
 import Navbar from "components/Navbar"
 import Analytics from "pages/Analytics"
 import Accounts from "pages/Accounts"
-import AlertJoy from "components/AlertJoy"
+import AlertJoy from "components/alerts/AlertJoy"
 
 import {useLocation, Link} from "react-router-dom"
 import Dashboard from './Dashboard';

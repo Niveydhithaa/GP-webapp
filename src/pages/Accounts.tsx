@@ -21,13 +21,11 @@ import {
     Stack,
     IconButton,
   } from "@mui/material";
-import All from "components/charts/MainPage"
 
 export default function Accounts() {
     return (
         <Box>
             <Typography>Coming soon... </Typography>
-            <All></All>
         </Box>
     )
 }

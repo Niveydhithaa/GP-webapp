@@ -32,8 +32,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PatientProfile from "./PatientProfile";
-import AlertJoy from "components/AlertJoyPrimary"
-import AlertJoyPrimary from "components/AlertJoyPrimary";
+import AlertJoy from "components/alerts/AlertJoyPrimary"
+import AlertJoyPrimary from "components/alerts/AlertJoyPrimary";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {

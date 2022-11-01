@@ -24,7 +24,7 @@ import {
 } from "@mui/material";
 import Alert from '@mui/joy/Alert';
 import Box1  from '@mui/joy/Box';
-import AlertJoy from "components/AlertJoyPrimary"
+import AlertMUI from "components/alerts/AlertMUI"
 import SelectHospitalStatic from "components/hooks/SelectHospitalStatic"
 import Navbar from "components/Navbar";
 import InfoIcon from '@mui/icons-material/Info';
@@ -231,7 +231,7 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                       {/* <Tooltip title="Hospital Inegration is still onprocess. Once EMR is connected, this dialog will be activated" arrow>
                         <IconButton><InfoIcon color="primary"/></IconButton>
                       </Tooltip> */}
-                      <AlertJoy></AlertJoy>
+                      <AlertMUI></AlertMUI>
                     </DialogTitle>
                     
                     
@@ -558,7 +558,7 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                 </Box>
                 <Dialog open={oncologyReferralPopup} onClose={handleCloseOncoRefer}>
                     <DialogTitle>Oncology referral (Coming Soon...)
-                    <AlertJoy></AlertJoy>
+                    <AlertMUI></AlertMUI>
                     </DialogTitle>
                     <DialogContent >
                         <Box>
