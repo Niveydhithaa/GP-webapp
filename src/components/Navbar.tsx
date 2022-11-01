@@ -12,11 +12,12 @@ import {
   MenuItem,
 } from "@mui/material";
 import Dialog from '@mui/material/Dialog';
+import CloseIcon from '@mui/icons-material/Close';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -61,9 +62,9 @@ const Navbar = () => {
           >
             <img src="Early detect Logo - W.svg" height="50"></img>
             <Box mt={2} ml={2}>
-            <Typography className="beta" >BETA</Typography>
+              <Typography className="beta" >BETA</Typography>
             </Box>
-            
+
           </Typography>
           <Box flexGrow={1}></Box>
           <Box flexGrow={0}>
@@ -87,7 +88,7 @@ const Navbar = () => {
               onClose={handleCloseUserMenu}
             >
               <MenuItem onClick={handleOpenGPProfile}>
-                <Typography textAlign="center">About GP</Typography>
+                <Typography textAlign="center">About Early Detect</Typography>
               </MenuItem>
               <MenuItem onClick={handleLogoutUser}>
                 <Typography textAlign="center">Logout</Typography>
@@ -95,17 +96,42 @@ const Navbar = () => {
             </Menu>
           </Box>
           <Dialog open={gpAbtDialog} onClose={handleCloseGPProfile}>
-                    <DialogTitle>About GP</DialogTitle>
-                    <DialogContent >
-                        <Box>
-                          <Typography>GP Module Version: 1.1</Typography>
-                          <Typography>Based on NICE Guidlines Version 2022.1</Typography>
+            <DialogTitle>
+                    <Box display="flex">
+                       <Box display="flex" width="100%">
+                           About Early Detect
                         </Box>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={handleCloseGPProfile}>Close</Button>
-                    </DialogActions>
-                </Dialog>
+                        <Box justifyContent="flex-end" sx={{ alignSelf: "center", textAlign: "center" }}>
+                           <IconButton onClick={handleCloseGPProfile}><CloseIcon /> </IconButton>
+                          {/* todo: icon button */}
+                        </Box>
+              </Box>
+            </DialogTitle>
+            <DialogContent >
+              Early Detect as the name suggests, is a tool to detect cancer at early stages, based on the NICE guidelines developed by Optimal Oncology.
+                                  <Box display="flex" flexWrap="nowrap" mt={2}>
+                                        <Box display="flex" flexWrap="nowrap" justifyContent="space-between" width="50%">
+                                            <p>Early Detect version</p>
+                                            <p>:</p>
+                                        </Box>
+                                        <Box width="50%">
+                                            v2022.1
+                                        </Box>
+                                    </Box>
+                                    <Box display="flex" flexWrap="nowrap">
+                                        <Box display="flex" flexWrap="nowrap" justifyContent="space-between" width="50%">
+                                            <p>NICE Guidelines version</p>
+                                            <p>:</p>
+                                        </Box>
+                                        <Box width="50%">
+                                            v2022.10
+                                        </Box>
+                                    </Box>
+            </DialogContent>
+            <DialogActions>
+              {/* <Button onClick={handleCloseGPProfile}>Close</Button> */}
+            </DialogActions>
+          </Dialog>
         </Toolbar>
       </Container>
     </AppBar>

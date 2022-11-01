@@ -402,12 +402,20 @@ export default function Dashboard() {
                       InputProps={{
                         inputProps: { min: 0, max: 150 }
                       }}
+                      // inputProps={{ type: 'number'}}
                       type="number"
                       id="demo-simple-select"
                       // value={ageV2.toString()}
                       // label="Age"
                       sx={{width: 100}}
                       placeholder="00"
+                      onKeyPress = {(event) => {
+                        if(event.key=='-' || event.key==='+' || event.key=='.' || event.key==='e') {
+                          console.log("prohibited")
+                          // event.key=''
+                          event.preventDefault();
+                        }
+                      }}
                       onChange={AGEhandleChange}>
                       
                     </TextField>

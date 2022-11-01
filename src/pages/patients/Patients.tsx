@@ -18,6 +18,7 @@ import {
     InputBase
 } from "@mui/material";
 import TwoStepBreadCrumb from "components/TwoStepBreadCrumb"
+import CloseIcon from '@mui/icons-material/Close';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -164,10 +165,10 @@ export default function Patients() {
                         <Button variant="contained" color="primary" onClick={addNewPatientHandler}>
                             Create Patient
                             </Button>
-                        
+
                     </Box>
                     <Box mb={2}>
-                    <AlertMUI></AlertMUI>
+                        <AlertMUI></AlertMUI>
                     </Box>
                     <TableContainer component={Paper}>
                         {/* <Box
@@ -256,7 +257,16 @@ export default function Patients() {
                         </Table>
                     </TableContainer>
                     <Dialog open={addPatientDialog} onClose={handleCloseAddPatientDialog}>
-                        <DialogTitle>Create Patient (Coming Soon...)
+                        <DialogTitle>
+                            <Box display="flex">
+                                <Box display="flex" width="100%">
+                                    Create Patient (Coming Soon...)
+                                            </Box>
+                                <Box justifyContent="flex-end" sx={{ alignSelf: "center", textAlign: "center" }}>
+                                    <IconButton onClick={handleCloseAddPatientDialog}><CloseIcon /> </IconButton>
+                                    {/* todo: icon button */}
+                                </Box>
+                            </Box>
                         </DialogTitle>
                         <DialogContent >
                             <AlertMUI></AlertMUI>
@@ -272,15 +282,15 @@ export default function Patients() {
                 </Box>
             </Box>
             <Dialog open={patientClicked} onClose={handleClosePatientDialog}>
-                    <DialogTitle>Profile</DialogTitle>
-                    <DialogContent >
-                        <PatientProfile></PatientProfile>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={handleClosePatientDialog}>Close</Button>
-                        {/* <Button onClick={handleOncoRefer} variant="contained" color="success">Submit</Button> */}
-                    </DialogActions>
-                </Dialog>
+                <DialogTitle>Profile</DialogTitle>
+                <DialogContent >
+                    <PatientProfile></PatientProfile>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClosePatientDialog}>Close</Button>
+                    {/* <Button onClick={handleOncoRefer} variant="contained" color="success">Submit</Button> */}
+                </DialogActions>
+            </Dialog>
         </div>
     )
 }

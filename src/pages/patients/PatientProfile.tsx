@@ -7,6 +7,7 @@ import {
     TableRow,
     TableBody,
     Button,
+    IconButton,
     Typography,
     Paper,
     Dialog,
@@ -19,6 +20,7 @@ import {
     Divider
 } from "@mui/material";
 import Navbar from "components/Navbar"
+import CloseIcon from '@mui/icons-material/Close';
 import SymptomTracker from "components/SymptomTrackerAccordion"
 import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
@@ -81,25 +83,25 @@ export default function PatientProfile() {
     const [symptomDialog, setSymptomDialog] = useState<boolean>(false)
     const handleSuggeModuleOpen = () => {
         setSymptomDialog(false)
-      }
-      const handleCloseSuggeDialog = () => {
+    }
+    const handleCloseSuggeDialog = () => {
         setSymptomDialog(false)
-      }
-      const addNewPatient = () => {
-          setSymptomDialog(true)
-      }
+    }
+    const addNewPatient = () => {
+        setSymptomDialog(true)
+    }
     return (
-        <Box sx={{backgroundColor: "#EEEEEE", minHeight: "100vh"}} className="font">
+        <Box sx={{ backgroundColor: "#EEEEEE", minHeight: "100vh" }} className="font">
             <Navbar></Navbar>
             <Box width="100%">
-                <Grid container maxWidth="xl" sx={{margin: "0 auto", p: 4}}>
-                    <Grid item xs={12} sx={{p: 2}}>
+                <Grid container maxWidth="xl" sx={{ margin: "0 auto", p: 4 }}>
+                    <Grid item xs={12} sx={{ p: 2 }}>
                         <CustomBreadCrumb></CustomBreadCrumb>
                     </Grid>
                     <AlertMUI></AlertMUI>
-                    <Grid container item xs={12} spacing={2} sx={{marginTop: "16px"}}>
+                    <Grid container item xs={12} spacing={2} sx={{ marginTop: "16px" }}>
                         <Grid item xs={3}>
-                            <Card sx={{p: 2, borderRadius: 4, minWidth: "100%", backgroundColor: "#fff"}}>
+                            <Card sx={{ p: 2, borderRadius: 4, minWidth: "100%", backgroundColor: "#fff" }}>
                                 <Box p={1.5}>
                                     <p className="card-title">Patient Details</p>
                                 </Box>
@@ -144,14 +146,14 @@ export default function PatientProfile() {
                                             <p>:</p>
                                         </Box>
                                         <Box width="50%">
-                                        17/10/2022
+                                            17/10/2022
                                         </Box>
                                     </Box>
                                 </Box>
                             </Card>
                         </Grid>
                         <Grid item xs={9}>
-                            <Card sx={{p: 2, borderRadius: 4, minWidth: "100%", backgroundColor: "#fff", minHeight:"400px"}}>
+                            <Card sx={{ p: 2, borderRadius: 4, minWidth: "100%", backgroundColor: "#fff", minHeight: "400px" }}>
                                 <Box
                                     component="span"
                                     m={1}
@@ -159,15 +161,23 @@ export default function PatientProfile() {
                                     display="flex"
                                     justifyContent="space-between"
                                     alignItems="center"
-                                    >
+                                >
                                     <Typography>Symptoms</Typography>
                                     <Button variant="contained" sx={{ height: 40 }} onClick={addNewPatient}>
                                         Add Symptom
                                     </Button>
                                 </Box>
                                 <Dialog open={symptomDialog} onClose={handleCloseSuggeDialog}>
-                                    <DialogTitle>Add Symptom (Coming Soon...)
-                                        
+                                    <DialogTitle>
+                                    <Box display="flex">
+                                            <Box display="flex" width="100%">
+                                               Add Symptom (Coming Soon...)
+                                            </Box>
+                                            <Box justifyContent="flex-end" sx={{ alignSelf: "center", textAlign: "center" }}>
+                                                <IconButton onClick={handleCloseSuggeDialog}><CloseIcon /> </IconButton>
+                                                {/* todo: icon button */}
+                                            </Box>
+                                        </Box>
                                     </DialogTitle>
                                     <DialogContent >
                                         <AlertMUI></AlertMUI>
@@ -181,9 +191,9 @@ export default function PatientProfile() {
                                     </DialogActions>
                                 </Dialog>
                                 <SymptomTracker selectedSymp="Abdominal or pelvic pain (persistent or frequent particularly more than 12 times per month) in women" possible_cancer="Ovarian"></SymptomTracker>
-                                
+
                                 <SymptomTracker selectedSymp="Abdominal pain with weight loss (unexplained)" possible_cancer="Colorectal"></SymptomTracker>
-                                
+
                             </Card>
                         </Grid>
                     </Grid>
