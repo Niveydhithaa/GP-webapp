@@ -194,15 +194,20 @@ export default function Dashboard() {
           .get(url + `/GetSymptomdatafilter?agegtlt=${ageV2}`)
           .then(result => {
               // console.log(result.data)
-              let symptomdata_Details = result.data.symptomdata_Details
+              let symptomdata_Details1 = result.data.symptomdata_Details.symptomdatadetails1;
+              console.log(symptomdata_Details1.length)
+              let symptomdata_Details2 = result.data.symptomdata_Details.symptomdatadetails2;
+              console.log(symptomdata_Details2.length)
+              let symptomdata_Details3 = result.data.symptomdata_Details.symptomdatadetails3;
+              console.log(symptomdata_Details3.length)
+              // let symptomdata_Details_old = result.data.symptomdata_Details
+              let symptomdata_Details_part1 = symptomdata_Details1.concat(symptomdata_Details2)
+              let symptomdata_Details_part2 = symptomdata_Details_part1.concat(symptomdata_Details3)
+              let symptomdata_Details = symptomdata_Details_part2
               // console.log(symptomdata_Details)
               var symptoms_temp_dict :Record<string, string>[] = [];
               symptomdata_Details.forEach(function (value : any) {
-                // console.log(value);
                 
-                // console.log(v)
-                // console.log(value.possible_cancer)
-                // console.log(value.step1_test)
                 setStep1_Test(value.step1_test)
                 setPossibleCancer(value.possible_cancer)
                 
@@ -395,7 +400,7 @@ export default function Dashboard() {
                 <TextField 
                       hiddenLabel={true}
                       InputProps={{
-                        inputProps: { min: 0 }
+                        inputProps: { min: 0, max: 150 }
                       }}
                       type="number"
                       id="demo-simple-select"

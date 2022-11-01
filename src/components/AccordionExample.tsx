@@ -228,7 +228,7 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                   } */}
                 </Typography>
                 <Card>
-                <Dialog open={patientDialogOpen} onClose={handleClosePrescribeDialog}>
+                <Dialog open={patientDialogOpen} onClose={handleClosePrescribeDialog} sx={{padding: "24px"}}>
                     <DialogTitle>
                       {/* <Tooltip title="Hospital Inegration is still onprocess. Once EMR is connected, this dialog will be activated" arrow>
                         <IconButton><InfoIcon color="primary"/></IconButton>
@@ -238,7 +238,7 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                            Prescribe (Coming Soon...)
                         </Box>
                         <Box justifyContent="flex-end" sx={{alignSelf: "center", textAlign:"center" }}>
-                         <CloseIcon /> 
+                         <IconButton onClick={handleClosePrescribeDialog}><CloseIcon /> </IconButton>
                          {/* todo: icon button */}
                         </Box>
                       </Box>
@@ -568,8 +568,16 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                     }
                 </Box>
                 <Dialog open={oncologyReferralPopup} onClose={handleCloseOncoRefer}>
-                    <DialogTitle>Oncology referral (Coming Soon...)
-                    
+                    <DialogTitle>
+                    <Box display="flex">
+                        <Box display="flex" width="100%">
+                           Oncology referral  (Coming Soon...)
+                        </Box>
+                        <Box justifyContent="flex-end" sx={{alignSelf: "center", textAlign:"center" }}>
+                         <IconButton onClick={handleCloseOncoRefer}><CloseIcon /> </IconButton>
+                         {/* todo: icon button */}
+                        </Box>
+                      </Box>
                     </DialogTitle>
                     <DialogContent >
                         <AlertMUI></AlertMUI>
@@ -586,7 +594,7 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleCloseOncoRefer}>Cancel</Button>
-                        <Button onClick={handleOncoRefer} variant="contained">Submit</Button>
+                        <Button onClick={handleOncoRefer}>Submit</Button>
                     </DialogActions>
                 </Dialog>
                 <Dialog open={suggeDialog} onClose={handleCloseSuggeDialog}>
