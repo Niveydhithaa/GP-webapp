@@ -6,6 +6,7 @@ import axios from "axios"
 import { useState} from "react"
 import { Link } from "react-router-dom";
 import Snackbar from '@mui/material/Snackbar';
+import Spinner from "components/hooks/Spinner"
 
 interface Login {
   Username: string,
@@ -16,10 +17,12 @@ export default function Login() {
   const navigate = useNavigate();
   const [openLoginFail, setOpenLoginFail] = useState(false)  
   const [openUnameFail, setOpenUnameFail] = useState(false)  
+  const [isLoading, setIsLoading] = useState(false)
   const handleClose = () => {
     setOpenLoginFail(false);
 }
   const handleOnSignin = () => {
+    setIsLoading(true)
     const uname = (document.getElementById("username_input") as HTMLInputElement).value
     const pswd = (document.getElementById("password_input") as HTMLInputElement).value
     console.log(uname)
@@ -32,13 +35,14 @@ export default function Login() {
     axios
         .post(url, input_dict)
         .then(result => {
-             
+          setIsLoading(false)
             console.log(result);
             console.log(result.data);
             let res_Dict = result.data
             let isSuccess = res_Dict.isSuccess
             console.log(isSuccess)
             if(isSuccess) {
+              
               sessionStorage.setItem("user", "true")
               navigate("/home")
             }
@@ -118,9 +122,17 @@ export default function Login() {
               {/* { openUnameFail &&
                 <Typography fontSize="12px" color="red">Username not found</Typography>
               } */}
-              <Button variant="contained" sx={{ borderRadius: "50px" }} onClick={handleOnSignin}>
+              {
+                isLoading &&
+                <Spinner></Spinner>
+                }
+              {
+                !isLoading &&
+                <Button variant="contained" sx={{ borderRadius: "50px" }} onClick={handleOnSignin}>
                 <Typography fontSize="16px">Sign in</Typography>
               </Button>
+              }
+              
               <Box margin="auto">
                 <Typography fontSize="10px">@Copyright Optimal Oncology</Typography>
               </Box>
