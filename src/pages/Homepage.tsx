@@ -51,8 +51,8 @@ export default function NavTabs() {
             <Tabs value={tabIndex} onChange={handleChange} aria-label="nav tabs example">
               <LinkTab label="Search Guidelines" href="/dashboard" />
               <LinkTab label="Patients" href="/patientslist" />
-              <LinkTab label="Analytics" href="/" />
-              <LinkTab label="Accounts" href="/accounts" />
+              {/* <LinkTab label="Analytics" href="/" />
+              <LinkTab label="Accounts" href="/accounts" /> */}
             </Tabs>
           </Box>
           <Box sx={{ padding: 2 }}>
