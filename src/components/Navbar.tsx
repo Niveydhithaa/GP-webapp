@@ -59,7 +59,7 @@ const Navbar = () => {
               textDecoration: "none",
             }}
           >
-            <img src="Early Detect@4x.png"></img>
+            <img src="Early detect Logo - W.svg" height="50"></img>
             <Box mt={2} ml={2}>
             <Typography className="beta" >BETA</Typography>
             </Box>

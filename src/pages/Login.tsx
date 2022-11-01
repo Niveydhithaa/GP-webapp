@@ -7,6 +7,7 @@ import { useState} from "react"
 import { Link } from "react-router-dom";
 import Snackbar from '@mui/material/Snackbar';
 import Spinner from "components/hooks/Spinner"
+import configData from "config.json"
 
 interface Login {
   Username: string,
@@ -30,10 +31,10 @@ export default function Login() {
     const input_dict : Record<string, string> = {};
     input_dict['Username'] = uname
     input_dict['Password'] = pswd
-    const url = 'http://20.3.165.1/GPValues/GPLogin';
+    const url1 = configData.url +'/GPLogin';
     // API work
     axios
-        .post(url, input_dict)
+        .post(url1, input_dict)
         .then(result => {
           setIsLoading(false)
             console.log(result);
@@ -103,9 +104,9 @@ export default function Login() {
       <Box ml={20} width="40%">
         {/* <Card variant="outlined">{card}</Card> */}
         <Box>
-          <img src="Optimal Oncology Logo - Full.png"></img>
-          {/* <img src="Early Detect@4x.png"></img> */}
+        <img src="Early detect Logo - W.svg" height="120"></img>
         </Box>
+
       </Box>
       <Box ml={16}>
           <Card variant="outlined" sx={{minWidth: 450, minHeight: 420, borderRadius:"30px"}} >
@@ -133,9 +134,9 @@ export default function Login() {
               </Button>
               }
               
-              <Box margin="auto">
+              {/* <Box margin="auto">
                 <Typography fontSize="10px">@Copyright Optimal Oncology</Typography>
-              </Box>
+              </Box> */}
             </Box>
           </Box>
           </Card>

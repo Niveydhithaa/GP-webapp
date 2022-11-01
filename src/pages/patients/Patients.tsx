@@ -166,7 +166,7 @@ export default function Patients() {
                             </Button>
                         
                     </Box>
-                    <Box width="39%" mb={2}>
+                    <Box mb={2}>
                     <AlertMUI></AlertMUI>
                     </Box>
                     <TableContainer component={Paper}>

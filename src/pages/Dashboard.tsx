@@ -6,18 +6,13 @@ import {
   Button,
   ToggleButtonGroup,
   ToggleButton,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Autocomplete,
   TextField,
-  IconButton,
   Grid
 } from "@mui/material";
 import ReplayIcon from '@mui/icons-material/Replay';
 // import MultiSelect from 'components/MultiSelect'
 import MultiSelect, { MultiValue } from 'react-select'
-// import Select from 'react-select'
+import configData from "config.json"
 import { symptomOptions } from './data'
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Navbar from "components/Navbar";
@@ -113,7 +108,7 @@ export default function Dashboard() {
   }
   const fetchData = (e: React.FocusEvent<HTMLInputElement, Element>, topic: string) => {
     // setIsLoading(true)  
-    const url = 'http://20.3.165.1/GPValues'
+    const url = configData.url
       if(ageV2==0 || isNaN(ageV2))
       {
         console.log('no age selected')
@@ -347,7 +342,7 @@ export default function Dashboard() {
                 >
                   <ToggleButton value="symptom" id="toggle_symptom">Symptom</ToggleButton>
                   <ToggleButton value="site" disabled>Site</ToggleButton>
-                  <ToggleButton value="primaryCare" >
+                  <ToggleButton value="primaryCare" disabled >
                     Primary care Investigations
                   </ToggleButton>
                 </ToggleButtonGroup>
@@ -399,6 +394,9 @@ export default function Dashboard() {
                 <Typography fontWeight="bold" mb={2}>Age</Typography>
                 <TextField 
                       hiddenLabel={true}
+                      InputProps={{
+                        inputProps: { min: 0 }
+                      }}
                       type="number"
                       id="demo-simple-select"
                       // value={ageV2.toString()}

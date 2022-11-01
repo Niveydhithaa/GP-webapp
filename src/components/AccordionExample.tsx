@@ -574,7 +574,7 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleCloseOncoRefer}>Cancel</Button>
-                        <Button onClick={handleOncoRefer} variant="contained" color="success">Submit</Button>
+                        <Button onClick={handleOncoRefer} variant="contained">Submit</Button>
                     </DialogActions>
                 </Dialog>
                 <Dialog open={suggeDialog} onClose={handleCloseSuggeDialog}>
