@@ -40,7 +40,7 @@ export default function Login() {
             console.log(isSuccess)
             if(isSuccess) {
               sessionStorage.setItem("user", "true")
-              // navigate("/home")
+              navigate("/home")
             }
             else
             {
