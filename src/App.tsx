@@ -11,7 +11,6 @@ import CustomBreadCrumb from "components/CustomBreadCrumb"
 import TwoStepBreadCrumb from "components/TwoStepBreadCrumb"
 import Accounts from "pages/Accounts"
 import Analytics from "pages/Analytics"
-import PrivateRoutesDashboard from './hooks/PrivateRouteDashboard'
 import MainPage from "components/charts/MainPage";
 import PrivateRoute from "hooks/PrivateRoute"
 
