@@ -27,11 +27,13 @@ export default function Login() {
     const input_dict : Record<string, string> = {};
     input_dict['Username'] = uname
     input_dict['Password'] = pswd
+    const url = 'http://20.3.165.1/GPValues/GPLogin';
     // API work
     axios
-        .post('http://20.3.165.1/GPValues/GPLogin', input_dict)
+        .post(url, input_dict)
         .then(result => {
-            // console.log(result);
+             
+            console.log(result);
             console.log(result.data);
             let res_Dict = result.data
             let isSuccess = res_Dict.isSuccess
@@ -98,6 +100,7 @@ export default function Login() {
         {/* <Card variant="outlined">{card}</Card> */}
         <Box>
           <img src="Optimal Oncology Logo - Full.png"></img>
+          {/* <img src="Early Detect@4x.png"></img> */}
         </Box>
       </Box>
       <Box ml={16}>
