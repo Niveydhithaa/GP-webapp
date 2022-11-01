@@ -257,9 +257,9 @@ export default function Patients() {
                     </TableContainer>
                     <Dialog open={addPatientDialog} onClose={handleCloseAddPatientDialog}>
                         <DialogTitle>Create Patient (Coming Soon...)
-                        <AlertMUI></AlertMUI>
                         </DialogTitle>
                         <DialogContent >
+                            <AlertMUI></AlertMUI>
                             <Box>
                                 <PatientDialog></PatientDialog>
                             </Box>

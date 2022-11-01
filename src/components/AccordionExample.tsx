@@ -44,6 +44,8 @@ import dayjs, { Dayjs } from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { symptomOptions } from "pages/data";
+import CloseIcon from '@mui/icons-material/Close';
+
 interface Props {
   selectedSymp: string  
   possible_cancer: string
@@ -218,24 +220,33 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                   {selectedSymp}
                 </Typography>
                 <Typography>
-                  {!gender_specific &&
+                  {/* {!gender_specific &&
                         <Typography fontSize="10px">Not gender specific!</Typography>
                   }
                   {gender_specific &&
                         <Typography fontSize="10px">Specific to: {gender_specific}</Typography>
-                  }
+                  } */}
                 </Typography>
                 <Card>
                 <Dialog open={patientDialogOpen} onClose={handleClosePrescribeDialog}>
-                    <DialogTitle>Prescribe (Coming Soon...)
+                    <DialogTitle>
                       {/* <Tooltip title="Hospital Inegration is still onprocess. Once EMR is connected, this dialog will be activated" arrow>
                         <IconButton><InfoIcon color="primary"/></IconButton>
                       </Tooltip> */}
-                      <AlertMUI></AlertMUI>
+                      <Box display="flex">
+                        <Box display="flex" width="100%">
+                           Prescribe (Coming Soon...)
+                        </Box>
+                        <Box justifyContent="flex-end" sx={{alignSelf: "center", textAlign:"center" }}>
+                         <CloseIcon /> 
+                         {/* todo: icon button */}
+                        </Box>
+                      </Box>
                     </DialogTitle>
                     
                     
                     <DialogContent >
+                        <AlertMUI></AlertMUI>
                         <Stack>
                           <br></br>
                           <Box>
@@ -558,9 +569,10 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                 </Box>
                 <Dialog open={oncologyReferralPopup} onClose={handleCloseOncoRefer}>
                     <DialogTitle>Oncology referral (Coming Soon...)
-                    <AlertMUI></AlertMUI>
+                    
                     </DialogTitle>
                     <DialogContent >
+                        <AlertMUI></AlertMUI>
                         <Box>
                           <Stack display="flex" >
                             <br></br>

@@ -97,7 +97,7 @@ export default function PatientProfile() {
                         <CustomBreadCrumb></CustomBreadCrumb>
                     </Grid>
                     <AlertMUI></AlertMUI>
-                    <Grid container item xs={12} spacing={2} sx={{padding: "2rem"}}>
+                    <Grid container item xs={12} spacing={2} sx={{marginTop: "16px"}}>
                         <Grid item xs={3}>
                             <Card sx={{p: 2, borderRadius: 4, minWidth: "100%", backgroundColor: "#fff"}}>
                                 <Box p={1.5}>
@@ -155,6 +155,7 @@ export default function PatientProfile() {
                                 <Box
                                     component="span"
                                     m={1}
+                                    mb={3}
                                     display="flex"
                                     justifyContent="space-between"
                                     alignItems="center"
@@ -166,9 +167,10 @@ export default function PatientProfile() {
                                 </Box>
                                 <Dialog open={symptomDialog} onClose={handleCloseSuggeDialog}>
                                     <DialogTitle>Add Symptom (Coming Soon...)
-                                        <AlertMUI></AlertMUI>
+                                        
                                     </DialogTitle>
                                     <DialogContent >
+                                        <AlertMUI></AlertMUI>
                                         <Box>
                                             <Dashboard></Dashboard>
                                         </Box>
