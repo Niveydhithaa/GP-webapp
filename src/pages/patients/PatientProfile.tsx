@@ -169,7 +169,7 @@ export default function PatientProfile() {
                                         Add Symptom
                                     </Button>
                                 </Box>
-                                <Dialog open={symptomDialog} onClose={handleCloseSuggeDialog}>
+                                <Dialog open={symptomDialog} onClose={handleCloseSuggeDialog} sx={{maxWidth: "80%"}}>
                                     <DialogTitle>
                                     <Box display="flex">
                                             <Box display="flex" width="100%">
