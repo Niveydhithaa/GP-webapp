@@ -49,8 +49,9 @@ export default function NavTabs() {
         <Card sx={{p: 2, borderRadius: 4, minHeight: "calc(100vh - 128px)", minWidth: "100%"}}>
           <Box sx={{ width: '80%', alignItems: "center"}} >
             <Tabs value={tabIndex} onChange={handleChange} aria-label="nav tabs example">
-              <LinkTab label="Search Guidelines" href="/dashboard" />
+              
               <LinkTab label="Patients" href="/patientslist" />
+              <LinkTab label="Search Guidelines" href="/dashboard" />
               <LinkTab label="Analytics" href="/" />
               <LinkTab label="Accounts" href="/accounts" />
             </Tabs>
@@ -59,13 +60,13 @@ export default function NavTabs() {
             {tabIndex === 0 && (
               <Box>
                 {/* <Typography>The first tab</Typography> */}
-                <Dashboard></Dashboard>
+                <Patients></Patients>
               </Box>
             )}
             {tabIndex === 1 && (
               <Box>
                 {/* <Typography>The second tab</Typography> */}
-                <Patients></Patients>
+                <Dashboard></Dashboard>
               </Box>
             )}
             {tabIndex === 2 && (
