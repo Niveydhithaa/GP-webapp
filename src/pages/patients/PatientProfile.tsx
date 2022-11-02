@@ -26,7 +26,7 @@ import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import CustomBreadCrumb from "components/CustomBreadCrumb"
 import AccordionExample from "components/AccordionExample";
-import Dashboard from "pages/Dashboard";
+import AddSympDashboard from "pages/AddSympDashboard";
 import AlertMUI from "components/alerts/AlertMUI";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -184,7 +184,7 @@ export default function PatientProfile() {
                                     <DialogContent >
                                         <AlertMUI></AlertMUI>
                                         <Box>
-                                            <Dashboard></Dashboard>
+                                            <AddSympDashboard></AddSympDashboard>
                                         </Box>
                                     </DialogContent>
                                     <DialogActions>
