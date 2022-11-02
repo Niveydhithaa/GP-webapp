@@ -259,7 +259,7 @@ export default function Patients() {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    <Dialog open={addPatientDialog} onClose={handleCloseAddPatientDialog}>
+                    <Dialog open={addPatientDialog} onClose={handleCloseAddPatientDialog} fullWidth maxWidth="sm">
                         <DialogTitle>
                             <Box display="flex">
                                 <Box display="flex" width="100%">

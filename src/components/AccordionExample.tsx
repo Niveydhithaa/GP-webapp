@@ -24,6 +24,7 @@ import {
   Divider
 } from "@mui/material";
 import Alert from '@mui/joy/Alert';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
 import Box1  from '@mui/joy/Box';
 import AlertMUI from "components/alerts/AlertMUI"
 import SelectHospitalStatic from "components/hooks/SelectHospitalStatic"
@@ -233,7 +234,7 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                   } */}
                 </Typography>
                 <Card>
-                <Dialog open={patientDialogOpen} onClose={handleClosePrescribeDialog} sx={{padding: "24px"}}>
+                <Dialog open={patientDialogOpen} onClose={handleClosePrescribeDialog} fullWidth sx={{padding: "24px"}} maxWidth="md">
                     <DialogTitle>
                       {/* <Tooltip title="Hospital Inegration is still onprocess. Once EMR is connected, this dialog will be activated" arrow>
                         <IconButton><InfoIcon color="primary"/></IconButton>
@@ -248,8 +249,6 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                         </Box>
                       </Box>
                     </DialogTitle>
-                    
-                    
                     <DialogContent >
                         <AlertMUI></AlertMUI>
                         <Stack>
@@ -577,7 +576,7 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                       </Box>
                     }
                 </Box>
-                <Dialog open={oncologyReferralPopup} onClose={handleCloseOncoRefer}>
+                <Dialog open={oncologyReferralPopup} onClose={handleCloseOncoRefer} fullWidth maxWidth="sm">
                     <DialogTitle>
                     <Box display="flex">
                         <Box display="flex" width="100%">
@@ -599,7 +598,15 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                               <TextField label="Doctor"></TextField>
                               <br></br>
                               <TextField multiline={true} label="Notes about patient"></TextField>
+                              
                           </Stack>
+                          <Box mt={2}>
+                            <Button variant="outlined" component="label">
+                              <FileUploadIcon/>
+                              <Box ml={1}>Upload Medical File</Box>
+                              <input hidden accept="image/*" multiple type="file" />
+                            </Button>
+                          </Box>
                         </Box>
                     </DialogContent>
                     <DialogActions>
