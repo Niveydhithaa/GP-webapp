@@ -66,11 +66,14 @@ interface Props {
 }
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
+    // backgroundColor: theme.palette.common.black,
+    // color: theme.palette.common.white,
+    backgroundColor: "#EEEEEE",
+    color: "black",
+    fontWeight: "800"
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
+    fontSize: 14
   },
 }));
 
@@ -205,7 +208,7 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
     }
     return(
         
-        <Box mt={3} width="70%">
+        <Box mt={3}>
             <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
