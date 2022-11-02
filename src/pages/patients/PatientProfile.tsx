@@ -98,7 +98,9 @@ export default function PatientProfile() {
                     <Grid item xs={12} sx={{ p: 2 }}>
                         <CustomBreadCrumb></CustomBreadCrumb>
                     </Grid>
-                    <AlertMUI></AlertMUI>
+                    <Grid width="100%">
+                        <AlertMUI></AlertMUI>
+                    </Grid>
                     <Grid container item xs={12} spacing={2} sx={{ marginTop: "16px" }}>
                         <Grid item xs={3}>
                             <Card sx={{ p: 2, borderRadius: 4, minWidth: "100%", backgroundColor: "#fff" }}>

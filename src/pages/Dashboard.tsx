@@ -597,7 +597,7 @@ export default function Dashboard() {
                       // value={ageV2.toString()}
                       // label="Age"
                       sx={{width: 100}}
-                      placeholder="00"
+                      placeholder="--"
                       onKeyPress = {(event) => {
                         if(event.key=='-' || event.key==='+' || event.key=='.' || event.key==='e') {
                           console.log("prohibited")
@@ -664,7 +664,7 @@ export default function Dashboard() {
                     onFocus = {(e) => fetchData_LimitTags(e)}
                     // defaultValue={[top100Films[13], top100Films[12], top100Films[11]]}
                     renderInput={(params) => (
-                      <TextField {...params} label="Search symptom.. " placeholder="Favorites" />
+                      <TextField {...params} label="Search symptom.. " />
                     )}
                   />
             </Box>
