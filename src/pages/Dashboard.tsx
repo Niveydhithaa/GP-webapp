@@ -664,7 +664,7 @@ export default function Dashboard() {
                     onFocus = {(e) => fetchData_LimitTags(e)}
                     // defaultValue={[top100Films[13], top100Films[12], top100Films[11]]}
                     renderInput={(params) => (
-                      <TextField {...params} label="Search symptom.. " />
+                      <TextField {...params} label="Search symptom" />
                     )}
                   />
             </Box>

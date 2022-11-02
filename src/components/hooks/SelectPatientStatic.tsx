@@ -15,7 +15,7 @@ export default function BasicSelect() {
   return (
     <Box >
       <FormControl sx={{minWidth:"40%"}}>
-        <InputLabel id="demo-simple-select-label">Select Patient</InputLabel>
+        <InputLabel id="demo-simple-select-label">Patient</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
