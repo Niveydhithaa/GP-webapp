@@ -70,7 +70,7 @@ export default function Login() {
     // navigate("/home")
   }
   return (
-    <Box sx={{ backgroundColor: "#1F51B1" }}
+    <Box sx={{ backgroundColor: "#042b75" }}
     // width="100%"
     // height="100vh"
     // display="flex"
@@ -80,8 +80,8 @@ export default function Login() {
       <Grid >
         <Box display="flex" height="100vh" alignItems="center">
           <Box width="50%" sx={{ textAlign: "center", verticalAlign: "middle" }}>
-            <Box>
-              <img src="Early detect Logo - W.svg" height="120"></img>
+          <Box>
+              <img src="Optimal Oncology Logo - Full.png" height="120"></img>
             </Box>
           </Box>
           <Box width="50%" sx={{ textAlign: "" }}>

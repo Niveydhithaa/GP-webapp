@@ -42,7 +42,7 @@ const Navbar = () => {
     navigate("/")
   }
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{backgroundColor: "#042b75"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -69,7 +69,10 @@ const Navbar = () => {
           <Box flexGrow={1}></Box>
           <Box flexGrow={0}>
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <Avatar alt="Remy Sharp" src="https://picsum.photos/200" />
+              {/* <Avatar alt="Remy Sharp" src="https://picsum.photos/200" /> */}
+              <Avatar alt="avatar">
+                RP
+              </Avatar>
             </IconButton>
             <Menu
               sx={{ mt: "45px" }}

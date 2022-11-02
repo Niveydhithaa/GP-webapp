@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "pages/Login";
 import Dashboard from "pages/Dashboard";
-import DashboardV2 from "pages/Dashboard copy";
+import DashboardV2 from "pages/AddSympDashboard";
 import AccordionExample from "components/AccordionExample";
 import Patients from "pages/patients/Patients"
 import PatientProfile from "pages/patients/PatientProfile"
