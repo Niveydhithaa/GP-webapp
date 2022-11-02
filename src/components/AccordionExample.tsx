@@ -257,49 +257,49 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                           <Box>
                             <SelectPatientStatic></SelectPatientStatic>
                           </Box>
-                          <Box>
-                          <Box sx={{ backgroundColor: "#fff", maxWidth: "50%" }}>
+                          <Box sx={{border: '1px solid grey'}} mt={2} width="40%" padding={1} >
+                          <Box display="flex" sx={{ backgroundColor: "#fff" }}>
                                 
-                                <Box p={1.5}>
+                                <Box p={1.5} width="200px">
                                     <p className="patient-name">Patient1</p>
                                     <p className="patient-details">32 | F | Chennai</p>
                                     <p className="patient-id">88890038556</p>
                                 </Box>
-                                <Divider />
+                                <Divider orientation="vertical" flexItem />
                                 <Box p={1.5} className="patient-ids-group">
                                     <Box display="flex" flexWrap="nowrap">
-                                        <Box display="flex" flexWrap="nowrap" justifyContent="space-between" width="50%">
+                                        <Box display="flex" flexWrap="nowrap" justifyContent="space-between" width="90%">
                                             <p>Optimal ID</p>
                                             <p>:</p>
                                         </Box>
-                                        <Box width="50%">
+                                        <Box width="10%">
                                             <p><b>BCHT00022</b></p>
                                         </Box>
                                     </Box>
                                     <Box display="flex" flexWrap="nowrap">
-                                        <Box display="flex" flexWrap="nowrap" justifyContent="space-between" width="50%">
+                                        <Box display="flex" flexWrap="nowrap" justifyContent="space-between" width="90%">
                                             <p><b>GP ID</b></p>
                                             <p>:</p>
                                         </Box>
-                                        <Box width="50%">
+                                        <Box width="10%">
                                             GP00022
                                         </Box>
                                     </Box>
                                     <Box display="flex" flexWrap="nowrap">
-                                        <Box display="flex" flexWrap="nowrap" justifyContent="space-between" width="50%">
+                                        <Box display="flex" flexWrap="nowrap" justifyContent="space-between" width="90%">
                                             <p><b>Hospital ID</b></p>
                                             <p>:</p>
                                         </Box>
-                                        <Box width="50%">
+                                        <Box width="10%">
                                             <p><b>HT00022</b></p>
                                         </Box>
                                     </Box>
                                     <Box display="flex" flexWrap="nowrap">
-                                        <Box display="flex" flexWrap="nowrap" justifyContent="space-between" width="50%">
+                                        <Box display="flex" flexWrap="nowrap" justifyContent="space-between" width="90%">
                                             <p>Last Consulted On</p>
                                             <p>:</p>
                                         </Box>
-                                        <Box width="50%">
+                                        <Box width="10%">
                                             17/10/2022
                                         </Box>
                                     </Box>
