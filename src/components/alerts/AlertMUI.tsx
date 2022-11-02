@@ -4,7 +4,7 @@ export default function AlertMUI() {
     return (
         <div>
             <Alert severity="info" sx={{mt: "1rem", width:"100%"}}>
-            This simulates interactions with the host facility EMR systems. Currently EMR systems are not integrated hence only simulate those interactions, and the actions do not have any effect
+            Not integrated with the host facility's EMR/HIS. For display purposes only!
             </Alert>
         </div>
     )
