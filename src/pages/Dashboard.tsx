@@ -6,6 +6,7 @@ import {
   Button,
   ToggleButtonGroup,
   ToggleButton,
+  Autocomplete,
   TextField,
   Grid
 } from "@mui/material";
@@ -55,6 +56,7 @@ const ageResultLT = () => [
   }
 ];
 var multiSelectDict_global : MultiValue<Record<string, string>>;
+var multiSelectDict_global_tags : Record<string, string>[];
 const emptyOption : Record<string,string>[]= [
   {label: "", value: ""}
 ]
@@ -70,17 +72,20 @@ export default function Dashboard() {
   const [symptoms_selected, setSymptomsSelected] = useState<string[]>([])
   const [noofsymptoms, setNoOfSymptoms] = useState<number>(0)
   const [multiSelectOptions, setMultiSelectOptions] = useState<Record<string, string>[]>([])
+  const [optionsTags, setOptionsTags] = useState<Record<string, string>[]>([])
   const [selectedFromMultiDict, setSelectedFromMultiDict] = useState<MultiValue<Record<string, string>>>([])
   const [noFilterPopup, setNoFiltersPopup] = useState<boolean>(false);
   const [resetComponent, setResetComponent] = useState<boolean>(false);
   const [totalSymptomsinList, setTotalSymptomsinList] = useState<number>(0);
   const refreshComponents = () => {
     //version 1 hard refresh
-    window.location.reload();
+    // window.location.reload();
     setGender("")
     setAgeV2(0)
     setAgeV2_LT(0)
     setSelectedFromMultiDict([])
+    const clr = document.getElementsByClassName("MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator")[0] as HTMLElement;
+    clr.click();
     setNoOfSymptoms(0)
     let a = document.getElementById("age_value") as HTMLInputElement
     a.value=""
@@ -96,6 +101,10 @@ export default function Dashboard() {
   {
     return {label: primaryCare, value: primaryCare.toLowerCase()}
   }
+  const CreateDictTemp_2 = (label: string, symptom: string, possible_cancer: string) =>
+  {
+    return {label: symptom, value: symptom.toLowerCase(), possible_cancer: possible_cancer}
+  }
   const CreateDict = (label: string, sympname: string, possible_cancer: string, gender: string, step1: string, rsponse1_1: string, rsponse1_2:string, nosteps: string, step2_1: string, step2_2: string, response2_1: string, response2_2: string, step3_1: string, step3_2: string, step1_test: string, step2_test: string) =>
   {
     return {label: sympname, value: sympname.toLowerCase(), possible_cancer: possible_cancer, gender: gender, step1: step1, rsponse1_1: rsponse1_1, rsponse1_2: rsponse1_2, nosteps: nosteps, step2_1: step2_1, step2_2: step2_2, response2_1: response2_1, response2_2: response2_2, step3_1: step3_1, step3_2: step3_2, step1_test: step1_test, step2_test: step2_test}
@@ -105,6 +114,173 @@ export default function Dashboard() {
     temp_arr_record.push(CreateDictTemp("label", "Anaemia (iron‑deficiency), 60 and over" ))
     temp_arr_record.push(CreateDictTemp("label", "Haemoglobin levels low with visible haematuria in women 55 and over"))
     setMultiSelectOptions(temp_arr_record)
+  }
+  const fetchData_LimitTags = (e: React.FocusEvent<HTMLDivElement, Element> ) => {
+    // var temp_arr_record : Record<string, string>[] = [];
+    // temp_arr_record.push(CreateDictTemp_2("label", "Anaemia (iron‑deficiency), 60 and over", "Breast" ))
+    // temp_arr_record.push(CreateDictTemp_2("label", "Haemoglobin levels low with visible haematuria in women 55 and over", "Ovarian"))
+    // setOptionsTags(temp_arr_record)    
+    const url = configData.url
+      if(ageV2==0 || isNaN(ageV2))
+      {
+        console.log('no age selected')
+        axios
+          .get(url +'/Getsymptomdata')
+          .then(result => {
+              // debugger;
+              setIsLoading(false)
+              let symptomdata_Details = result.data.symptomdata_Details;
+              // console.log(symptomdata_Details)
+              var symptoms_temp_dict :Record<string, string>[] = [];
+              symptomdata_Details.forEach(function (value : any) {
+                // console.log(value);
+                
+                // console.log(v)
+                // console.log(value.possible_cancer)
+                // console.log(value.step1_test)
+                
+                if(gender==null)
+                {
+                  // debugger;
+                  //console.log("no gender no age bar")
+                  
+                  let v = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
+                  //console.log(value.rsponse1_1)
+                  symptoms_temp_dict.push(v)
+                }
+                //male and others without male
+                else if(gender!="female")
+                {
+                  // debugger;
+                  let g:string = value.gender;
+                  if(g!==null)
+                  {
+                    //remove redundant white spaces
+                    //console.log(g)
+                    g = g.replace(/^\s+|\s+$/gm,'');
+                  }
+                  // console.log(g)
+                  if(g!="F")
+                  {
+                    //console.log(value.symptom)
+                    let v1 = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
+                    symptoms_temp_dict.push(v1)
+                  }
+                }
+                //female and others without filter
+                else
+                {
+                  let g:string = value.gender;
+                  if(g!==null)
+                  {
+                    //remove redundant white spaces
+                    g = g.replace(/^\s+|\s+$/gm,'');
+                    // console.log(g)
+                  }
+                  if(g!="M")
+                  {
+                    let v1 = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
+                    symptoms_temp_dict.push(v1)
+                  }
+                  
+                }
+                
+              });
+              console.log(symptoms_temp_dict)
+              setOptionsTags(symptoms_temp_dict)
+              symptoms_temp_dict = []
+              // ({
+              //     repos: result.data,
+              //     isLoading: false
+              // });
+              return String(result.data);
+          })
+          .catch(error =>
+              console.log(error)
+          );
+      }
+      else if(ageV2!=0 && !isNaN(ageV2))
+      {
+        console.log("age filter applied")
+        axios
+          .get(url + `/GetSymptomdatafilter?agegtlt=${ageV2}`)
+          .then(result => {
+              // console.log(result.data)
+              let symptomdata_Details1 = result.data.symptomdata_Details.symptomdatadetails1;
+              console.log(symptomdata_Details1.length)
+              let symptomdata_Details2 = result.data.symptomdata_Details.symptomdatadetails2;
+              console.log(symptomdata_Details2.length)
+              let symptomdata_Details3 = result.data.symptomdata_Details.symptomdatadetails3;
+              console.log(symptomdata_Details3.length)
+              // let symptomdata_Details_old = result.data.symptomdata_Details
+              let symptomdata_Details_part1 = symptomdata_Details1.concat(symptomdata_Details2)
+              let symptomdata_Details_part2 = symptomdata_Details_part1.concat(symptomdata_Details3)
+              let symptomdata_Details = symptomdata_Details_part2
+              // console.log(symptomdata_Details)
+              var symptoms_temp_dict :Record<string, string>[] = [];
+              symptomdata_Details.forEach(function (value : any) {
+                
+                setStep1_Test(value.step1_test)
+                setPossibleCancer(value.possible_cancer)
+                
+                if(gender==null)
+                {
+                  // console.log(typeof(value.age_gt))
+                  let v = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
+                  symptoms_temp_dict.push(v)
+                }
+                //male and others without male
+                else if(gender!="female")
+                {
+                  // console.log("male and no-filter")
+                  // debugger;
+                  let g:string = value.gender;
+                  if(g!==null)
+                  {
+                    //remove redundant white spaces
+                    console.log(g)
+                    g = g.replace(/^\s+|\s+$/gm,'');
+                  }
+                  // console.log(g)
+                  if(g!="F")
+                  {
+                    // console.log(value.symptom)
+                    let v1 = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
+                    symptoms_temp_dict.push(v1)
+                  }
+                }
+                //female and others without filter
+                else
+                {
+                  let g:string = value.gender;
+                  if(g!==null)
+                  {
+                    //remove redundant white spaces
+                    g = g.replace(/^\s+|\s+$/gm,'');
+                    // console.log(g)
+                  }
+                  if(g!="M")
+                  {
+                    let v1 = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
+                    symptoms_temp_dict.push(v1)
+                  }
+                  
+                }
+                
+              });
+              console.log(symptoms_temp_dict)
+              setOptionsTags(symptoms_temp_dict)
+              symptoms_temp_dict = []
+              // ({
+              //     repos: result.data,
+              //     isLoading: false
+              // });
+              return String(result.data);
+          })
+          .catch(error =>
+              console.log(error)
+          );
+      }
   }
   const fetchData = (e: React.FocusEvent<HTMLInputElement, Element>, topic: string) => {
     // setIsLoading(true)  
@@ -274,7 +450,12 @@ export default function Dashboard() {
     event: React.MouseEvent<HTMLElement>,
     newGender: string
   ) => {
+    const clr = document.getElementsByClassName("MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator")[0] as HTMLElement;
+    if(clr){
+       clr.click();
+    }
     console.log(typeof(newGender))
+    setOptionsTags([])
     setGender(newGender);
     setMultiSelectOptions([]);
     console.log("gender is:" + newGender)
@@ -283,6 +464,7 @@ export default function Dashboard() {
   };
   const AGEhandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log("AGE:GT: "+event.target.value)
+    setOptionsTags([])
     if(isNaN(parseInt(event.target.value)))
     {
       console.log("yes blank")
@@ -300,21 +482,23 @@ export default function Dashboard() {
   };
   const handleSearchSymptom = () => {
     
-    const selected_options = (document.getElementById("multiselect") as HTMLInputElement)
-    const children_options = (selected_options.getElementsByClassName("css-12jo7m5 select__multi-value__label") as HTMLCollection);
-    console.log(children_options)
-    let temp_array: string[] = []
-    let item_select: string;
-    for (let i = 0; i < children_options.length; i++) {
-      item_select = children_options[i].innerHTML
-      console.log(item_select)
-      temp_array.push(item_select)
-    }
-    setSymptomsSelected(temp_array)
+    // const selected_options = (document.getElementById("multiselect") as HTMLInputElement)
+    // const children_options = (selected_options.getElementsByClassName("css-12jo7m5 select__multi-value__label") as HTMLCollection);
+    // console.log(children_options)
+    // let temp_array: string[] = []
+    // let item_select: string;
+    // for (let i = 0; i < children_options.length; i++) {
+    //   item_select = children_options[i].innerHTML
+    //   console.log(item_select)
+    //   temp_array.push(item_select)
+    // }
+    // setSymptomsSelected(temp_array)
     var tempDict : Record<string, string>[];
-    console.log(multiSelectDict_global)
-    setSelectedFromMultiDict(multiSelectDict_global)
-    setNoOfSymptoms(temp_array.length)
+    // console.log(multiSelectDict_global)
+    // setSelectedFromMultiDict(multiSelectDict_global)
+    console.log(multiSelectDict_global_tags)
+    setSelectedFromMultiDict(multiSelectDict_global_tags)
+    setNoOfSymptoms(multiSelectDict_global_tags.length)
     // console.log(pswd)
   }
   
@@ -323,6 +507,11 @@ export default function Dashboard() {
       var a = selectedFromMultiDict as Record<string, string>[];
       multiSelectDict_global = e
  }
+ const onTagsChange = (e: React.SyntheticEvent<Element, Event>, value: Record<string, string>[]) => {
+    console.log(value)
+    multiSelectDict_global_tags = value
+    console.log("tags changes")
+  }
   return (
     <Box
       width="100%"
@@ -453,7 +642,7 @@ export default function Dashboard() {
         <Grid item xs={12}>
           <Box display="flex" justifyContent="start" flexWrap="wrap" gap={2} mt={4}>
             <Box minWidth="50%" maxWidth="80%">
-              <MultiSelect
+              {/* <MultiSelect
                     // defaultValue={[symptomOptions[2], symptomOptions[3]]}
                     isMulti
                     name="symptoms"
@@ -461,9 +650,22 @@ export default function Dashboard() {
                     className="basic-multi-select"
                     classNamePrefix="select"
                     id="multiselect"
-                    onFocus = {topic=="symptom" ? (e) => fetchData(e, topic) : (e) => fetchDataOthers(e)}
+                    onFocus = {(e) => fetchData(e, topic)}
                     onChange={onMultiChange}
                     // defaultValue={emptyOption}
+                  /> */}
+                  <Autocomplete
+                    multiple
+                    // limitTags={2}
+                    id="multiple-limit-tags"
+                    options={optionsTags}
+                    getOptionLabel={(option) => option.label}
+                    onChange={(e, value) => onTagsChange(e, value)}
+                    onFocus = {(e) => fetchData_LimitTags(e)}
+                    // defaultValue={[top100Films[13], top100Films[12], top100Films[11]]}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Search symptom.. " placeholder="Favorites" />
+                    )}
                   />
             </Box>
 
@@ -474,7 +676,7 @@ export default function Dashboard() {
                 <Spinner></Spinner>
                 }
               {!isLoading &&
-                <Button variant="contained" onClick={handleSearchSymptom}>
+                <Button type="submit" variant="contained" onClick={handleSearchSymptom}>
                    Search
                 </Button>
               }

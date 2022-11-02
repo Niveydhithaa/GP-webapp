@@ -105,7 +105,7 @@ export default function Login() {
                   }
                   {
                     !isLoading &&
-                    <Button variant="contained" sx={{ borderRadius: "50px", marginTop: "2rem", height:"55px",  marginBottom: "4rem" }}  onClick={handleOnSignin}>
+                    <Button type="submit" variant="contained" sx={{ borderRadius: "50px", marginTop: "2rem", height:"55px",  marginBottom: "4rem" }}  onClick={handleOnSignin}>
                       <Typography fontSize="16px">Sign in</Typography>
                     </Button>
                   }
