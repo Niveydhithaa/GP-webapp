@@ -257,7 +257,7 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                           <Box>
                             <SelectPatientStatic></SelectPatientStatic>
                           </Box>
-                          <Box sx={{border: '1px solid grey'}} mt={2} width="40%" padding={1} >
+                          <Box sx={{border: '1px solid grey'}} mt={2} padding={1} >
                           <Box display="flex" sx={{ backgroundColor: "#fff" }}>
                                 
                                 <Box p={1.5} width="200px">
