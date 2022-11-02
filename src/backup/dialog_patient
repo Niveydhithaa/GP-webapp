@@ -1,0 +1,47 @@
+<Box>
+                            <TextField
+                                label="Name"
+                                id="input_name"
+                                required
+                                sx={{width:"44%"}}
+                                // style={{minWidth: "350px"}}
+                              />
+                            
+                            <TextField
+                                label="Surname"
+                                id="input_surname"
+                                required
+                                sx={{width:"44%", marginLeft: 2}}
+                                // style={{minWidth: "350px"}}
+                              />
+                          </Box>
+                          <br></br>
+                          <Box display="flex">
+                            <TextField
+                              label="Age"
+                              id="age"
+                              required
+                              sx={{width:"44%"}}
+                            />
+                            &nbsp; &nbsp;
+                            <ToggleButtonGroup
+                              color="primary"
+                              value={gender}
+                              sx={{width:"44%", marginLeft: 1}}
+                              exclusive
+                              onChange={handleGender}
+                              aria-label="Platform"
+                            >
+                              <ToggleButton value="male">Male</ToggleButton>
+                              <ToggleButton value="female">Female</ToggleButton>
+                            </ToggleButtonGroup>
+                          </Box>
+                          <br></br>
+                          <Box>
+                            <TextField
+                              label="Mobile"
+                              
+                              id="mobile_num"
+                              style={{marginBottom: "12px", width:"44%"}}
+                            />
+                          </Box>

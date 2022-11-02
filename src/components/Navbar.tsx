@@ -111,7 +111,7 @@ const Navbar = () => {
               </Box>
             </DialogTitle>
             <DialogContent >
-              Early Detect as the name suggests, is a tool to detect cancer at early stages, based on the NICE guidelines developed by Optimal Oncology.
+              Early Detect as the name suggests, is a tool to detect cancer at early stages, based on the cancer guidelines developed by Optimal Oncology.
                                   <Box display="flex" flexWrap="nowrap" mt={2}>
                                         <Box display="flex" flexWrap="nowrap" justifyContent="space-between" width="50%">
                                             <p>Early Detect version</p>
@@ -121,7 +121,7 @@ const Navbar = () => {
                                             v2022.1
                                         </Box>
                                     </Box>
-                                    <Box display="flex" flexWrap="nowrap">
+                                    {/* <Box display="flex" flexWrap="nowrap">
                                         <Box display="flex" flexWrap="nowrap" justifyContent="space-between" width="50%">
                                             <p>NICE Guidelines version</p>
                                             <p>:</p>
@@ -129,7 +129,7 @@ const Navbar = () => {
                                         <Box width="50%">
                                             v2022.10
                                         </Box>
-                                    </Box>
+                                    </Box> */}
             </DialogContent>
             <DialogActions>
               {/* <Button onClick={handleCloseGPProfile}>Close</Button> */}

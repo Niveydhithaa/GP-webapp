@@ -37,13 +37,16 @@ import AlertMUI from "components/alerts/AlertMUI";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-        backgroundColor: theme.palette.common.black,
-        color: theme.palette.common.white,
+      // backgroundColor: theme.palette.common.black,
+      // color: theme.palette.common.white,
+      backgroundColor: "#EEEEEE",
+      color: "black",
+      fontWeight: "800"
     },
     [`&.${tableCellClasses.body}`]: {
-        fontSize: 14,
+      fontSize: 14
     },
-}));
+  }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     "&:nth-of-type(odd)": {

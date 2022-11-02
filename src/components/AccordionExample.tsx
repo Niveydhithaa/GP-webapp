@@ -21,11 +21,13 @@ import {
   Link,
   Stack,
   IconButton,
+  Divider
 } from "@mui/material";
 import Alert from '@mui/joy/Alert';
 import Box1  from '@mui/joy/Box';
 import AlertMUI from "components/alerts/AlertMUI"
 import SelectHospitalStatic from "components/hooks/SelectHospitalStatic"
+import SelectPatientStatic from "components/hooks/SelectPatientStatic"
 import Navbar from "components/Navbar";
 import InfoIcon from '@mui/icons-material/Info';
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -253,53 +255,58 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                         <Stack>
                           <br></br>
                           <Box>
-                            <TextField
-                                label="Name"
-                                id="input_name"
-                                required
-                                sx={{width:"44%"}}
-                                // style={{minWidth: "350px"}}
-                              />
-                            
-                            <TextField
-                                label="Surname"
-                                id="input_surname"
-                                required
-                                sx={{width:"44%", marginLeft: 2}}
-                                // style={{minWidth: "350px"}}
-                              />
+                            <SelectPatientStatic></SelectPatientStatic>
                           </Box>
-                          <br></br>
-                          <Box display="flex">
-                            <TextField
-                              label="Age"
-                              id="age"
-                              required
-                              sx={{width:"44%"}}
-                            />
-                            &nbsp; &nbsp;
-                            <ToggleButtonGroup
-                              color="primary"
-                              value={gender}
-                              sx={{width:"44%", marginLeft: 1}}
-                              exclusive
-                              onChange={handleGender}
-                              aria-label="Platform"
-                            >
-                              <ToggleButton value="male">Male</ToggleButton>
-                              <ToggleButton value="female">Female</ToggleButton>
-                            </ToggleButtonGroup>
-                          </Box>
-                          <br></br>
                           <Box>
-                            <TextField
-                              label="Mobile"
-                              
-                              id="mobile_num"
-                              style={{marginBottom: "12px", width:"44%"}}
-                            />
+                          <Box sx={{ backgroundColor: "#fff", maxWidth: "50%" }}>
+                                
+                                <Box p={1.5}>
+                                    <p className="patient-name">Patient1</p>
+                                    <p className="patient-details">32 | F | Chennai</p>
+                                    <p className="patient-id">88890038556</p>
+                                </Box>
+                                <Divider />
+                                <Box p={1.5} className="patient-ids-group">
+                                    <Box display="flex" flexWrap="nowrap">
+                                        <Box display="flex" flexWrap="nowrap" justifyContent="space-between" width="50%">
+                                            <p>Optimal ID</p>
+                                            <p>:</p>
+                                        </Box>
+                                        <Box width="50%">
+                                            <p><b>BCHT00022</b></p>
+                                        </Box>
+                                    </Box>
+                                    <Box display="flex" flexWrap="nowrap">
+                                        <Box display="flex" flexWrap="nowrap" justifyContent="space-between" width="50%">
+                                            <p><b>GP ID</b></p>
+                                            <p>:</p>
+                                        </Box>
+                                        <Box width="50%">
+                                            GP00022
+                                        </Box>
+                                    </Box>
+                                    <Box display="flex" flexWrap="nowrap">
+                                        <Box display="flex" flexWrap="nowrap" justifyContent="space-between" width="50%">
+                                            <p><b>Hospital ID</b></p>
+                                            <p>:</p>
+                                        </Box>
+                                        <Box width="50%">
+                                            <p><b>HT00022</b></p>
+                                        </Box>
+                                    </Box>
+                                    <Box display="flex" flexWrap="nowrap">
+                                        <Box display="flex" flexWrap="nowrap" justifyContent="space-between" width="50%">
+                                            <p>Last Consulted On</p>
+                                            <p>:</p>
+                                        </Box>
+                                        <Box width="50%">
+                                            17/10/2022
+                                        </Box>
+                                    </Box>
+                                </Box>
+                            </Box>
                           </Box>
-                          <Table sx={{ minWidth: 100}} aria-label="customized table">
+                          <Table sx={{ minWidth: 100, marginTop: 2}} aria-label="customized table">
                             <TableHead>
                               <TableRow>
                                 <StyledTableCell>
