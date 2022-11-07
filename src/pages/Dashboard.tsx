@@ -306,7 +306,7 @@ export default function Dashboard() {
           console.log(error)
         );
     }
-  });
+  }, [topic, gender, ageV2]);
 
   const refreshComponents = () => {
     //version 1 hard refresh
