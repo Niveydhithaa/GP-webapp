@@ -43,6 +43,7 @@ export default function Dashboard() {
   const [noofsymptoms, setNoOfSymptoms] = useState<number>(0)
   const [multiSelectOptions, setMultiSelectOptions] = useState<Record<string, string>[]>([])
   const [optionsTags, setOptionsTags] = useState<Record<string, string>[]>([])
+  const [tagsStrings, setTagsStrings] = useState<string[]>([])
   const [selectedFromMultiDict, setSelectedFromMultiDict] = useState<MultiValue<Record<string, string>>>([])
   const [noFilterPopup, setNoFiltersPopup] = useState<boolean>(false);
   const [resetComponent, setResetComponent] = useState<boolean>(false);
@@ -116,6 +117,14 @@ export default function Dashboard() {
 
             });
             console.log(symptoms_temp_dict)
+            // const a = [
+            //   ...new Set(
+            //     symptoms_temp_dict.map((person) => { return person.label; })
+            //   ),
+            // ];
+            console.log(symptoms_temp_dict.length)
+            // console.log(a.length)
+            // setTagsStrings(a)
             setOptionsTags(symptoms_temp_dict)
             symptoms_temp_dict = []
           }
@@ -464,7 +473,8 @@ export default function Dashboard() {
         <Grid item xs={12}>
           <Box display="flex" justifyContent="start" flexWrap="wrap" gap={2} mt={4}>
             <Box minWidth="50%" maxWidth="80%">
-              <Autocomplete
+              {(topic=="symptom") &&
+                <Autocomplete
                 multiple
                 // limitTags={2}
                 id="multiple-limit-tags"
@@ -477,6 +487,23 @@ export default function Dashboard() {
                   <TextField {...params} label="Search symptom" />
                 )}
               />
+              }
+              {
+                (topic=="primary") &&
+                  <Autocomplete
+                    multiple
+                    // limitTags={2}
+                    id="multiple-limit-tags"
+                    options={optionsTags}
+                    getOptionLabel={(option) => option.label}
+                    onChange={(e, value) => onTagsChange(e, value)}
+                    // onFocus = {(e) => fetchData_LimitTags(e)}
+                    // defaultValue={[top100Films[13], top100Films[12], top100Films[11]]}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Search primary care" />
+                    )}
+                  />
+              }
             </Box>
             <Box>
               {
