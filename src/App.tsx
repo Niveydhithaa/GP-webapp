@@ -13,6 +13,7 @@ import Accounts from "pages/Accounts"
 import Analytics from "pages/Analytics"
 import MainPage from "components/charts/MainPage";
 import PrivateRoute from "hooks/PrivateRoute"
+import Homepagev2 from "pages/Homepagev2"
 
 function App() {
   return (
@@ -35,6 +36,9 @@ function App() {
         <Route path='/patientprofile' element={<PrivateRoute component={PatientProfile} />} />
         <Route path='/patientslist' element={<PrivateRoute component={Patients} />} />
         <Route path='/dashboard' element={<PrivateRoute component={Dashboard} />} />
+
+        {/* For checkig tabs */}
+        {/* <Route path='/homev2' element={<Homepagev2></Homepagev2>} /> */}
       </Routes>
     </BrowserRouter>
   );
