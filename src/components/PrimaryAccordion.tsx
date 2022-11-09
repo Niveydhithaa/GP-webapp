@@ -259,7 +259,7 @@ export default function AccordionExample({ findings, possible_cancer, gender_spe
               <TableBody>
                 <StyledTableRow>
                   <StyledTableCell component="th" scope="row">
-                    {localStorage.getItem("selected_test_for_prescription")}
+                    {localStorage.getItem("selected_test_for_recommendation")}
                   </StyledTableCell>
                 </StyledTableRow>
               </TableBody>
