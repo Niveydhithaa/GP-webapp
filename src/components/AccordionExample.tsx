@@ -148,10 +148,10 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
     const [timeSlot, setTimeSlot] = useState("");
     const [noofsymptoms, setNoofSymptoms] = useState(sessionStorage.getItem("noofsymptopms"))
     let arr = new Array(Number(noofsymptoms))
-    const new_arr = new Array(parseInt(no_of_steps)) 
+    // const new_arr = new Array(parseInt(no_of_steps)) 
     
-    for(let i=0; i< parseInt(no_of_steps); i++)
-      new_arr.push(`${i}`)
+    // for(let i=0; i< parseInt(no_of_steps); i++)
+    //   new_arr.push(`${i}`)
     const [value, setValue] = useState<Dayjs | null>(
       dayjs(),
     );
