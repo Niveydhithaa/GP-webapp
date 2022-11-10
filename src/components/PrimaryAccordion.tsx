@@ -118,7 +118,7 @@ export default function AccordionExample({ findings, possible_cancer, gender_spe
   const testClickHandler = (e: React.MouseEvent<HTMLSpanElement> | React.MouseEvent<HTMLAnchorElement>, test_name: string) => {
     setPatientDialogOpen(true)
     console.log(recommendation)
-    console.log("Recommendation selected: " +test_name)
+    console.log("Recommendation selected: " + test_name)
     localStorage.setItem("selected_test_for_recommendation", test_name)
     // setTestNameSelected(test_name)
   }
@@ -265,6 +265,43 @@ export default function AccordionExample({ findings, possible_cancer, gender_spe
               </TableBody>
             </Table>
             <br></br>
+            <Box>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                {/* <DateTimePicker
+                                label="Next Appointment"
+                                value={value}
+                                onChange={handleChangeDate}
+                                shouldDisableDate={disableRandomDates}
+                                shouldDisableTime={disableRandomDates}
+                                renderInput={(params) => <TextField {...params} />}
+                              /> */}
+                <DatePicker
+                  label="Next Appointment"
+                  value={value}
+                  onChange={handleChangeDate}
+                  shouldDisableDate={disableRandomDates}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+                {/* <DatePicker hintText="Random Dates Disabled" shouldDisableDate={disableRandomDates} /> */}
+              </LocalizationProvider>
+
+            </Box>
+            <br></br>
+            <Box>
+              <ToggleButtonGroup
+                color="primary"
+                value={timeSlot}
+                exclusive
+                onChange={handleTimeSlot}
+                aria-label="Platform"
+              >
+                <ToggleButton value="9amto10am">9:00 - 10: 00</ToggleButton>
+                <ToggleButton value="11.30amto12.30pm">11:30 - 12:30</ToggleButton>
+                <ToggleButton value="3pmto4pm" disabled={true}>15:00 - 16:00</ToggleButton>
+                <ToggleButton value="4.30pmto5pm">16:30 - 17:00</ToggleButton>
+                <ToggleButton value="6.30pmto7.30pm" disabled={true}>18:30 - 19:30</ToggleButton>
+              </ToggleButtonGroup>
+            </Box>
           </Stack>
         </DialogContent>
         <DialogActions>
