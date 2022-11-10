@@ -497,6 +497,7 @@ export default function Dashboard() {
                 // limitTags={2}
                 id="multiple-limit-tags"
                 options={optionsTags}
+                // render uniquely using map to ids 
                 renderOption={(props, option) => (
                   <li {...props} key={option.id}>
                     {option.label}
