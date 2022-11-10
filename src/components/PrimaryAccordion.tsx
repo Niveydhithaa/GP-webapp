@@ -284,7 +284,6 @@ export default function AccordionExample({ findings, possible_cancer, gender_spe
                 />
                 {/* <DatePicker hintText="Random Dates Disabled" shouldDisableDate={disableRandomDates} /> */}
               </LocalizationProvider>
-
             </Box>
             <br></br>
             <Box>
