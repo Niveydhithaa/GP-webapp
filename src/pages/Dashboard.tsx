@@ -49,11 +49,11 @@ export default function Dashboard() {
   const [resetComponent, setResetComponent] = useState<boolean>(false);
   const [totalSymptomsinList, setTotalSymptomsinList] = useState<number>(0);
 
-  const CreateDict_PrimaryData = (label: string, findings: string, possible_cancer: string, gender: string, recommendation: string) => {
-    return { label: findings, value: findings.toLowerCase(), possible_cancer: possible_cancer, gender: gender, recommendation: recommendation }
+  const CreateDict_PrimaryData = (label: string, prim_id : string, findings: string, possible_cancer: string, gender: string, recommendation: string) => {
+    return { label: findings, id: prim_id, value: findings.toLowerCase(), possible_cancer: possible_cancer, gender: gender, recommendation: recommendation }
   }
-  const CreateDict = (label: string, sympname: string, possible_cancer: string, gender: string, step1: string, rsponse1_1: string, rsponse1_2: string, nosteps: string, step2_1: string, step2_2: string, response2_1: string, response2_2: string, step3_1: string, step3_2: string, step1_test: string, step2_test: string) => {
-    return { label: sympname, value: sympname.toLowerCase(), possible_cancer: possible_cancer, gender: gender, step1: step1, rsponse1_1: rsponse1_1, rsponse1_2: rsponse1_2, nosteps: nosteps, step2_1: step2_1, step2_2: step2_2, response2_1: response2_1, response2_2: response2_2, step3_1: step3_1, step3_2: step3_2, step1_test: step1_test, step2_test: step2_test }
+  const CreateDict = (label: string, symp_id: string, sympname: string, possible_cancer: string, gender: string, step1: string, rsponse1_1: string, rsponse1_2: string, nosteps: string, step2_1: string, step2_2: string, response2_1: string, response2_2: string, step3_1: string, step3_2: string, step1_test: string, step2_test: string) => {
+    return { label: sympname, id: symp_id, value: sympname.toLowerCase(), possible_cancer: possible_cancer, gender: gender, step1: step1, rsponse1_1: rsponse1_1, rsponse1_2: rsponse1_2, nosteps: nosteps, step2_1: step2_1, step2_2: step2_2, response2_1: response2_1, response2_2: response2_2, step3_1: step3_1, step3_2: step3_2, step1_test: step1_test, step2_test: step2_test }
   }
   useEffect(() => {
     console.log(topic + " : is the current topic!!")
@@ -66,6 +66,7 @@ export default function Dashboard() {
           // debugger;
           setIsLoading(false)
           if (topic == "symptom") {
+            console.log(result.data)
             let symptomdata_Details = result.data.data_Details;
             // console.log(symptomdata_Details)
             var symptoms_temp_dict: Record<string, string>[] = [];
@@ -80,7 +81,7 @@ export default function Dashboard() {
                 // debugger;
                 //console.log("no gender no age bar")
 
-                let v = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
+                let v = CreateDict("label", value.symp_id, value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
                 //console.log(value.rsponse1_1)
                 symptoms_temp_dict.push(v)
               }
@@ -96,7 +97,7 @@ export default function Dashboard() {
                 // console.log(g)
                 if (g != "F") {
                   //console.log(value.symptom)
-                  let v1 = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
+                  let v1 = CreateDict("label", value.symp_id, value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
                   symptoms_temp_dict.push(v1)
                 }
               }
@@ -109,7 +110,7 @@ export default function Dashboard() {
                   // console.log(g)
                 }
                 if (g != "M") {
-                  let v1 = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
+                  let v1 = CreateDict("label", value.symp_id, value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
                   symptoms_temp_dict.push(v1)
                 }
 
@@ -129,12 +130,13 @@ export default function Dashboard() {
             symptoms_temp_dict = []
           }
           else if (topic == "primary") {
+            // console.log(result.data.data_Details)
             let primaryData_details = result.data.data_Details;
             //console.log(primaryData_details)
             var primary_temp_dict: Record<string, string>[] = [];
             primaryData_details.forEach(function (value: any) {
               if (gender == null) {
-                let v = CreateDict_PrimaryData("label", value.findings, value.possible_cancer, value.gender, value.recommendation)
+                let v = CreateDict_PrimaryData("label", value.primary_id,value.findings, value.possible_cancer, value.gender, value.recommendation)
                 //console.log(value.rsponse1_1)
                 primary_temp_dict.push(v)
               }
@@ -150,7 +152,7 @@ export default function Dashboard() {
                 // console.log(g)
                 if (g != "F") {
                   //console.log(value.symptom)
-                  let v1 = CreateDict_PrimaryData("label", value.findings, value.possible_cancer, value.gender, value.recommendation)
+                  let v1 = CreateDict_PrimaryData("label", value.primary_id, value.findings, value.possible_cancer, value.gender, value.recommendation)
                   primary_temp_dict.push(v1)
                 }
               }
@@ -163,7 +165,7 @@ export default function Dashboard() {
                   // console.log(g)
                 }
                 if (g != "M") {
-                  let v1 = CreateDict_PrimaryData("label", value.findings, value.possible_cancer, value.gender, value.recommendation)
+                  let v1 = CreateDict_PrimaryData("label", value.primary_id, value.findings, value.possible_cancer, value.gender, value.recommendation)
                   primary_temp_dict.push(v1)
                 }
 
@@ -189,18 +191,18 @@ export default function Dashboard() {
       axios
         .get(url + `/Getgpdata?input=${topic}&agegtlt=${ageV2}`)
         .then(result => {
-          // console.log(result.data)
+          console.log(result.data)
           if (topic === "symptom") {
-            let symptomdata_Details1 = result.data.data_Details.symptomdatadetails1;
-            console.log(symptomdata_Details1.length)
-            let symptomdata_Details2 = result.data.data_Details.symptomdatadetails2;
-            console.log(symptomdata_Details2.length)
-            let symptomdata_Details3 = result.data.data_Details.symptomdatadetails3;
-            console.log(symptomdata_Details3.length)
-            // let symptomdata_Details_old = result.data.symptomdata_Details
-            let symptomdata_Details_part1 = symptomdata_Details1.concat(symptomdata_Details2)
-            let symptomdata_Details_part2 = symptomdata_Details_part1.concat(symptomdata_Details3)
-            let symptomdata_Details = symptomdata_Details_part2
+            // let symptomdata_Details1 = result.data.data_Details.symptomdatadetails1;
+            // console.log(symptomdata_Details1.length)
+            // let symptomdata_Details2 = result.data.data_Details.symptomdatadetails2;
+            // console.log(symptomdata_Details2.length)
+            // let symptomdata_Details3 = result.data.data_Details.symptomdatadetails3;
+            // console.log(symptomdata_Details3.length)
+            // // let symptomdata_Details_old = result.data.symptomdata_Details
+            // let symptomdata_Details_part1 = symptomdata_Details1.concat(symptomdata_Details2)
+            // let symptomdata_Details_part2 = symptomdata_Details_part1.concat(symptomdata_Details3)
+            let symptomdata_Details = result.data.data_Details
             // console.log(symptomdata_Details)
             var symptoms_temp_dict: Record<string, string>[] = [];
             symptomdata_Details.forEach(function (value: any) {
@@ -210,7 +212,7 @@ export default function Dashboard() {
 
               if (gender == null) {
                 // console.log(typeof(value.age_gt))
-                let v = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
+                let v = CreateDict("label", value.symp_id, value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
                 symptoms_temp_dict.push(v)
               }
               //male and others without male
@@ -226,7 +228,7 @@ export default function Dashboard() {
                 // console.log(g)
                 if (g != "F") {
                   // console.log(value.symptom)
-                  let v1 = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
+                  let v1 = CreateDict("label", value.symp_id, value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
                   symptoms_temp_dict.push(v1)
                 }
               }
@@ -239,7 +241,7 @@ export default function Dashboard() {
                   // console.log(g)
                 }
                 if (g != "M") {
-                  let v1 = CreateDict("label", value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
+                  let v1 = CreateDict("label", value.symp_id, value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
                   symptoms_temp_dict.push(v1)
                 }
 
@@ -251,21 +253,21 @@ export default function Dashboard() {
             symptoms_temp_dict = []
           }
           else if (topic === "primary") {
-            let primarydata_Details1 = result.data.data_Details.primarydatadetails1;
-            console.log(primarydata_Details1.length)
-            let primarydata_Details2 = result.data.data_Details.primarydatadetails2;
-            console.log(primarydata_Details2.length)
-            let primarydata_Details3 = result.data.data_Details.primarydatadetails3;
-            console.log(primarydata_Details3.length)
-            // let symptomdata_Details_old = result.data.symptomdata_Details
-            let primarydata_Details_part1 = primarydata_Details1.concat(primarydata_Details2)
-            let primarydata_Details_part2 = primarydata_Details_part1.concat(primarydata_Details3)
-            let primaryData_Details = primarydata_Details_part2
+            // let primarydata_Details1 = result.data.data_Details.primarydatadetails1;
+            // console.log(primarydata_Details1.length)
+            // let primarydata_Details2 = result.data.data_Details.primarydatadetails2;
+            // console.log(primarydata_Details2.length)
+            // let primarydata_Details3 = result.data.data_Details.primarydatadetails3;
+            // console.log(primarydata_Details3.length)
+            // // let symptomdata_Details_old = result.data.symptomdata_Details
+            // let primarydata_Details_part1 = primarydata_Details1.concat(primarydata_Details2)
+            // let primarydata_Details_part2 = primarydata_Details_part1.concat(primarydata_Details3)
+            let primaryData_Details = result.data.data_Details
             // console.log(symptomdata_Details)
             var primary_temp_dict: Record<string, string>[] = [];
             primaryData_Details.forEach(function (value: any) {
               if (gender == null) {
-                let v = CreateDict_PrimaryData("label", value.findings, value.possible_cancer, value.gender, value.recommendation)
+                let v = CreateDict_PrimaryData("label", value.primary_id, value.findings, value.possible_cancer, value.gender, value.recommendation)
                 //console.log(value.rsponse1_1)
                 primary_temp_dict.push(v)
               }
@@ -281,7 +283,7 @@ export default function Dashboard() {
                 // console.log(g)
                 if (g != "F") {
                   //console.log(value.symptom)
-                  let v1 = CreateDict_PrimaryData("label", value.findings, value.possible_cancer, value.gender, value.recommendation)
+                  let v1 = CreateDict_PrimaryData("label",value.primary_id, value.findings, value.possible_cancer, value.gender, value.recommendation)
                   primary_temp_dict.push(v1)
                 }
               }
@@ -294,7 +296,7 @@ export default function Dashboard() {
                   // console.log(g)
                 }
                 if (g != "M") {
-                  let v1 = CreateDict_PrimaryData("label", value.findings, value.possible_cancer, value.gender, value.recommendation)
+                  let v1 = CreateDict_PrimaryData("label", value.primary_id,value.findings, value.possible_cancer, value.gender, value.recommendation)
                   primary_temp_dict.push(v1)
                 }
 
@@ -336,8 +338,13 @@ export default function Dashboard() {
     event: React.MouseEvent<HTMLElement>,
     newTopic: string
   ) => {
-    console.log("NEW TOPIC: " + newTopic)
-    setTopic(newTopic);
+    
+    if (newTopic !== null) {
+      console.log("NEW TOPIC: " + newTopic)
+      setTopic(newTopic);
+    }
+    // setTopic(newTopic)
+    setNoOfSymptoms(0)
   };
   const handleGender = (
     event: React.MouseEvent<HTMLElement>,
@@ -347,11 +354,13 @@ export default function Dashboard() {
     if (clr) {
       clr.click();
     }
-    console.log(typeof (newGender))
+    if (newGender !== null) {
+      console.log("gender is:" + newGender)
+      setGender(newGender);
+    }
     setOptionsTags([])
-    setGender(newGender);
+    // setGender(newGender);
     setMultiSelectOptions([]);
-    console.log("gender is:" + newGender)
     setSelectedFromMultiDict([])
     setNoOfSymptoms(0)
   };
@@ -469,6 +478,15 @@ export default function Dashboard() {
             </Box>
           </Box>
         </Grid>
+        <Grid item xs={12}>
+        <Box>
+              {(topic==null) && 
+                <Box m="auto" display="flex" alignItems="center" justifyContent="center" sx={{ verticalAlign: "middle" }}>
+                  <Typography fontFamily="sans-serif" fontSize="13px" mt={10}>No Topic Selected! Please select a topic to search. </Typography>
+                </Box>
+              }
+            </Box>
+        </Grid>
         {/* SEARCH COMPONENT */}
         <Grid item xs={12}>
           <Box display="flex" justifyContent="start" flexWrap="wrap" gap={2} mt={4}>
@@ -479,6 +497,11 @@ export default function Dashboard() {
                 // limitTags={2}
                 id="multiple-limit-tags"
                 options={optionsTags}
+                renderOption={(props, option) => (
+                  <li {...props} key={option.id}>
+                    {option.label}
+                  </li>
+                )}
                 getOptionLabel={(option) => option.label}
                 onChange={(e, value) => onTagsChange(e, value)}
                 // onFocus = {(e) => fetchData_LimitTags(e)}
@@ -505,12 +528,9 @@ export default function Dashboard() {
                   />
               }
             </Box>
+            
             <Box>
-              {
-                isLoading &&
-                <Spinner></Spinner>
-              }
-              {!isLoading &&
+              {(topic!==null) &&
                 <Button type="submit" variant="contained" onClick={handleSearchSymptom}>
                   Search
                 </Button>
