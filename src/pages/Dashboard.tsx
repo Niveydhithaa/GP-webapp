@@ -346,6 +346,9 @@ export default function Dashboard() {
         setSelectedFromMultiDict([])
         setNoOfSymptoms(0)
       }
+      // setMultiSelectOptions([]);
+      //   setSelectedFromMultiDict([])
+      //   setNoOfSymptoms(0)
       // setTopic(newTopic)
     }
     else if(topic==newTopic)
@@ -776,6 +779,7 @@ export default function Dashboard() {
             {isLoading &&
               <Spinner/>
             }
+        
         </Grid>
         {/* SEARCH COMPONENT */}
         <Grid item xs={12}>
@@ -843,7 +847,8 @@ export default function Dashboard() {
             </Box>
           }
         </Grid>
-        <Grid item xs={12}>
+        {!isLoading &&
+          <Grid item xs={12}>
           {(topic == "symptom") &&
             <Box sx={{ mt: 2, minHeight: "50px" }}>
 
@@ -901,6 +906,7 @@ export default function Dashboard() {
             </Box>
           }
         </Grid>
+        }
       </Grid>
     </Box>
   );
