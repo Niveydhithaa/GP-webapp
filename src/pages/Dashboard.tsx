@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect, useCallback } from "react";
 import {
   Box,
   Typography,
@@ -8,9 +8,14 @@ import {
   ToggleButton,
   Autocomplete,
   TextField,
+  InputLabel,
+  FormControl,
+  NativeSelect,
   Grid
 } from "@mui/material";
+import { debounce } from "lodash";
 import ReplayIcon from '@mui/icons-material/Replay';
+import {DebounceInput} from "react-debounce-input"
 // import MultiSelect from 'components/MultiSelect'
 import MultiSelect, { MultiValue } from 'react-select'
 import configData from "config.json"
@@ -48,16 +53,15 @@ export default function Dashboard() {
   const [noFilterPopup, setNoFiltersPopup] = useState<boolean>(false);
   const [resetComponent, setResetComponent] = useState<boolean>(false);
   const [totalSymptomsinList, setTotalSymptomsinList] = useState<number>(0);
-
+  const url = configData.url
   const CreateDict_PrimaryData = (label: string, prim_id : string, findings: string, possible_cancer: string, gender: string, recommendation: string) => {
     return { label: findings, id: prim_id, value: findings.toLowerCase(), possible_cancer: possible_cancer, gender: gender, recommendation: recommendation }
   }
   const CreateDict = (label: string, symp_id: string, sympname: string, possible_cancer: string, gender: string, step1: string, rsponse1_1: string, rsponse1_2: string, nosteps: string, step2_1: string, step2_2: string, response2_1: string, response2_2: string, step3_1: string, step3_2: string, step1_test: string, step2_test: string) => {
     return { label: sympname, id: symp_id, value: sympname.toLowerCase(), possible_cancer: possible_cancer, gender: gender, step1: step1, rsponse1_1: rsponse1_1, rsponse1_2: rsponse1_2, nosteps: nosteps, step2_1: step2_1, step2_2: step2_2, response2_1: response2_1, response2_2: response2_2, step3_1: step3_1, step3_2: step3_2, step1_test: step1_test, step2_test: step2_test }
   }
-  useEffect(() => {
+  const fetchData = debounce((value) => {
     console.log(topic + " : is the current topic!!")
-    const url = configData.url
     if (ageV2 == 0 || isNaN(ageV2)) {
       console.log('no age selected')
       axios
@@ -192,6 +196,176 @@ export default function Dashboard() {
         .get(url + `/Getgpdata?input=${topic}&agegtlt=${ageV2}`)
         .then(result => {
           console.log(result.data)
+          setIsLoading(false)
+          if (topic === "symptom") {
+            let symptomdata_Details = result.data.data_Details
+            // console.log(symptomdata_Details)
+            var symptoms_temp_dict: Record<string, string>[] = [];
+            symptomdata_Details.forEach(function (value: any) {
+
+              setStep1_Test(value.step1_test)
+              setPossibleCancer(value.possible_cancer)
+
+              if (gender == null) {
+                // console.log(typeof(value.age_gt))
+                let v = CreateDict("label", value.symp_id, value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
+                symptoms_temp_dict.push(v)
+              }
+              //male and others without male
+              else if (gender != "female") {
+                // console.log("male and no-filter")
+                // debugger;
+                let g: string = value.gender;
+                if (g !== null) {
+                  //remove redundant white spaces
+                  console.log(g)
+                  g = g.replace(/^\s+|\s+$/gm, '');
+                }
+                // console.log(g)
+                if (g != "F") {
+                  // console.log(value.symptom)
+                  let v1 = CreateDict("label", value.symp_id, value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
+                  symptoms_temp_dict.push(v1)
+                }
+              }
+              //female and others without filter
+              else {
+                let g: string = value.gender;
+                if (g !== null) {
+                  //remove redundant white spaces
+                  g = g.replace(/^\s+|\s+$/gm, '');
+                  // console.log(g)
+                }
+                if (g != "M") {
+                  let v1 = CreateDict("label", value.symp_id, value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
+                  symptoms_temp_dict.push(v1)
+                }
+
+              }
+
+            });
+            console.log(symptoms_temp_dict)
+            setOptionsTags(symptoms_temp_dict)
+            symptoms_temp_dict = []
+          }
+          else if (topic === "primary") {
+            let primaryData_Details = result.data.data_Details
+            // console.log(symptomdata_Details)
+            var primary_temp_dict: Record<string, string>[] = [];
+            primaryData_Details.forEach(function (value: any) {
+              if (gender == null) {
+                let v = CreateDict_PrimaryData("label", value.primary_id, value.findings, value.possible_cancer, value.gender, value.recommendation)
+                //console.log(value.rsponse1_1)
+                primary_temp_dict.push(v)
+              }
+              //male and others without male
+              else if (gender != "female") {
+                // debugger;
+                let g: string = value.gender;
+                if (g !== null) {
+                  //remove redundant white spaces
+                  //console.log(g)
+                  g = g.replace(/^\s+|\s+$/gm, '');
+                }
+                // console.log(g)
+                if (g != "F") {
+                  //console.log(value.symptom)
+                  let v1 = CreateDict_PrimaryData("label",value.primary_id, value.findings, value.possible_cancer, value.gender, value.recommendation)
+                  primary_temp_dict.push(v1)
+                }
+              }
+              //female and others without filter
+              else {
+                let g: string = value.gender;
+                if (g !== null) {
+                  //remove redundant white spaces
+                  g = g.replace(/^\s+|\s+$/gm, '');
+                  // console.log(g)
+                }
+                if (g != "M") {
+                  let v1 = CreateDict_PrimaryData("label", value.primary_id,value.findings, value.possible_cancer, value.gender, value.recommendation)
+                  primary_temp_dict.push(v1)
+                }
+
+              }
+
+            });
+            console.log(primary_temp_dict)
+            setOptionsTags(primary_temp_dict)
+            primary_temp_dict = []
+          }
+          // ({
+          //     repos: result.data,
+          //     isLoading: false
+          // });
+          return String(result.data);
+        })
+        .catch(error =>
+          console.log(error)
+        );
+    }
+  }, 1000);
+
+  
+  // debounce
+  useEffect(() => {
+    setIsLoading(true)
+    console.log(topic + " : is the current topic!!")
+    fetchData(topic)
+  }, [topic, gender, ageV2]);
+
+  const refreshComponents = () => {
+    //version 1 hard refresh
+    // window.location.reload();
+    setGender(null)
+    setTopic("symptom")
+    setAgeV2(0)
+    // setAgeV2(NaN)
+    // setAgeV2("")
+    setSelectedFromMultiDict([])
+    const clr = document.getElementsByClassName("MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator")[0] as HTMLElement;
+    clr.click();
+    setNoOfSymptoms(0)
+    let a = document.getElementById("age_value") as HTMLInputElement
+    a.value = ""
+  }
+  const handleTopic = (
+    event: React.MouseEvent<HTMLElement>,
+    newTopic: string
+  ) => {
+    
+    if(topic!=newTopic)
+    {
+      setOptionsTags([])
+      if (newTopic !== null) {
+        console.log("NEW TOPIC: " + newTopic)
+        setTopic(newTopic);
+        const clr = document.getElementsByClassName("MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator")[0] as HTMLElement;
+        clr.click();
+        setMultiSelectOptions([]);
+        setSelectedFromMultiDict([])
+        setNoOfSymptoms(0)
+      }
+      // setTopic(newTopic)
+    }
+    else if(topic==newTopic)
+    {
+      // setOptionsTags([])
+    // setGender(newGender);
+      // setMultiSelectOptions([]);
+      // setSelectedFromMultiDict([])
+      // setNoOfSymptoms(0)
+    }
+  };
+  
+
+  const handleDebounceFn = (inputValue: any) => {
+    if (ageV2 != 0 && !isNaN(ageV2)) {
+      console.log("age filter applied")
+      axios
+        .get(url + `/Getgpdata?input=${topic}&agegtlt=${ageV2}`)
+        .then(result => {
+          console.log(result.data)
           if (topic === "symptom") {
             // let symptomdata_Details1 = result.data.data_Details.symptomdatadetails1;
             // console.log(symptomdata_Details1.length)
@@ -317,35 +491,8 @@ export default function Dashboard() {
           console.log(error)
         );
     }
-  }, [topic, gender, ageV2]);
-
-  const refreshComponents = () => {
-    //version 1 hard refresh
-    // window.location.reload();
-    setGender(null)
-    setTopic("symptom")
-    setAgeV2(0)
-    setAgeV2(NaN)
-    // setAgeV2("")
-    setSelectedFromMultiDict([])
-    const clr = document.getElementsByClassName("MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator")[0] as HTMLElement;
-    clr.click();
-    setNoOfSymptoms(0)
-    let a = document.getElementById("age_value") as HTMLInputElement
-    a.value = ""
   }
-  const handleTopic = (
-    event: React.MouseEvent<HTMLElement>,
-    newTopic: string
-  ) => {
-    
-    if (newTopic !== null) {
-      console.log("NEW TOPIC: " + newTopic)
-      setTopic(newTopic);
-    }
-    // setTopic(newTopic)
-    setNoOfSymptoms(0)
-  };
+  const debounceFn = useCallback(debounce(handleDebounceFn, 50), []);
   const handleGender = (
     event: React.MouseEvent<HTMLElement>,
     newGender: string
@@ -364,7 +511,7 @@ export default function Dashboard() {
     setSelectedFromMultiDict([])
     setNoOfSymptoms(0)
   };
-  const AGEhandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const AGEhandleChange = debounce((event: React.ChangeEvent<HTMLInputElement>) => {
     console.log("AGE:GT: " + event.target.value)
     setOptionsTags([])
     if (isNaN(parseInt(event.target.value))) {
@@ -374,7 +521,21 @@ export default function Dashboard() {
       console.log("number is: " + parseInt(event.target.value))
     }
     setAgeV2(parseInt(event.target.value));
-
+    
+  }, 1000);
+  // const handleChangeWithLib = debounce((value) => {
+  //   fetch(`https://demo.dataverse.org/api/search?q=${value}`)
+  //     .then((res) => res.json())
+  //     .then((json) => setSuggestions(json.data.items));
+  // }, 500);
+  const AGEhandleChange_Dropdown = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log("AGE:from dropdown" + event.target.value)
+    if(parseInt(event.target.value)==0)
+    {
+      console.log("no age filter")
+    }
+    
+      setAgeV2(parseInt(event.target.value));
   };
   const handleSearchSymptom = () => {
     var tempDict: Record<string, string>[];
@@ -446,6 +607,125 @@ export default function Dashboard() {
               noValidate
               autoComplete="off">
               <Typography fontWeight="bold" mb={2}>Age</Typography>
+              {/* <Box sx={{ minWidth: 120 }}>
+                <FormControl fullWidth>
+                  <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                    Age
+                  </InputLabel>
+                  <NativeSelect
+                    defaultValue={0}
+                    value={ageV2}
+                    inputProps={{
+                      name: 'age',
+                      id: 'uncontrolled-native',
+                    }}
+                    onChange={AGEhandleChange_Dropdown}
+                  >
+                    <option value={0}>--</option>
+                    <option value={1}>1</option>
+                    <option value={2}>2</option>
+                    <option value={3}>3</option>
+                    <option value={4}>4</option>
+                    <option value={5}>5</option>
+                    <option value={6}>6</option>
+                    <option value={7}>7</option>
+                    <option value={8}>8</option>
+                    <option value={9}>9</option>
+                    <option value={10}>10</option>
+                    <option value={11}>11</option>
+                    <option value={12}>12</option>
+                    <option value={13}>13</option>
+                    <option value={14}>14</option>
+                    <option value={15}>15</option>
+                    <option value={16}>16</option>
+                    <option value={17}>17</option>
+                    <option value={18}>19</option>
+                    <option value={20}>20</option>
+                    <option value={21}>21</option>
+                    <option value={22}>22</option>
+                    <option value={23}>23</option>
+                    <option value={24}>24</option>
+                    <option value={25}>25</option>
+                    <option value={26}>26</option>
+                    <option value={27}>27</option>
+                    <option value={28}>28</option>
+                    <option value={29}>29</option>
+                    <option value={30}>30</option>
+                    <option value={31}>31</option>
+                    <option value={32}>32</option>
+                    <option value={33}>33</option>
+                    <option value={34}>34</option>
+                    <option value={35}>35</option>
+                    <option value={36}>36</option>
+                    <option value={37}>37</option>
+                    <option value={38}>38</option>
+                    <option value={39}>39</option>
+                    <option value={40}>40</option>
+                    <option value={41}>41</option>
+                    <option value={42}>42</option>
+                    <option value={43}>43</option>
+                    <option value={44}>44</option>
+                    <option value={45}>45</option>
+                    <option value={46}>46</option>
+                    <option value={47}>47</option>
+                    <option value={48}>48</option>
+                    <option value={49}>49</option>
+                    <option value={50}>50</option>
+                    <option value={51}>51</option>
+                    <option value={52}>52</option>
+                    <option value={53}>53</option>
+                    <option value={54}>54</option>
+                    <option value={55}>55</option>
+                    <option value={56}>56</option>
+                    <option value={57}>57</option>
+                    <option value={58}>58</option>
+                    <option value={59}>59</option>
+                    <option value={60}>60</option>
+                    <option value={61}>61</option>
+                    <option value={62}>62</option>
+                    <option value={63}>63</option>
+                    <option value={64}>64</option>
+                    <option value={65}>65</option>
+                    <option value={66}>66</option>
+                    <option value={67}>67</option>
+                    <option value={68}>68</option>
+                    <option value={69}>69</option>
+                    <option value={70}>70</option>
+                    <option value={71}>71</option>
+                    <option value={72}>72</option>
+                    <option value={73}>73</option>
+                    <option value={74}>74</option>
+                    <option value={75}>75</option>
+                    <option value={76}>76</option>
+                    <option value={77}>77</option>
+                    <option value={78}>78</option>
+                    <option value={79}>79</option>
+                    <option value={80}>80</option>
+                    <option value={81}>81</option>
+                    <option value={82}>82</option>
+                    <option value={83}>83</option>
+                    <option value={84}>84</option>
+                    <option value={85}>85</option>
+                    <option value={86}>86</option>
+                    <option value={87}>87</option>
+                    <option value={88}>88</option>
+                    <option value={89}>89</option>
+                    <option value={90}>90</option>
+                    <option value={90}>90</option>
+                    <option value={91}>91</option>
+                    <option value={92}>92</option>
+                    <option value={93}>93</option>
+                    <option value={94}>94</option>
+                    <option value={95}>95</option>
+                    <option value={96}>96</option>
+                    <option value={96}>96</option>
+                    <option value={97}>97</option>
+                    <option value={98}>98</option>
+                    <option value={99}>99</option>
+                    <option value={100}>100</option>
+                  </NativeSelect>
+                </FormControl>
+              </Box> */}
               <TextField
                 hiddenLabel={true}
                 InputProps={{
@@ -468,13 +748,18 @@ export default function Dashboard() {
                 onChange={AGEhandleChange}>
 
               </TextField>
-
+              {/* <DebounceInput
+                // minLength={2}
+                className="search"
+                placeholder="Enter something here..."
+                debounceTimeout={500}
+                onChange={AGEhandleChange} /> */}
             </Box>
             <Box>
               {/* <Typography fontWeight="bold" mb={2}></Typography> */}
               <Button sx={{ mt: 6 }} variant="outlined" startIcon={<ReplayIcon />} onClick={refreshComponents}>
                 Clear
-                    </Button>
+              </Button>
             </Box>
           </Box>
         </Grid>
@@ -487,11 +772,16 @@ export default function Dashboard() {
               }
             </Box>
         </Grid>
+        <Grid item xs={12} mt={4}>
+            {isLoading &&
+              <Spinner/>
+            }
+        </Grid>
         {/* SEARCH COMPONENT */}
         <Grid item xs={12}>
-          <Box display="flex" justifyContent="start" flexWrap="wrap" gap={2} mt={4}>
+          {isLoading && 
+            <Box display="flex" justifyContent="start" flexWrap="wrap" gap={2} mt={4}>
             <Box minWidth="50%" maxWidth="80%">
-              {(topic=="symptom") &&
                 <Autocomplete
                 multiple
                 // limitTags={2}
@@ -503,41 +793,55 @@ export default function Dashboard() {
                     {option.label}
                   </li>
                 )}
+                disabled={true}
                 getOptionLabel={(option) => option.label}
                 onChange={(e, value) => onTagsChange(e, value)}
-                // onFocus = {(e) => fetchData_LimitTags(e)}
+                // onFocus = {(e) => fetchData(e)}
                 // defaultValue={[top100Films[13], top100Films[12], top100Films[11]]}
                 renderInput={(params) => (
-                  <TextField {...params} label="Search symptom" />
+                  <TextField {...params} label="Search" />
                 )}
               />
-              }
-              {
-                (topic=="primary") &&
-                  <Autocomplete
-                    multiple
-                    // limitTags={2}
-                    id="multiple-limit-tags"
-                    options={optionsTags}
-                    getOptionLabel={(option) => option.label}
-                    onChange={(e, value) => onTagsChange(e, value)}
-                    // onFocus = {(e) => fetchData_LimitTags(e)}
-                    // defaultValue={[top100Films[13], top100Films[12], top100Films[11]]}
-                    renderInput={(params) => (
-                      <TextField {...params} label="Search primary care" />
-                    )}
-                  />
-              }
             </Box>
-            
             <Box>
-              {(topic!==null) &&
-                <Button type="submit" variant="contained" onClick={handleSearchSymptom}>
+                <Button type="submit" variant="contained" onClick={handleSearchSymptom} disabled={true}>
                   Search
                 </Button>
-              }
             </Box>
           </Box>
+          }
+          {
+            !isLoading &&
+            <Box display="flex" justifyContent="start" flexWrap="wrap" gap={2} mt={4}>
+              <Box minWidth="50%" maxWidth="80%">
+                  <Autocomplete
+                  multiple
+                  // limitTags={2}
+                  id="multiple-limit-tags"
+                  options={optionsTags}
+                  // render uniquely using map to ids 
+                  renderOption={(props, option) => (
+                    <li {...props} key={option.id}>
+                      {option.label}
+                    </li>
+                  )}
+                  getOptionLabel={(option) => option.label}
+                  onChange={(e, value) => onTagsChange(e, value)}
+                  // onFocus = {(e) => fetchData(e)}
+                  // defaultValue={[top100Films[13], top100Films[12], top100Films[11]]}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Search" />
+                  )}
+                />
+              </Box>
+              
+              <Box>
+                <Button type="submit" variant="contained" onClick={handleSearchSymptom}>
+                    Search
+                  </Button>
+              </Box>
+            </Box>
+          }
         </Grid>
         <Grid item xs={12}>
           {(topic == "symptom") &&
@@ -554,7 +858,7 @@ export default function Dashboard() {
                 <Box width="100%">
                   <Box>
                     <Box>
-                      <Typography fontSize="13px">Showing {noofsymptoms} symptom result(s)</Typography>
+                      <Typography fontSize="13px">Showing {noofsymptoms} result(s)</Typography>
                     </Box>
                     {
                       selectedFromMultiDict.map((symptom) => (
@@ -582,7 +886,7 @@ export default function Dashboard() {
                 <Box width="100%">
                   <Box>
                     <Box>
-                      <Typography fontSize="13px">Showing {noofsymptoms} finding result(s)</Typography>
+                      <Typography fontSize="13px">Showing {noofsymptoms} result(s)</Typography>
                     </Box>
                     {
                       selectedFromMultiDict.map((primary) => (
