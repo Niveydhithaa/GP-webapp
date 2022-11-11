@@ -26,8 +26,8 @@ export default function Login() {
     setIsLoading(true)
     const uname = (document.getElementById("username_input") as HTMLInputElement).value
     const pswd = (document.getElementById("password_input") as HTMLInputElement).value
-    console.log(uname)
-    console.log(pswd)
+    // console.log(uname)
+    // console.log(pswd)
     const input_dict: Record<string, string> = {};
     input_dict['Username'] = uname
     input_dict['Password'] = pswd
