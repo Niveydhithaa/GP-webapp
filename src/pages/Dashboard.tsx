@@ -334,31 +334,12 @@ export default function Dashboard() {
     newTopic: string
   ) => {
     
-    if(topic!=newTopic)
-    {
-      setOptionsTags([])
-      if (newTopic !== null) {
-        console.log("NEW TOPIC: " + newTopic)
-        setTopic(newTopic);
-        const clr = document.getElementsByClassName("MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator")[0] as HTMLElement;
-        clr.click();
-        setMultiSelectOptions([]);
-        setSelectedFromMultiDict([])
-        setNoOfSymptoms(0)
-      }
-      setMultiSelectOptions([]);
-        setSelectedFromMultiDict([])
-        setNoOfSymptoms(0)
-      // setTopic(newTopic)
+    if (newTopic !== null) {
+      console.log("NEW TOPIC: " + newTopic)
+      setTopic(newTopic);
     }
-    else if(topic==newTopic)
-    {
-      // setOptionsTags([])
-    // setGender(newGender);
-      // setMultiSelectOptions([]);
-      // setSelectedFromMultiDict([])
-      // setNoOfSymptoms(0)
-    }
+    // setTopic(newTopic)
+    setNoOfSymptoms(0)
   };
   
 
