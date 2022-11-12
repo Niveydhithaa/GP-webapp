@@ -320,14 +320,14 @@ export default function Dashboard() {
     setGender(null)
     setTopic("symptom")
     setAgeV2(0)
-    // setAgeV2(NaN)
+    console.log(ageV2)
     // setAgeV2("")
     setSelectedFromMultiDict([])
-    const clr = document.getElementsByClassName("MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator")[0] as HTMLElement;
-    clr.click();
+    // const clr = document.getElementsByClassName("MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator")[0] as HTMLElement;
+    // clr.click();
     setNoOfSymptoms(0)
-    let a = document.getElementById("age_value") as HTMLInputElement
-    a.value = ""
+    // let a = document.getElementById("age_value") as HTMLInputElement
+    // a.value = ""
   }
   const handleTopic = (
     event: React.MouseEvent<HTMLElement>,
@@ -498,13 +498,16 @@ export default function Dashboard() {
   const AGEhandleChange = debounce((event: React.ChangeEvent<HTMLInputElement>) => {
     console.log("AGE:GT: " + event.target.value)
     setOptionsTags([])
+    setMultiSelectOptions([]);
+    setSelectedFromMultiDict([])
+    setNoOfSymptoms(0)
     if (isNaN(parseInt(event.target.value))) {
       console.log("yes blank")
     }
     else {
       console.log("number is: " + parseInt(event.target.value))
     }
-    setAgeV2(parseInt(event.target.value));
+    setAgeV2(Number(event.target.value));
     
   }, 1000);
   // const handleChangeWithLib = debounce((value) => {
@@ -718,7 +721,7 @@ export default function Dashboard() {
                 // inputProps={{ type: 'number'}}
                 type="number"
                 id="demo-simple-select"
-                // value={ageV2.toString()}
+                value={ageV2}
                 // label="Age"
                 sx={{ width: 100 }}
                 placeholder="--"
@@ -729,9 +732,8 @@ export default function Dashboard() {
                     event.preventDefault();
                   }
                 }}
-                onChange={AGEhandleChange}>
-
-              </TextField>
+                
+                onChange={AGEhandleChange} />
               {/* <DebounceInput
                 // minLength={2}
                 className="search"
