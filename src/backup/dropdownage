@@ -1,11 +1,20 @@
-{/* <Box sx={{ minWidth: 120 }}>
+{/* dropdown age */}
+            <Box component="form"
+              // sx={{
+              //   '& .MuiTextField-root': {  width: '25ch' },
+              // }}
+
+              noValidate
+              autoComplete="off">
+              <Typography fontWeight="bold" mb={2}>Age</Typography>
+              <Box sx={{ minWidth: 120 }}>
                 <FormControl fullWidth>
-                  <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                  {/* <InputLabel variant="standard" htmlFor="uncontrolled-native">
                     Age
-                  </InputLabel>
+                  </InputLabel> */}
                   <NativeSelect
                     defaultValue={0}
-                    value={ageV2}
+                    // value={ageV2}
                     inputProps={{
                       name: 'age',
                       id: 'uncontrolled-native',
@@ -116,4 +125,6 @@
                     <option value={100}>100</option>
                   </NativeSelect>
                 </FormControl>
-              </Box> */}
+              </Box>
+            </Box>
+            
