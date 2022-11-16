@@ -491,6 +491,9 @@ export default function Dashboard() {
                 Clear
               </Button>
             </Box>
+            <Box sx={{ mt: 6 }}>{isLoading &&
+              <Spinner/>
+            }</Box>
           </Box>
         </Grid>
         <Grid item xs={12}>
@@ -502,11 +505,15 @@ export default function Dashboard() {
               }
             </Box>
         </Grid>
-        <Grid item xs={12} mt={4}>
+        {/* <Grid item xs={12} mt={4}>
             {isLoading &&
               <Spinner/>
             }
-        </Grid>
+            {!isLoading
+            &&
+            <Box></Box>
+            }
+        </Grid> */}
         {/* SEARCH COMPONENT */}
         <Grid item xs={12}>
           {isLoading && 
