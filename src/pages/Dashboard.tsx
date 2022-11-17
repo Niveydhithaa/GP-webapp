@@ -319,8 +319,8 @@ export default function Dashboard() {
     // window.location.reload();
     setGender(null)
     setTopic("symptom")
-    setAgeV2(0)
-    console.log(ageV2)
+    // setAgeV2(0)
+    // console.log(ageV2)
     // setAgeV2("")
     setSelectedFromMultiDict([])
     setNoOfSymptoms(0)
