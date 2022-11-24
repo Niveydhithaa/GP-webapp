@@ -1,0 +1,90 @@
+const handleSmokerChange = () =>{
+    
+  }
+  const handleSite = () => {
+    setIsLung(true)
+    console.log("Site handler! :)")
+    const str1 = "cough <OR fatigue <OR shortness-of-breath <OR ";
+    const arr_split = str1.split(" ")
+    // for(let i=0; i<arr_split.length; i++)
+    // {
+    //   console.log(arr_split[i])
+    // }
+    // let arr_check_val = new Array<boolean>(10);
+    // let bool1 = true
+    // let bool2 = false
+    // arr_check_val = [true, false, false, false, true, true, false, false, false, false]
+    // console.log("Sample evaluation checks")
+    // console.log(arr_check_val)
+    // console.log(arr_check_val.filter(x => x===true).length)
+    // console.log(arr_check_val.filter(x => x===false).length)
+    // console.log("Evaluating: 23 > 40: " + eval("23 > 40"))
+    // console.log("Evaluating: 87 > 40: " + eval("87 > 40"))
+    // console.log("Evaluating: true && false: " + eval("true&&false"))
+    // console.log("Evaluating: true && !true: " + eval("true&&!true"))
+    // // console.log(pswd)
+    // console.log("Condition checks")
+    // const smoker = false
+    // const symptoms = ['cough', 'fatigue']
+    // const count_symptoms = symptoms.length
+    // const cough = true
+    // const fatigue = false
+    // const bool_last_expr = eval(`${cough} || ${fatigue}`)
+    // // the above variables are going to be input from the strings inside the json dictionary
+    // console.log(eval(`${smoker} && ${count_symptoms} > 2 && ${bool_last_expr}`))
+    // console.log("JSON array into Javascript array")
+    // console.log(site_json)
+    // for(let i in site_json)
+    // {
+    //   // site can be added into state mgmt?
+    //   console.log("Site: " + site_json[i].site)
+    //   console.log("screens array")
+    //   let screensList = site_json[i].screens
+    //   for(let screen in screensList)
+    //   {
+    //     console.log(screensList[screen])
+    //   }
+    //   let keys_list = screensList[1].state_variables
+    //   let cond_array = screensList[1].condition
+    //   var temp_dict: Record<string, boolean> = {};
+    //   for(let i in keys_list)
+    //   {
+    //     var key = keys_list[Number(i)]
+    //     temp_dict[key] = true
+    //   }
+    //   let evalstring = ``
+    //   if(!isUndefined(keys_list))
+    //     evalstring = temp_dict[keys_list[0]] + `||` + temp_dict[keys_list[1]]
+    //   console.log(temp_dict)
+    //   console.log("stringified condition : " + evalstring)
+    //   console.log("evaluated eg:" + eval(evalstring))
+      
+    // }
+    // return (
+    //   <Box>
+    //     <Dialog open={isLung}>
+    //     <DialogTitle>Lung Cancer / Mesathelioma</DialogTitle>
+    //     <DialogContent>
+    //       <DialogContentText>
+    //         To subscribe to this website, please enter your email address here. We
+    //         will send updates occasionally.
+    //       </DialogContentText>
+    //       <ToggleButtonGroup
+    //         color="primary"
+    //         value={smoker}
+    //         exclusive
+    //         onChange={handleSmokerChange}
+    //         aria-label="Platform"
+    //       >
+    //         <ToggleButton value="smoker">Smoker</ToggleButton>
+    //         <ToggleButton value="nonsmoker">Non Smoker</ToggleButton>
+    //       </ToggleButtonGroup>
+    //     </DialogContent>
+    //     <DialogActions>
+    //       <Button>Cancel</Button>
+    //       <Button>Subscribe</Button>
+    //     </DialogActions>
+    //     </Dialog>
+    //   </Box>
+    // )
+  }

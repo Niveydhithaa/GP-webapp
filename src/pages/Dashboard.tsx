@@ -1,38 +1,18 @@
-import { useState, useEffect, useLayoutEffect, useCallback } from "react";
+import ReplayIcon from '@mui/icons-material/Replay';
 import {
-  Box,
-  Typography,
-  Container,
-  Button,
-  ToggleButtonGroup,
-  ToggleButton,
-  Autocomplete,
-  TextField,
-  InputLabel,
-  FormControl,
-  NativeSelect,
-  Grid
+  Autocomplete, Box, Button, Grid, TextField, ToggleButton, ToggleButtonGroup, Typography
 } from "@mui/material";
 import { debounce } from "lodash";
-import ReplayIcon from '@mui/icons-material/Replay';
-import {DebounceInput} from "react-debounce-input"
+import { useEffect, useState } from "react";
 // import MultiSelect from 'components/MultiSelect'
-import MultiSelect, { MultiValue } from 'react-select'
-import configData from "config.json"
-import { symptomOptions } from './data'
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import Navbar from "components/Navbar";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { styled } from "@mui/material/styles";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import Paper from "@mui/material/Paper";
-import AccordionExample from "components/AccordionExample";
-import PrimaryAccordion from "components/PrimaryAccordion";
 import axios from "axios";
-import Spinner from "components/hooks/Spinner"
+import AccordionExample from "components/AccordionExample";
+import Spinner from "components/hooks/Spinner";
+import PrimaryAccordion from "components/PrimaryAccordion";
+import configData from "config.json";
+import { MultiValue } from 'react-select';
 
 // let age_global : any = 0;
-// let age_global_lt : any = 0;
 var multiSelectDict_global: MultiValue<Record<string, string>>;
 var multiSelectDict_global_tags: Record<string, string>[];
 
@@ -53,6 +33,9 @@ export default function Dashboard() {
   const [noFilterPopup, setNoFiltersPopup] = useState<boolean>(false);
   const [resetComponent, setResetComponent] = useState<boolean>(false);
   const [totalSymptomsinList, setTotalSymptomsinList] = useState<number>(0);
+  const [color1, setColor] = useState<string>("#FF0000")
+  const [isLung, setIsLung] = useState<boolean>(false);
+  const [smoker, setSmoker] = useState<boolean>(false)
   const url = configData.url
   const CreateDict_PrimaryData = (label: string, prim_id : string, findings: string, possible_cancer: string, gender: string, recommendation: string) => {
     return { label: findings, id: prim_id, value: findings.toLowerCase(), possible_cancer: possible_cancer, gender: gender, recommendation: recommendation }
@@ -61,6 +44,7 @@ export default function Dashboard() {
     return { label: sympname, id: symp_id, value: sympname.toLowerCase(), possible_cancer: possible_cancer, gender: gender, step1: step1, rsponse1_1: rsponse1_1, rsponse1_2: rsponse1_2, nosteps: nosteps, step2_1: step2_1, step2_2: step2_2, response2_1: response2_1, response2_2: response2_2, step3_1: step3_1, step3_2: step3_2, step1_test: step1_test, step2_test: step2_test }
   }
   const fetchData = debounce((value) => {
+    setColor("#800020")
     console.log(topic + " : is the current topic!!")
     if (ageV2 == 0 || isNaN(ageV2)) {
       console.log('no age selected')
@@ -394,6 +378,7 @@ export default function Dashboard() {
       setAgeV2(parseInt(event.target.value));
   }, 1000);
   const handleSearchSymptom = () => {
+    setColor("#ff0000")
     var tempDict: Record<string, string>[];
     // console.log(multiSelectDict_global)
     // setSelectedFromMultiDict(multiSelectDict_global)
@@ -576,6 +561,7 @@ export default function Dashboard() {
                 <Button type="submit" variant="contained" onClick={handleSearchSymptom}>
                     Search
                   </Button>
+                  {/* <Button variant="contained" style={{backgroundColor: color1}}>Hello</Button> */}
               </Box>
             </Box>
           }
@@ -637,6 +623,12 @@ export default function Dashboard() {
               }
             </Box>
           }
+          {/* {
+            (topic=="site") && 
+              <Box sx={{ mt: 2, minHeight: "50px" }}>
+                <Button onClick={handleSite}>Lung</Button>
+              </Box>
+          } */}
         </Grid>
       </Grid>
     </Box>
