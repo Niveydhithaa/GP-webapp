@@ -1,0 +1,236 @@
+[
+	{
+		"site_id": "1",
+		"site":"Lung and pleural cancers",
+		"screens":[
+			{
+				"screen_id": "1.1",
+				"screen_name": "data-collection-field",
+				"display_name": "Patient statistics",
+				"values":{
+					"smoking":{
+						"type":"boolean",
+						"message":"Has the patient ever smoked?"
+					},
+					"asbestos":{
+						"type":"boolean",
+						"message":"Has the patient been exposed to asbestos"
+					},
+					"age":{
+						"type": "numeric",
+						"message": "Patient age",
+						"comment": "If its entered in the top age box pre-populate with that value"
+					},
+					"gender":{
+						"type": "enum",
+						"message": "Patient gender",
+						"comment": "If its entered in the top gender box pre-populate with that value"
+					}
+				},
+				"state_variables": ["smoking", "asbestos", "age", "gender"],
+				"num_termination_options": 1,
+				"termination_button_text": ["Next - Symptoms for immediate referral"],
+				"termination_screens": ["1.2"]
+			},
+			{
+				"screen_id":"1.2",
+				"screen_name":"immediate-referral-symptoms",
+				"display_name": "Symptoms or findings leading to immediate referral",
+				"values":{
+					"xray_findings":{
+
+						"type": "radio_button",
+						"display_name": "X-Ray findings",
+						"num_options": 3,
+						"options": ["Normal", "Abnormal-Lung cancer", "Abnormal-Mesothelioma"]
+
+					},
+					"unexplained_heamoptysis": {
+						"type": "radio_button",
+						"display_name": "Unexplained heamoptysis",
+						"num_options": 2,
+						"options": ["Present", "Absent"]
+					}
+				},
+				"state_variables": ["xray_findings", "unexplained_heamoptysis"],
+				"condition_text":["If either the X-ray findings are abnormal, or there is unexplained heamoptysis, urgent referral to oncologist is prescribed"],
+				"condition": ["xray_findings==1 or xray_findings==-1 or unexplained_heamoptysis==1"],
+				"condition_satisfied_actions": [
+					{
+						"button_index": 0,
+						"condition_index": 0,
+						"action": "color_change",
+						"color": "#FF0000"
+					}
+				],
+				"num_termination_options": 2,
+				"termination_button_text":["Immediate referral", "Consider further investigations"],
+				"termination_screens": ["referral", "1.3"]
+			},
+			{
+				"screen_id": "1.3",
+				"screen_name":"further-investigations-to-be-considered",
+				"required_state_variables": ["smoking", "asbestos", "age"],
+				"display_name": "These symptoms indicate the need for further investigations",
+				"values": {
+					"cough":{
+						"type":"boolean",
+						"num_options": 1,
+						"options": ["Cough"],
+						"possible_cancer": ["lung", "mesothelioma"]
+					},
+					"fatigue":{
+						"type":"boolean",
+						"num_options": 1,
+						"options": ["Fatigue"],
+						"possible_cancer": ["lung", "mesothelioma"]
+					},
+					"shortness-of-breath":{
+						"type":"boolean",
+						"num_options": 1,
+						"options": ["Shortness of breath"],
+						"possible_cancer": ["lung", "mesothelioma"]
+					},
+					"chest-pain":{
+						"type":"boolean",
+						"num_options": 1,
+						"options": ["Chest pain"],
+						"possible_cancer": ["lung", "mesothelioma"]
+
+					},
+					"weight-loss":{
+						"type":"boolean",
+						"num_options": 1,
+						"options": ["Weight loss"],
+						"possible_cancer": ["lung", "mesothelioma"]
+
+					},
+					"appetite-loss":{
+						"type":"boolean",
+						"num_options": 1,
+						"options": ["Appetite loss"],
+						"possible_cancer": ["lung", "mesothelioma"]
+
+					},
+					"finger-clubbing": {
+						"type":"boolean",
+						"num_options": 1,
+						"options": ["Finger clubbing"],
+						"possible_cancer": ["lung", "mesothelioma"]
+					},
+					"chest-signs-lung-cancer":{
+						"type":"boolean",
+						"num_options": 1,
+						"options": ["Chest signs indicative of lung cancer"],
+						"possible_cancer": ["lung"]
+					},
+					"chest-signs-pleural-disease":{
+						"type":"boolean",
+						"num_options": 1,
+						"options": ["Chest signs indicative of pleural disease"],
+						"possible_cancer": ["mesothelioma"]
+					},
+					"supraclavicular-lymphadenopathy":{
+						"type":"boolean",
+						"num_options": 1,
+						"options": ["Supraclavicular lymphadenopathy"],
+						"possible_cancer": ["lung"]
+					},
+					"persistent-cervical-lymphadenopathy":{
+						"type":"boolean",
+						"num_options": 1,
+						"options": ["Persistent cervical lymphadenopathy"],
+						"possible_cancer": ["lung"]
+
+					},
+					"persistent-chest-infection":{
+						"type":"boolean",
+						"num_options": 1,
+						"options": ["Persistent chest infection"],
+						"possible_cancer": ["lung"]
+
+					},
+					"recurrent-chest-infection": {
+						"type":"boolean",
+						"num_options": 1,
+						"options": ["Recurrent chest infection"],
+						"possible_cancer": ["lung"]
+
+					},
+					"thrombocytosis":{
+						"type":"boolean",
+						"num_options": 1,
+						"options": ["Thrombocytosis"],
+						"possible_cancer": ["lung"]
+
+					}
+				},
+				"state_variables": ["cough", "fatigue", "shortness-of-breath", 
+					"chest-pain", "weight-loss", "appetite-loss", "finger-clubbing", 
+					"chest-signs-lung-cancer", "chest-signs-pleural-disease", "supraclavicular-lymphadenopathy", 
+					"persistent-cervical-lymphadenopathy", "persistent-chest-infection", "recurrent-chest-infection", "thrombocytosis"],
+
+				"symptoms": ["cough", "fatigue", "shortness-of-breath", 
+					"chest-pain", "weight-loss", "appetite-loss", "finger-clubbing", 
+					"chest-signs-lung-cancer", "chest-signs-pleural-disease", "supraclavicular-lymphadenopathy", 
+					"persistent-cervical-lymphadenopathy", "persistent-chest-infection", "recurrent-chest-infection", "thrombocytosis"],
+
+				"offer_symptoms_lung_cancer": ["cough", "fatigue", "shortness-of-breath", "chest-pain", "weight-loss", "appetite-loss"],
+
+				"consider_symptoms_lung_cancer": ["persistent-chest-infection", "recurrent-chest-infection", "finger-clubbing", "supraclavicular-lymphadenopathy",
+					"persistent-cervical-lymphadenopathy", "chest-signs-lung-cancer", "thrombocytosis"],
+
+				"offer_symptoms_mesothelioma": ["cough", "fatigue", "shortness-of-breath", "chest-pain", "weight-loss", "appetite-loss"],
+				"consider_symptoms_mesothelioma": ["finger-clubbing", "chest-signs-pleural-disease"],
+
+				"condition_text": "Consider urgent X-ray in case of lung cancer for age >= 40 ",
+
+
+				"condition" : [
+					["(age >= 40 and count_offer >= 2) or (smoker==true and count_offer >= 1)"],
+					["age >= 40 and count_consider >= 1"],
+					["(age >= 40 and count_offer_mes >= 2) or (smoker and count_offer_mes >= 1) or (asbestos and count_offer_mes >= 1)"],
+					["age >= 40 and count_consider_mes >= 1"]
+				],
+
+				"condition_satisfied_actions": [
+					{
+						"button_index": 0,
+						"condition_index": 0,
+						"action": "color_change",
+						"color": "#FF0000"
+					},
+					{
+						"button_index": 1,
+						"condition_index": 1,
+						"action": "color_change",
+						"color": "#FF0000"
+					},
+					{
+						"button_index": 2,
+						"condition_index": 2,
+						"action": "color_change",
+						"color": "#FF0000"
+					},
+					{
+						"button_index": 3,
+						"condition_index": 3,
+						"action": "color_change",
+						"color": "#FF0000"
+					},
+					{
+						"button_index": 4,
+						"condition_index": 2,
+						"action": "color_change",
+						"color": "#FF0000"
+
+					}
+				],
+				"termination_button_text":["Urgent Chest X-ray, suspect lung cancer", "Consider Chest X-ray, suspect lung cancer", "Urgent Chest X-ray, suspect mesothelioma", "Consider Chest X-ray, suspect mesothelioma", "Urgent Chest X-ray, suspect lung cancer and mesothelioma"],
+				"termination_screens": ["prescription", "prescription", "prescription", "prescription", "prescription"]
+
+			}
+			
+		]
+	}
+]
