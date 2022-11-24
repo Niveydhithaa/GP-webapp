@@ -13,7 +13,10 @@ import Accounts from "pages/Accounts"
 import Analytics from "pages/Analytics"
 import MainPage from "components/charts/MainPage";
 import PrivateRoute from "hooks/PrivateRoute"
+import SiteJson from "evaluation/SiteJson"
 import Homepagev2 from "pages/Homepagev2"
+import FiltrexEval from "evaluation/FiltrexEval";
+import Screen3 from "evaluation/RenderQuestions";
 
 function App() {
   return (
@@ -31,6 +34,10 @@ function App() {
         <Route path="/accounts" element={<Accounts />} />
         <Route path="/analytics" element={<Analytics />} />
         <Route path="/main" element={<MainPage />} />
+        <Route path="/site" element={<SiteJson />} />
+        {/* below requires context arguments */}
+        {/* <Route path="/filtrex" element={<FiltrexEval />} /> */}
+        {/* <Route path="/filtrex/screen3" element={<Screen3 />} /> */}
 
         <Route path='/home' element={<PrivateRoute component={Home} />} />
         <Route path='/patientprofile' element={<PrivateRoute component={PatientProfile} />} />
