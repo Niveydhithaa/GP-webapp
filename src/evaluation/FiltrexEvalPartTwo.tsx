@@ -15,7 +15,7 @@ interface Props {
     asbestos: boolean | undefined
 }
 
-export default function RenderQuestions({smoker, asbestos} : Props) {
+export default function FiltrexEvalPartTwo({smoker, asbestos} : Props) {
     const [cough, setCough] = useState<number>()
     const [fatigue, setFatigue] = useState<number>()
     const [shortness_breath, setShortnessBreath]= useState<number>()
@@ -56,7 +56,7 @@ export default function RenderQuestions({smoker, asbestos} : Props) {
         setConsider(consider_lungcancer_list)
         //#endregion
         
-        //#region Conditions mapping with present input - Basicaly Rule Engine
+        //#region Rule Engine
         if(screen3_expr1!=undefined && screen3_expr2!=undefined && screen3_expr3!=undefined && screen3_expr4!=undefined)
         {
             var screen3_filter1 = compileExpression(screen3_expr1)
@@ -128,7 +128,7 @@ export default function RenderQuestions({smoker, asbestos} : Props) {
                 </ToggleButtonGroup>
             </Box>
             <Box>
-                <Typography>{siteJson[0].screens[2].values["shortness-of-breath"]?.options[0]}</Typography>
+                <Typography>{siteJson[0].screens[2].values["shortness_of_breath"]?.options[0]}</Typography>
                 <ToggleButtonGroup
                     color="primary"
                     value={shortness_breath}
@@ -140,18 +140,6 @@ export default function RenderQuestions({smoker, asbestos} : Props) {
                     <ToggleButton value={0}>No</ToggleButton>
                 </ToggleButtonGroup>
             </Box>
-            {/* <Box>
-                {
-                    siteJson[0].screens[2].symptoms?.map(symptom_single => {
-                        return (
-                                <div>
-                                    <h1>{symptom_single}</h1>
-                                    
-                                </div>
-                            )
-                        })
-                    }
-            </Box> */}
             <Button onClick={getResults}>Get results</Button>
         </Box>
     );

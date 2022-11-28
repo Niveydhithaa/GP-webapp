@@ -10,7 +10,7 @@ import {useState, useEffect} from "react";
 import siteJson from "data/sites_master_mod.json"
 import { isUndefined } from 'util';
 import {useNavigate} from "react-router-dom"
-import RenderQuestions from 'evaluation/RenderQuestions';
+import RenderQuestions from 'evaluation/FiltrexEvalPartTwo';
 
 interface Props {
     smoker: boolean | undefined
