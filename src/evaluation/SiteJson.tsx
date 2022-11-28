@@ -1,4 +1,4 @@
-import site_json from "../data/sites_master_data.json"
+import config from "config.json"
 import {
     Box,
     Autocomplete,
@@ -10,7 +10,17 @@ import {
 } from "@mui/material"
 import {useState} from "react"
 import RenderQuestions from "evaluation/RenderQuestions_Clone"
-
+async function getJsonFromBlob() {
+    try {
+        const blobUrl = config.bloburl
+      let response = await fetch(blobUrl);
+      let responseJson = await response.json();
+      return responseJson;
+     } catch(error) {
+      console.error(error);
+    }
+  }
+var siteJson_blob = getJsonFromBlob()
 const siteData =  ['Lung', 'Blood']
 export default function SiteJson() {
     const [site, setSite] = useState<string | null>(siteData[0])
@@ -25,16 +35,9 @@ export default function SiteJson() {
     
     return (
         <Box>
-            {/* {
-                site_json.map(singlesite => {
-                    return (
-                        <div>
-                            <h1>{singlesite.site_id}</h1>
-                            <p>{singlesite.site}</p>
-                        </div>
-                    )
-                })
-            } */}
+            <>
+            {console.log(siteJson_blob)}
+            </>
             <Box>
                 <Autocomplete
                     disablePortal
