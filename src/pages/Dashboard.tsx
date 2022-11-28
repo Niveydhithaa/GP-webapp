@@ -11,6 +11,7 @@ import Spinner from "components/hooks/Spinner";
 import PrimaryAccordion from "components/PrimaryAccordion";
 import configData from "config.json";
 import { MultiValue } from 'react-select';
+import SiteJson from "evaluation/SiteJson"
 
 // let age_global : any = 0;
 var multiSelectDict_global: MultiValue<Record<string, string>>;
@@ -415,7 +416,7 @@ export default function Dashboard() {
 
                 >
                   <ToggleButton value="symptom" id="toggle_symptom">Symptom</ToggleButton>
-                  <ToggleButton value="site" disabled>Site</ToggleButton>
+                  <ToggleButton value="site" >Site</ToggleButton>
                   <ToggleButton value="primary" >
                     Primary care Investigations
                   </ToggleButton>
@@ -567,6 +568,12 @@ export default function Dashboard() {
           }
         </Grid>
         <Grid item xs={12}>
+        {
+            (topic=="site") && 
+              <Box sx={{ mt: 2, minHeight: "50px" }}>
+                <SiteJson />
+              </Box>
+          }
           {(topic == "symptom") &&
             <Box sx={{ mt: 2, minHeight: "50px" }}>
 
@@ -623,12 +630,7 @@ export default function Dashboard() {
               }
             </Box>
           }
-          {/* {
-            (topic=="site") && 
-              <Box sx={{ mt: 2, minHeight: "50px" }}>
-                <Button onClick={handleSite}>Lung</Button>
-              </Box>
-          } */}
+          
         </Grid>
       </Grid>
     </Box>
