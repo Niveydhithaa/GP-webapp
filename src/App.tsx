@@ -16,7 +16,8 @@ import PrivateRoute from "hooks/PrivateRoute"
 import SiteJson from "evaluation/SiteJson"
 import Homepagev2 from "pages/Homepagev2"
 import FiltrexEval from "evaluation/FiltrexEval";
-import Screen3 from "evaluation/RenderQuestions";
+import Screen3 from "evaluation/FiltrexEvalPartTwo";
+import Reducer from "evaluation/Reducer";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path="/analytics" element={<Analytics />} />
         <Route path="/main" element={<MainPage />} />
         <Route path="/site" element={<SiteJson />} />
+        <Route path="/reducer" element={<Reducer />} />
         {/* below requires context arguments */}
         {/* <Route path="/filtrex" element={<FiltrexEval />} /> */}
         {/* <Route path="/filtrex/screen3" element={<Screen3 />} /> */}
