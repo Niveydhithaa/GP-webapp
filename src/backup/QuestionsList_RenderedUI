@@ -1,0 +1,68 @@
+
+        //MAPPING EXAMPLE
+        {/* <Box>
+                {
+                    siteJson[0].screens[2].symptoms?.map(symptom_single => {
+                        return (
+                                <div>
+                                    <h1>{symptom_single}</h1>
+                                    
+                                </div>
+                            )
+                        })
+                    }
+            </Box> */}
+        //WITHOUT LOOP
+        {/* <Box>
+            </Box>
+            <Box>
+                <Typography>Q.1. Smoker?</Typography>
+                <ToggleButtonGroup
+                    color="primary"
+                    value={smoker}
+                    exclusive
+                    onChange={(e: any, newValue: boolean) => setSmoker(newValue)}
+                    aria-label="Platform"
+                >
+                    <ToggleButton value={true} id="toggle_symptom">Yes</ToggleButton>
+                    <ToggleButton value={false}>No</ToggleButton>
+                </ToggleButtonGroup>
+            </Box>
+            <Box>
+                <Typography>Q.2. Has he/she worked in asbestos industry?</Typography>
+                <ToggleButtonGroup
+                    color="primary"
+                    value={asbestos}
+                    exclusive
+                    onChange={(e: any, newValue: boolean) => setAsbestos(newValue)}
+                    aria-label="Platform"
+                >
+                    <ToggleButton value={true} id="toggle_symptom">Yes</ToggleButton>
+                    <ToggleButton value={false}>No</ToggleButton>
+                </ToggleButtonGroup>
+            </Box> */}
+        //WITH LOOP
+            // questionsList.push(<Box> 
+            //     <Typography>{values[i].message}</Typography>
+            //     <ToggleButtonGroup
+            //         color="primary"
+            //         exclusive
+            //         value={false}
+            //         onChange={(e: React.MouseEvent<HTMLElement>, newValue: boolean) => handleAddMoreFields(e, keys[i], newValue, values[i].message)}
+            //         aria-label="Platform"
+            //         >
+            //         {
+            //             values[i].options &&
+            //                 <Box>
+            //                     <ToggleButton value={true} id="toggle_symptom">{values[i].options[0]}</ToggleButton>
+            //                     <ToggleButton value={false}>{values[i].options[1]}</ToggleButton>
+            //                 </Box>
+            //         }
+            //         {
+            //             !values[i].options &&
+            //                 <Box>
+            //                     <TextField disabled value=""/>
+            //                 </Box>
+            //         }
+            //     </ToggleButtonGroup>
+            //     </Box>);
