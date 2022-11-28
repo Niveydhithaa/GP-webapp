@@ -9,7 +9,7 @@ import {
     ToggleButton
 } from "@mui/material"
 import {useState} from "react"
-import RenderQuestions from "evaluation/RenderQuestions_Main"
+import RenderQuestions from "evaluation/RenderQuestions_Clone"
 
 const siteData =  ['Lung', 'Blood']
 export default function SiteJson() {
@@ -53,7 +53,7 @@ export default function SiteJson() {
                 <Button onClick={getDataHandler}>Get data</Button>
                 {
                     getData==true &&
-                    <RenderQuestions/>
+                    <RenderQuestions id="1" />
                 }
             </Box>
         </Box>
