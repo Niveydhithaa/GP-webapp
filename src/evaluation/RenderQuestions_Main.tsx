@@ -7,7 +7,7 @@ import {
     ToggleButtonGroup,
     ToggleButton
 } from "@mui/material"
-import { useState, useReducer, useCallback, useMemo } from "react"
+import { useState, useReducer, useCallback, useMemo, useEffect } from "react"
 import siteJson from "../data/sites_master_mod.json"
 import FiltrexEval from "evaluation/FiltrexEval"
 enum ActionKind {
@@ -17,6 +17,11 @@ enum ActionKind {
 interface ActionProp {
     type: ActionKind
     payload: { title: string, value: boolean, question: string }
+    index? : number
+}
+interface Props {
+    condition: boolean
+    site: number | undefined
 }
 export const reducer = (state: any, action: ActionProp) => {
     switch (action.type) {
@@ -25,23 +30,29 @@ export const reducer = (state: any, action: ActionProp) => {
             console.log(action)
             return {...state, name: [...state.name, action.payload]};
         }
-        case ActionKind.UPDATE:
-            state.action.name.payload = action.payload.value
-            return state;
+        case ActionKind.UPDATE:{
+            if(action.index!==undefined)
+                state["name"][action.index]["value"] = action.payload.value
+            // return {...state, name: [...state.name, action.payload]};
+            return {...state};
+        }
         default:
             return state;
     }
 };
-export default function RenderQuestions_MAIN() {
+export default function RenderQuestions_MAIN({condition, site, ...props} : Props) {
     const [smoker, setSmoker] = useState<boolean>()
     const [asbestos, setAsbestos] = useState<boolean>()
     const [startEval, setStartEval] = useState<boolean>(false)
-    let initialState = { name: [{ title: "default", payload: true, question: "defaultqn" }]};
+    let initialState = { name: []};
     const [inputFields, dispatch] = useReducer(reducer, initialState)
     let states: Record<string, any>[] = [];
     const age = 45;
     console.log("Hello rendering!")
     const vals = Object.values(siteJson[0].screens[0].values)
+    useEffect(() => {
+        renderQuestionsToggle()
+    }, [site])
     const getResults = () => {
         console.log("smoker val:" + smoker)
         console.log("asbestos val:" + asbestos)
@@ -71,23 +82,30 @@ export default function RenderQuestions_MAIN() {
             type: ActionKind.STATE,
             payload: { title: state_name, value: state_value, question: question }
         });
-    }, [inputFields]);
+    }, [site]);
 
-    const handleUpdateValueField = (state_name: string, state_value: boolean, question: string) => {
-        console.log("update value")
+    const handleUpdateValueField = (index: number, state_name: string, state_value: boolean, question: string) => {
+        console.log("update value : index: " + index + " value: " + state_value)
         dispatch({
             type: ActionKind.UPDATE,
-            payload: { title: state_name, value: state_value, question: question}
+            payload: { title: state_name, value: state_value, question: question},
+            index: index
         });
+        console.log(inputFields.name)
     };
-    const toggleFn = useMemo(() => renderQuestionsToggle(), [inputFields]);
+    //const toggleFn = useMemo(() => renderQuestionsToggle(), [inputFields]);
     const createDict = (key: string, value: any) => {
         return { key: value }
     }
-    function renderQuestionsToggle() {
+    //function renderQuestionsToggle
+    const renderQuestionsToggle = () => {
         console.log("driver function enter")
+        //make the inputFields epmty here. for each site it has to be made empty
         let questionsList: any[] = [];
-        let totalDict = siteJson[0].screens[0].values
+        if(site!=undefined)
+        {
+            console.log(site)
+            let totalDict = siteJson[site-1].screens[0].values
         let keys = Object.keys(totalDict)
         let values = Object.values(totalDict)
         console.log(" Initial state of input field:  " + JSON.stringify(initialState))
@@ -98,46 +116,12 @@ export default function RenderQuestions_MAIN() {
             console.log(totalDict.hasOwnProperty(keys[i]))
             // #infinite loop problem
             handleAddMoreFields(keys[i], true, values[i].message)
-            // inputFields.map((item: any) => {
-            //         console.log(item)
-            //         questionsList.push(
-            //             <Box key={`${item.name?.title}`} className="Wrapper">
-            //                 {/* {console.log(item.name.title)} */}
-            //                 <Typography>{values[i].message}</Typography>
-                            
-            //                     {
-            //                         values[i].options &&
-            //                         <Box>
-            //                             <ToggleButtonGroup
-            //                                     color="primary"
-            //                                     exclusive
-            //                                     value={true}
-            //                                     onChange={(e: React.MouseEvent<HTMLElement>, newValue: boolean) => handleUpdateValueField(keys[i], newValue, values[i].message)}
-            //                                     aria-label="Platform"
-            //                                 >
-            //                                 <ToggleButton value={true} id="toggle_symptom">Yes</ToggleButton>
-            //                                 <ToggleButton value={false}>No</ToggleButton>
-            //                             </ToggleButtonGroup>
-            //                         </Box>
-            //                     }
-            //                     {
-            //                         !values[i].options &&
-            //                             <TextField disabled value="Autofilled"/>
-            //                     }
-            //             </Box>
-            //         );
-            //     })
             
             console.log(JSON.stringify(initialState))
         }
         console.log(" Input field after loop: " + JSON.stringify(inputFields))
         console.log("driver function exit")
-        return questionsList;
-    }
-    function renderQuestionsToggle_version2() {
-        
-        console.log("driver function enter")
-        let questionsList: any[] = [];
+        }
         return questionsList;
     }
     return (
@@ -171,12 +155,52 @@ export default function RenderQuestions_MAIN() {
                 </ToggleButtonGroup>
             </Box> 
             <Typography style={{color: "red"}}>Dynamic tries: START</Typography>
-            <Box>{toggleFn}</Box>
+            {/* <Box>{condition&&renderQuestionsToggle()}</Box> */}
+            {/* <Button onClick={renderQuestionsToggle}>Render</Button> */}
+            {JSON.stringify(inputFields.name)}
+            {inputFields.name.map((item: any, index : number) => {
+                   return (
+                        <Box key={index} className="Wrapper">
+                            {/* {console.log(item.name.title)} */}
+                            <Typography>{item.question} - {item.title}</Typography>
+                            
+                                {
+                                    (item.title!="gender" && item.title!="age") &&
+                                    <Box>
+                                        <ToggleButtonGroup
+                                                color="primary"
+                                                exclusive
+                                                value={item.value}
+                                                // onInput={}
+                                                // onClick={(e: React.MouseEvent<HTMLElement>, newValue: boolean) => handleUpdateValueField(index, item.title, newValue, item.question)}
+                                                onChange={(e: React.MouseEvent<HTMLElement>, newValue: boolean) => {
+                                                    handleUpdateValueField(index, item.title, newValue, item.question)
+                                                    item.value = newValue
+                                                }}
+                                                aria-label="Platform"
+                                            >
+                                            <ToggleButton value={true} id="toggle_symptom">Yes</ToggleButton>
+                                            <ToggleButton value={false}>No</ToggleButton>
+                                        </ToggleButtonGroup>
+                                    </Box>
+                                }
+                                {
+                                    (item.title=="gender" || item.title=="age")
+                                    &&
+                                    <Box>
+                                        <TextField label={item.title} disabled={true}>Autofilled</TextField>
+                                    </Box>
+                                }
+                        </Box>
+                   )
+                  
+                })
+            }
             <Typography style={{color: "red"}}>Dynamic tries: END</Typography>
             <Button onClick={getResults}>Get results</Button>
             {
                 startEval &&
-                <FiltrexEval smoker={smoker} asbestos={asbestos}></FiltrexEval>
+                <FiltrexEval smoker={smoker} asbestos={asbestos} site={site} inputFields={inputFields}></FiltrexEval>
             }
             
         </Box>
