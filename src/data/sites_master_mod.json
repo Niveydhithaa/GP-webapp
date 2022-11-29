@@ -234,5 +234,241 @@
 			}
 			
 		]
+	},
+	{
+		"site_id":"2",
+		"site": "Upper gastrointestinal tract cancers",
+		"screens":[
+			{
+				"screen_id": "2.1",
+				"screen_name": "data-collection-field",
+				"display_name": "Patient details",
+				"values":{
+					"age":{
+						"type": "numeric",
+						"message": "Patient age",
+						"comment": "If its entered in the top age box pre-populate with that value"
+					}
+
+				},
+				"state_variables": ["age"],
+				"num_termination_options": 1,
+				"termination_button_text": ["Next-Immediate referral"],
+				"termination_screens": ["2.2"]
+			},
+			{
+				"screen_id": "2.2",
+				"screen_name": "immediate-referral-symptoms",
+				"display_name": "Symptoms or findings leading to immediate referral",
+				"values": {
+					"jaundice": {
+						"type": "radio_button",
+						"display_name": "Unexplained Jaundice",
+						"num_options": 2,
+						"options": [
+							"Present",
+							"Absent"
+						]
+					},
+					"stomach_mass": {
+						"type": "radio_button",
+						"display_name": "Upper abdominal mass consistent with stomach cancer",
+						"num_options": 2,
+						"options": [
+							"Present",
+							"Absent"
+						]
+					}
+				},
+				"state_variables": ["jaundice", "stomach_mass"],
+				"condition_text": [
+					"Unexplained Jaundice in adults over 40 might indicate pancreatic cancer, unexplained stomach mass might indicate stomach cancer"
+				],
+				"condition": [
+					["jaundice == 1 && age >= 40"],
+					["stomach_mass == 1"]
+				],
+				"condition_satisfied_actions": [
+					{
+						"button_index": 0,
+						"condition_index": 0,
+						"action": "color_change",
+						"color": "#FF0000"
+					},
+					{
+						"button_index": 1,
+						"condition_index": 1,
+						"action": "color_change",
+						"color": "#FF0000"
+					}
+				],
+				"num_termination_options": 3,
+				"termination_button_text": [
+					"Consider referral - Pancreatic cancer",
+					"Consider referral - Stomach cancer",
+					"Consider further investigations"
+				],
+				"termination_screens": [
+					"referral",
+					"referral",
+					"2.3"
+				]
+
+			},
+			{
+				"screen_id": "2.3",
+				"screen_name": "further-investigations-to-be-considered",
+				"display_name": "These symptoms indicate the need for further investigations",
+				"values": {
+					"dysphagia": {
+						"type": "boolean",
+						"num_options": 1,
+						"options": [
+							"Dysphagia"
+						],
+						"possible_cancer": [
+							"oesophagal", "stomach"
+						]
+
+					},
+					"weight_loss": {
+						"type": "boolean",
+						"num_options": 1,
+						"options": [
+							"Weight loss"
+						],
+						"possible_cancer": [
+							"oesophagal", "stomach"
+						]
+
+					},
+					"upper_abdominal_pain": {
+						"type": "boolean",
+						"num_options": 1,
+						"options": [
+							"Upper abdominal pain"
+						],
+						"possible_cancer": [
+							"oesophagal", "stomach"
+						]
+					},
+					"abdominal_pain": {
+						"type": "boolean",
+						"num_options": 1,
+						"options": [
+							"Abdominal pain"
+						],
+						"possible_cancer": [
+							"oesophagal", "stomach"
+						]
+
+					},
+					"reflux": {
+						"type": "boolean",
+						"num_options": 1,
+						"options": [
+							"Reflux"
+						],
+						"possible_cancer": [
+							"oesophagal", "stomach"
+						]
+					},
+					"dyspepsia": {
+						"type": "boolean",
+						"num_options": 1,
+						"options": [
+							"Dyspepsia"
+						],
+						"possible_cancer": [
+							"oesophagal", "stomach"
+						]
+					},
+					"haematemesis": {
+						"type": "boolean",
+						"num_options": 1,
+						"options": [
+							"Haematemesis"
+						],
+						"possible_cancer": [
+							"oesophagal", "stomach"
+						]
+					},
+					"treatment_resistant_dyspepsia": {
+						"type": "boolean",
+						"num_options": 1,
+						"options": [
+							"Treatment resistant dyspepsia"
+						],
+						"possible_cancer": [
+							"oesophagal", "stomach"
+						]
+
+					},
+					"low_heamoglobin_levels": {
+						"type": "boolean",
+						"num_options": 1,
+						"options": [
+							"Low haemoglobin levels"
+						],
+						"possible_cancer": [
+							"oesophagal", "stomach"
+						]
+					},
+					"raised_platelet_count": {
+						"type": "boolean",
+						"num_options": 1,
+						"options": [
+							"Raised platelet count"
+						],
+						"possible_cancer": [
+							"oesophagal", "stomach"
+						]
+
+
+					},
+					"nausea": {
+						"type": "boolean",
+						"num_options": 1,
+						"options": [
+							"Nausea"
+						],
+						"possible_cancer": [
+							"oesophagal", "stomach", "pancreatic"
+						]
+
+					},
+					"vomiting": {
+						"type": "boolean",
+						"num_options": 1,
+						"options": [
+							"Vomiting"
+						],
+						"possible_cancer": [
+							"oesophagal", "stomach", "pancreatic"
+						]
+					},
+					"upper_abdominal_mass_gall_bladder": {
+						"type": "boolean",
+						"num_options": 1,
+						"options": [
+							"Upper abdominal mass consistent with an enlarged gall bladder"
+						],
+						"possible_cancer": [
+							"oesophagal", "stomach", "pancreatic"
+						]
+					},
+					"upper_abdominal_mass_liver": {
+						"type": "boolean",
+						"num_options": 1,
+						"options": [
+							"Upper abdominal mass consistent with an enlarged liver"
+						],
+						"possible_cancer": [
+							"oesophagal", "stomach", "pancreatic"
+						]
+					}
+				}
+			}
+		]
 	}
 ]
