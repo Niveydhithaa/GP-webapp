@@ -19,6 +19,7 @@ export default function SiteJson() {
     const [site, setSite] = useState<string | null>()
     const [getData, setGetData] = useState<boolean>(false)
     const [inputValue, setInputValue] = useState<string>('')
+    const [siteId, setSiteId] = useState<number>();
     function getOptionsArray(siteJson_blob_up:any)
     {
         console.log(siteJson_blob_up)
@@ -47,6 +48,15 @@ export default function SiteJson() {
             temp_dict = {}
         }
     }
+    const getIdFromSiteName = () => {
+        for(let i in siteJson_blob) {
+            if(siteJson_blob[i].site==site){
+                console.log(i)
+                return Number(i)
+            }
+        }
+        return -1;
+    }
     useEffect(() => {
         var blobUrl = config.bloburl
         axios
@@ -69,6 +79,9 @@ export default function SiteJson() {
     const getIdFromSite = (site: string) => {
     }
     const getDataHandler = () => {
+        let ans : number = getIdFromSiteName()
+        console.log(ans)
+        if (ans!==-1) setSiteId(ans+1)
         setGetData(true)
     }
     
@@ -77,6 +90,7 @@ export default function SiteJson() {
             <>
             {console.log(siteJson_blob)}
             </>
+            
             <Box>
                 <Autocomplete
                     disablePortal
@@ -86,8 +100,8 @@ export default function SiteJson() {
                     // value={site}
                     inputValue={inputValue}
                     onInputChange={(event, newInputValue) => {
-                    setInputValue(newInputValue);
-                    console.log("new site chosen: " + newInputValue)
+                        setInputValue(newInputValue);
+                        console.log("new site chosen: " + newInputValue)
                     }}
                     onChange={(e: any, newValue: string | null) => setSite(newValue)}
                     renderInput={(params) => <TextField {...params} label="Search" />}
@@ -96,7 +110,7 @@ export default function SiteJson() {
                 {
                     getData==true &&
                     // <RenderQuestions />
-                    <RenderQuestions />
+                    <RenderQuestions condition={true} site={siteId}/>
                 }
             </Box>
         </Box>
