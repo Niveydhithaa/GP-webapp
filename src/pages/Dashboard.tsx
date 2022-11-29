@@ -502,40 +502,10 @@ export default function Dashboard() {
         </Grid> */}
         {/* SEARCH COMPONENT */}
         <Grid item xs={12}>
-          {isLoading && 
-            <Box display="flex" justifyContent="start" flexWrap="wrap" gap={2} mt={4}>
-            <Box minWidth="50%" maxWidth="80%">
-                <Autocomplete
-                multiple
-                // limitTags={2}
-                id="multiple-limit-tags"
-                options={optionsTags}
-                // render uniquely using map to ids 
-                renderOption={(props, option) => (
-                  <li {...props} key={option.id}>
-                    {option.label}
-                  </li>
-                )}
-                disabled={true}
-                getOptionLabel={(option) => option.label}
-                onChange={(e, value) => onTagsChange(e, value)}
-                // onFocus = {(e) => fetchData(e)}
-                // defaultValue={[top100Films[13], top100Films[12], top100Films[11]]}
-                renderInput={(params) => (
-                  <TextField {...params} label="Search" />
-                )}
-              />
-            </Box>
+          { (topic=="symptom" || topic=="primary") && 
             <Box>
-                <Button type="submit" variant="contained" onClick={handleSearchSymptom} disabled={true}>
-                  Search
-                </Button>
-            </Box>
-          </Box>
-          }
-          {
-            !isLoading &&
-            <Box display="flex" justifyContent="start" flexWrap="wrap" gap={2} mt={4}>
+            {isLoading && 
+              <Box display="flex" justifyContent="start" flexWrap="wrap" gap={2} mt={4}>
               <Box minWidth="50%" maxWidth="80%">
                   <Autocomplete
                   multiple
@@ -548,6 +518,7 @@ export default function Dashboard() {
                       {option.label}
                     </li>
                   )}
+                  disabled={true}
                   getOptionLabel={(option) => option.label}
                   onChange={(e, value) => onTagsChange(e, value)}
                   // onFocus = {(e) => fetchData(e)}
@@ -557,14 +528,47 @@ export default function Dashboard() {
                   )}
                 />
               </Box>
-              
               <Box>
-                <Button type="submit" variant="contained" onClick={handleSearchSymptom}>
+                  <Button type="submit" variant="contained" onClick={handleSearchSymptom} disabled={true}>
                     Search
                   </Button>
-                  {/* <Button variant="contained" style={{backgroundColor: color1}}>Hello</Button> */}
               </Box>
             </Box>
+            }
+            {
+              !isLoading &&
+              <Box display="flex" justifyContent="start" flexWrap="wrap" gap={2} mt={4}>
+                <Box minWidth="50%" maxWidth="80%">
+                    <Autocomplete
+                    multiple
+                    // limitTags={2}
+                    id="multiple-limit-tags"
+                    options={optionsTags}
+                    // render uniquely using map to ids 
+                    renderOption={(props, option) => (
+                      <li {...props} key={option.id}>
+                        {option.label}
+                      </li>
+                    )}
+                    getOptionLabel={(option) => option.label}
+                    onChange={(e, value) => onTagsChange(e, value)}
+                    // onFocus = {(e) => fetchData(e)}
+                    // defaultValue={[top100Films[13], top100Films[12], top100Films[11]]}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Search" />
+                    )}
+                  />
+                </Box>
+                
+                <Box>
+                  <Button type="submit" variant="contained" onClick={handleSearchSymptom}>
+                      Search
+                    </Button>
+                    {/* <Button variant="contained" style={{backgroundColor: color1}}>Hello</Button> */}
+                </Box>
+              </Box>
+            }
+          </Box>
           }
         </Grid>
         <Grid item xs={12}>

@@ -8,25 +8,64 @@ import {
     ToggleButtonGroup,
     ToggleButton
 } from "@mui/material"
-import {useState} from "react"
-import RenderQuestions from "evaluation/RenderQuestions_Clone"
-async function getJsonFromBlob() {
-    try {
-        const blobUrl = config.bloburl
-      let response = await fetch(blobUrl);
-      let responseJson = await response.json();
-      return responseJson;
-     } catch(error) {
-      console.error(error);
-    }
-  }
-var siteJson_blob = getJsonFromBlob()
-const siteData =  ['Lung', 'Blood']
+import {useState, useEffect} from "react"
+import axios from "axios";
+import RenderQuestions from "evaluation/RenderQuestions_Main"
+var siteData : string[];
+
 export default function SiteJson() {
-    const [site, setSite] = useState<string | null>(siteData[0])
-    
+    const [siteJson_blob, setSiteJson_blob]  = useState<any[]>([])
+    const [siteOptions, setSiteOptions] = useState<string[]>([])
+    const [site, setSite] = useState<string | null>()
     const [getData, setGetData] = useState<boolean>(false)
     const [inputValue, setInputValue] = useState<string>('')
+    function getOptionsArray(siteJson_blob_up:any)
+    {
+        console.log(siteJson_blob_up)
+        console.log(typeof(siteJson_blob_up))
+        var site_options = [];
+        if(siteJson_blob_up!=undefined)
+        {
+            for(let i=0; i<siteJson_blob_up.length; i++)
+            {
+                site_options.push(siteJson_blob_up[i].site)
+            }
+            console.log(site_options)
+        }
+        setSiteOptions(site_options)
+        return site_options;
+    }
+    function constructDict() {
+        var temp_dict : Record<string, any> = {};
+        var temp_array = [];
+        for(let i=0; i<siteJson_blob.length; i++)
+        {
+            temp_dict['id'] = siteJson_blob[i].site_id
+            temp_dict['site'] = siteJson_blob[i].site
+            console.log(temp_dict)
+            temp_array.push(temp_dict)
+            temp_dict = {}
+        }
+    }
+    useEffect(() => {
+        var blobUrl = config.bloburl
+        axios
+            .get(blobUrl)
+            .then((res) => {
+                console.log(res);
+                console.log(res.data);
+                console.log(typeof(res))
+                setSiteJson_blob(res.data)
+                getOptionsArray(res.data)
+                // let id_name_dict = constructDict()
+                return res.data;
+            })
+            .catch((err) => {
+                console.error('Error:', err);
+            });
+    }, []);
+    
+    // constructDict()
     const getIdFromSite = (site: string) => {
     }
     const getDataHandler = () => {
@@ -42,9 +81,9 @@ export default function SiteJson() {
                 <Autocomplete
                     disablePortal
                     id="combo-box-demo"
-                    options={siteData}
+                    options={siteOptions}
                     sx={{ width: 300 }}
-                    value={site}
+                    // value={site}
                     inputValue={inputValue}
                     onInputChange={(event, newInputValue) => {
                     setInputValue(newInputValue);
@@ -56,7 +95,8 @@ export default function SiteJson() {
                 <Button onClick={getDataHandler}>Get data</Button>
                 {
                     getData==true &&
-                    <RenderQuestions id="1" />
+                    // <RenderQuestions />
+                    <RenderQuestions />
                 }
             </Box>
         </Box>

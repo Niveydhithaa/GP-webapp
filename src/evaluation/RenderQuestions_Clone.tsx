@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import siteJson from "data/sites_master_mod.json"
+import {Box, Button, TextField} from "@mui/material"
 interface IProps {
     id: string
   }
@@ -32,13 +33,9 @@ export default class RenderQuestions_Clone extends Component<IProps, IState> {
     }
   }
   updateStateNames(newState: string) {
-    if ((this.refs.input as any).value.trim() != '') {
         const object = (this.state as any).object;
-        object[newState] = (this.refs.input as any).value;
-        this.setState({ object });
-        (this.refs.input as any).select();
-    }
-    
+        object[newState] = "samplevalue";
+        this.setState({ object });    
   }
   render() {
     return (
@@ -47,17 +44,17 @@ export default class RenderQuestions_Clone extends Component<IProps, IState> {
         <br />
         <br />
         <input ref="input" placeholder="Type some text..." />
-        <button onClick={this.update}>UPDATE</button>
+        <Button onClick={this.update}>UPDATE</Button>
         <br />
         <br />
-        {/* <h2>For our usecase</h2>
+        <h2>For our usecase</h2>
         <>
         {
-            siteJson[0].screens[0].state_variables.map((item) => {
+            siteJson[0].screens[0].state_variables?.map((item) => {
                 this.updateStateNames(item)
             })
         }
-        </> */}
+        </>
         <ul>
           {/* {Object.values((this.state as any).object).map(v => (
             // <li>{v}</li>

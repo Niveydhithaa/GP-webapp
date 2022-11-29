@@ -1,0 +1,10 @@
+async function getJsonFromBlob() {
+    try {
+        const blobUrl = config.bloburl
+      let response = await fetch(blobUrl);
+      let responseJson = await response.json();
+      return responseJson;
+     } catch(error) {
+      console.error(error);
+    }
+  }

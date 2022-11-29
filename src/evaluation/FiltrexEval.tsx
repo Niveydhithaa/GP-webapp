@@ -90,9 +90,9 @@ export default function FiltrexEval({smoker, asbestos} : Props) {
                     aria-label="Platform"
                     >
                     <ToggleButton value={1} id="toggle_symptom">Yes (Lung cancer)</ToggleButton>
-                    <ToggleButton value={-1} id="toggle_symptom">Yes (Mesathelioma)</ToggleButton>
+                    <ToggleButton value={2} id="toggle_symptom">Yes (Mesathelioma)</ToggleButton>
                     <ToggleButton value={0}>No</ToggleButton>
-                    <ToggleButton value={2}>Not available</ToggleButton>
+                    <ToggleButton value={3}>Not available</ToggleButton>
                 </ToggleButtonGroup>
             </Box>
             <Box>
