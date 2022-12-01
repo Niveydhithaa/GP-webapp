@@ -142,6 +142,11 @@ export default function FiltrexEvalPartTwo({smoker, asbestos} : Props) {
 //             </Box>
 //             <Button onClick={getResults}>Get results</Button>
 //         </Box>
-        <Box></Box>
+        <Box>
+            <Typography>Further Investigation - screen 3</Typography>
+            <Box mt={2}>
+                <Button variant="contained">Complete</Button>
+            </Box>
+        </Box>
     )
 }

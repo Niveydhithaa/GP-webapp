@@ -169,7 +169,7 @@ export default function RenderQuestions_MAIN({condition, site, ...props} : Props
                 })
             }
             <Typography style={{color: "red"}}>Dynamic tries: END</Typography>
-            <Button onClick={getResults}>Get results</Button>
+            <Button onClick={getResults} variant="contained">Next</Button>
             {
                 startEval &&
                 <FiltrexEval smoker={smoker} asbestos={asbestos} site={site} inputFields={inputFields}></FiltrexEval>

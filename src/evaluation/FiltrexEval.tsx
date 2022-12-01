@@ -7,11 +7,17 @@ import {
     Typography, 
     TextField
 } from "@mui/material"
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 import { useState, useEffect, useReducer, useCallback } from "react";
 import siteJson from "data/sites_master_mod.json"
 import { isUndefined } from 'util';
 import { useNavigate } from "react-router-dom"
-import RenderQuestions from 'evaluation/FiltrexEvalPartTwo';
+import FiltrexEvalPartTwo from 'evaluation/FiltrexEvalPartTwo';
+import ImmediateReferral from "evaluation/components/ImmediateReferral"
 
 enum Colors {
     PRIMARY = "primary",
@@ -52,8 +58,16 @@ export const reducer = (state: any, action: ActionProp) => {
 };
 export default function FiltrexEval({ smoker, asbestos, site, inputFields, ...props }: Props) {
     const navigate = useNavigate()
+    const [value, setValue] = useState('female');
+
+    const handleChangeToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setImmediate(false)
+        setFurther(false)
+        setValue((event.target as HTMLInputElement).value);
+    };
     //#region state variables
     const [xray, setXray] = useState<number>();
+    const [openTreatmentOptions, setOpenTreatmentOptions] = useState<boolean>();
     const [unhaemo, setUnHaemo] = useState<number>();
     const [furtherInvest, setFurther] = useState<boolean>(false)
     const [immediate, setImmediate] = useState<boolean>(false)
@@ -67,6 +81,7 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, ...pr
         // Run! Like go get some data from an API.
         setNextScreen(false)
         renderQuestionsToggle()
+        setRuleEvalResults([])
     }, []);
     const handleAddMoreFields = useCallback((state_name: string, state_value: boolean | number, question: string) => {
         console.log("to add to list")
@@ -136,14 +151,14 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, ...pr
             })
             console.log(resultsArray)
             setRuleEvalResults(resultsArray)
-            if (resultsArray.filter(x => x===true).length >= 1) {
-                setImmediate(true)
-                setFurther(false)
-            }
-            else  {
-                setFurther(true)
-                setImmediate(false)
-            }
+            // if (resultsArray.filter(x => x===true).length >= 1) {
+            //     setImmediate(true)
+            //     setFurther(false)
+            // }
+            // else  {
+            //     setFurther(true)
+            //     setImmediate(false)
+            // }
             //get true indices
 
             //#region Commented
@@ -194,7 +209,7 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, ...pr
             // }
             //#endregion
         }
-
+        setOpenTreatmentOptions(true)
     }
     const clickFurther = () => {
         // navigate("/filtrex/screen3")
@@ -225,6 +240,16 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, ...pr
         }
         return questionsList;
     }
+    const onSubmitScreen2 = () => {
+        if(value!=="Consider further investigations")
+        {
+            setImmediate(true)
+        }
+        else
+        {
+            setFurther(true)
+        }
+    }
     return (
         <Box>
 
@@ -250,6 +275,7 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, ...pr
                                             onChange={(e: React.MouseEvent<HTMLElement>, newValue: boolean) => {
                                                 handleUpdateValueField(index, item.title, newValue, item.question)
                                                 item.value = newValue
+                                                setOpenTreatmentOptions(false)
                                             }}
                                             aria-label="Platform"
                                         >
@@ -275,32 +301,53 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, ...pr
             <Box>
 
             </Box>
-            <Button onClick={clickHandler}>Get results</Button>
-            <Box>
+            <Button onClick={clickHandler} variant="contained">Next</Button>
+            { openTreatmentOptions && 
+                <Box>
                 {/* <Button disabled={!furtherInvest} color="secondary" variant="contained" onClick={clickFurther}>{siteJson[0].screens[1].termination_button_text?.at(1)}</Button>
                 <Button disabled={!immediate} color="error" variant="contained">{siteJson[0].screens[1].termination_button_text?.at(0)}</Button> */}
                 <Box>
                     { (site!==undefined) &&
-                        siteJson[site - 1].screens[1].termination_button_text?.map((item: any, index: number ) => {
-                            if(siteJson[site-1].screens[1].condition_satisfied_actions!==undefined)
-                            {
-                                // let a = siteJson[site-1].screens[1].condition_satisfied_actions[index].color
-                                // setButtonMapping({})
-                            }
-                            return (
-                                <Box>
-                                    {/* <Button color={`${immediate?Colors.ERROR : Colors.PRIMARY}`} variant="contained" onClick={clickFurther} key={index}>{item}</Button> */}
-                                    <Button color="primary" variant="contained" onClick={clickFurther} key={index}>{item}</Button>
-                                </Box>
-                            )
-                        })
+                        <FormControl>
+                            <FormLabel id="demo-controlled-radio-buttons-group">Select Treatment</FormLabel>
+                            <RadioGroup
+                                aria-labelledby="demo-controlled-radio-buttons-group"
+                                name="controlled-radio-buttons-group"
+                                value={value}
+                                onChange={handleChangeToggle}
+                            >
+                                {
+                                siteJson[site - 1].screens[1].termination_button_text?.map((item: any, index: number ) => {
+                                    return (
+                                        <Box display="inline-flex">
+                                            <>{console.log(ruleEvalResults)}</>
+                                            <FormControlLabel value={item} control={<Radio />} label={item} />
+                                            {(ruleEvalResults[index]==true && index!==ruleEvalResults.length) &&
+                                                <Typography>(Recommended)</Typography>
+                                            }
+                                        </Box>
+                                    )
+                                })
+                                }
+                            </RadioGroup>
+                            <Box>
+                            <Button onClick={onSubmitScreen2} variant="contained">Next</Button>
+                            </Box>
+                        </FormControl>
                     }
                 </Box>
             </Box>
+            
+
+            }
             {/* section for further offer screen */}
             {
-                nextScreen &&
-                <RenderQuestions smoker={smoker} asbestos={asbestos} />
+                furtherInvest &&
+                <FiltrexEvalPartTwo smoker={smoker} asbestos={asbestos} />
+            }
+            {
+                immediate &&
+                <ImmediateReferral cause_of_immediate={value} />
             }
         </Box>
     )

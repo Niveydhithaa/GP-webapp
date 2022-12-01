@@ -106,7 +106,7 @@ export default function SiteJson() {
                     onChange={(e: any, newValue: string | null) => setSite(newValue)}
                     renderInput={(params) => <TextField {...params} label="Search" />}
                 />
-                <Button onClick={getDataHandler}>Get data</Button>
+                <Button onClick={getDataHandler} variant="contained" color="info">Next</Button>
                 {
                     getData==true &&
                     // <RenderQuestions />
