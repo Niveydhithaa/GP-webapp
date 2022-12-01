@@ -10,13 +10,11 @@
 				"values":{
 					"smoking":{
 						"type":"boolean",
-						"message":"Has the patient ever smoked?",
-						"options": ["Yes", "No"]
+						"message":"Has the patient ever smoked?"
 					},
 					"asbestos":{
 						"type":"boolean",
-						"message":"Has the patient been exposed to asbestos",
-						"options": ["Yes", "No"]
+						"message":"Has the patient been exposed to asbestos"
 					},
 					"age":{
 						"type": "numeric",

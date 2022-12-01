@@ -343,7 +343,7 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, ...pr
             {/* section for further offer screen */}
             {
                 furtherInvest &&
-                <FiltrexEvalPartTwo smoker={smoker} asbestos={asbestos} />
+                <FiltrexEvalPartTwo smoker={smoker} asbestos={asbestos} site={site} inputFields={inputFields}/>
             }
             {
                 immediate &&
