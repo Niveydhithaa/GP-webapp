@@ -1,0 +1,42 @@
+{/* <Box>
+                <Typography>Q.1. Smoker?</Typography>
+                <ToggleButtonGroup
+                    color="primary"
+                    value={smoker}
+                    exclusive
+                    onChange={(e: any, newValue: boolean) => setSmoker(newValue)}
+                    aria-label="Platform"
+                >
+                    <ToggleButton value={true} id="toggle_symptom">Yes</ToggleButton>
+                    <ToggleButton value={false}>No</ToggleButton>
+                </ToggleButtonGroup>
+            </Box>
+            <Box>
+                <Typography>Q.2. Has he/she worked in asbestos industry?</Typography>
+                <ToggleButtonGroup
+                    color="primary"
+                    value={asbestos}
+                    exclusive
+                    onChange={(e: any, newValue: boolean) => setAsbestos(newValue)}
+                    aria-label="Platform"
+                >
+                    <ToggleButton value={true} id="toggle_symptom">Yes</ToggleButton>
+                    <ToggleButton value={false}>No</ToggleButton>
+                </ToggleButtonGroup>
+            </Box> 
+             */}
+             //#endregion
+
+
+
+
+             dynamic
+             
+{/* <Button color={`${immediate?Colors.ERROR : Colors.PRIMARY}`} variant="contained" onClick={clickFurther} key={index}>{item}</Button> */}
+                                    {/* <Button 
+                                        color={`${(ruleEvalResults==item.condition)?Colors.ERROR : Colors.PRIMARY}`}
+                                        variant="contained" 
+                                        onClick={clickFurther} 
+                                        key={index}>
+                                            {item}
+                                    </Button> */}
