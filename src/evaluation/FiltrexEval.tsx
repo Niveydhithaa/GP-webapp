@@ -13,13 +13,17 @@ import { isUndefined } from 'util';
 import { useNavigate } from "react-router-dom"
 import RenderQuestions from 'evaluation/FiltrexEvalPartTwo';
 
+enum Colors {
+    PRIMARY = "primary",
+    ERROR  = "error"
+}
 enum ActionKind {
     STATE = "state",
     UPDATE = "update"
 }
 interface ActionProp {
     type: ActionKind
-    payload: { title: string, value: boolean, question: string }
+    payload: { title: string, value: boolean | number, question: string }
     index?: number
 }
 interface Props {
@@ -53,6 +57,8 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, ...pr
     const [unhaemo, setUnHaemo] = useState<number>();
     const [furtherInvest, setFurther] = useState<boolean>(false)
     const [immediate, setImmediate] = useState<boolean>(false)
+    const [ruleEvalResults, setRuleEvalResults] = useState<boolean[]>([])
+    const [buttonMapping, setButtonMapping] = useState<Record<any, any>>();
     //#endregion
     const [nextScreen, setNextScreen] = useState<boolean>(false)
     let initialState = { name: [] };
@@ -62,7 +68,7 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, ...pr
         setNextScreen(false)
         renderQuestionsToggle()
     }, []);
-    const handleAddMoreFields = useCallback((state_name: string, state_value: boolean, question: string) => {
+    const handleAddMoreFields = useCallback((state_name: string, state_value: boolean | number, question: string) => {
         console.log("to add to list")
         //debugger;
         dispatch({
@@ -71,7 +77,7 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, ...pr
         });
     }, [site]);
 
-    const handleUpdateValueField = (index: number, state_name: string, state_value: boolean, question: string) => {
+    const handleUpdateValueField = (index: number, state_name: string, state_value: boolean | number, question: string) => {
         console.log("update value : index: " + index + " value: " + state_value)
         dispatch({
             type: ActionKind.UPDATE,
@@ -81,40 +87,112 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, ...pr
         console.log(inputFieldsScreenTwo.name)
     };
     const clickHandler = () => {
-        //#region Sample Expression Evaluation
-        // Input from user (e.g. search filter)
-        // var expression = 'transactions < 3 and abs(profit) > 20.5';
-        // // Compile expression to executable function
-        // var myfilter = compileExpression(expression);
-        // var a = myfilter({transactions: 3, profit:-40.5}); // returns 1
-        // var b = myfilter({transactions: 2, profit:-49.5}); // returns 0
-        // console.log(a)
-        // console.log(b)
-        // //#endregion
-        // var screen2_expr = 'xrayfindings==0 or xrayfindings==-1 or unexplained_heamoptysis==present';
-        // var screen2_filter = compileExpression(screen2_expr)
-        // var a1 = screen2_filter({xrayfindings: 0, unexplained_haemoptysis: "present"})
-        // console.log(a1)
+        if(site!==undefined)
+        {
+            console.log("Click handler")
+            var screen2_conditions_arr = siteJson[site-1].screens[1].condition
+            console.log(screen2_conditions_arr)
+            var compareList:any[] = []
+            inputFieldsScreenTwo.name.map((item: any, index: any) => {
 
-        var screen2_expr2 = siteJson[0].screens[1].condition?.at(0)
-        console.log(typeof (screen2_expr2))
-        if (screen2_expr2 != undefined && !Array.isArray(screen2_expr2)) {
-            //xrayfindings=0 : normal
-            //xrayfindings=1 : abnormal
-            var screen2_filter2 = compileExpression(screen2_expr2)
-            console.log(xray)
-            console.log(unhaemo)
-
-            var a2 = screen2_filter2({ xray_findings: xray, unexplained_heamoptysis: unhaemo })
-            console.log(a2)
-            if (a2) {
+                let a = item.title
+                let compareDict = {[a] : item.value}
+                console.log(compareDict)
+                compareList.push(compareDict)
+            })
+            inputFields.name.map((item: any, index: any) => {
+                let a = item.title
+                let compareDict = {[a] : item.value}
+                console.log(compareDict)
+                compareList.push(compareDict)
+            })
+            // iterate data array and use empty object "a" as accumulator
+            let totalDict = compareList.reduce((a, e) => 
+            // iterate each object entry as [key, value] and use "a" as accumulator
+            Object.entries(e).reduce((a, t) => {
+                // create an empty array on "a" for each key (if it does not exist yet)
+                // then push current value to it
+                a[t[0]] = t[1];
+                return a;
+            }, a), {});
+            for(let i in Object.keys(totalDict)) {
+                if(Object.keys(totalDict)[i] == "age")
+                {
+                    totalDict["age"] = 45;
+                }
+            }
+            console.log(totalDict);
+            var resultsArray : boolean[] = []
+            screen2_conditions_arr?.map((condition: any, index: any) => {
+                console.log(condition)
+                console.log(typeof(condition))
+                if(condition!=undefined)
+                {
+                    var ruleEngine = compileExpression(condition)
+                    var a2 = ruleEngine(totalDict)
+                    console.log(a2)
+                    resultsArray.push(a2)
+                }
+            })
+            console.log(resultsArray)
+            setRuleEvalResults(resultsArray)
+            if (resultsArray.filter(x => x===true).length >= 1) {
                 setImmediate(true)
                 setFurther(false)
             }
-            else if (!a2) {
+            else  {
                 setFurther(true)
                 setImmediate(false)
             }
+            //get true indices
+
+            //#region Commented
+            // var screen2_expr2 = siteJson[site-1].screens[1].condition?.at(0)?.at(0)
+            // console.log(typeof (screen2_expr2))
+            // console.log(screen2_expr2)
+            // if (screen2_expr2 != undefined && !Array.isArray(screen2_expr2)) {
+            //     //xrayfindings=0 : normal
+            //     //xrayfindings=1 : abnormal
+            //     var screen2_filter2 = compileExpression(screen2_expr2)
+            //     console.log(xray)
+            //     console.log(unhaemo)
+            //     var compareList:any[] = []
+            //     inputFieldsScreenTwo.name.map((item: any, index: any) => {
+
+            //         let a = item.title
+            //         let compareDict = {[a] : item.value}
+            //         console.log(compareDict)
+            //         compareList.push(compareDict)
+            //     })
+            //     inputFields.name.map((item: any, index: any) => {
+            //         let a = item.title
+            //         let compareDict = {[a] : item.value}
+            //         console.log(compareDict)
+            //         compareList.push(compareDict)
+            //     })
+            //     // iterate data array and use empty object "a" as accumulator
+            //     let totalDict = compareList.reduce((a, e) => 
+            //     // iterate each object entry as [key, value] and use "a" as accumulator
+            //     Object.entries(e).reduce((a, t) => {
+            //         // create an empty array on "a" for each key (if it does not exist yet)
+            //         // then push current value to it
+            //         a[t[0]] = t[1];
+            //         return a;
+            //     }, a), {});
+
+            //     console.log(totalDict);
+            //     var a2 = screen2_filter2(totalDict)
+            //     console.log(a2)
+            //     if (a2) {
+            //         setImmediate(true)
+            //         setFurther(false)
+            //     }
+            //     else if (!a2) {
+            //         setFurther(true)
+            //         setImmediate(false)
+            //     }
+            // }
+            //#endregion
         }
 
     }
@@ -175,8 +253,8 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, ...pr
                                             }}
                                             aria-label="Platform"
                                         >
-                                            <ToggleButton value={true} id="toggle_symptom">Yes</ToggleButton>
-                                            <ToggleButton value={false}>No</ToggleButton>
+                                            <ToggleButton value={1} id="toggle_symptom">Yes</ToggleButton>
+                                            <ToggleButton value={0}>No</ToggleButton>
                                         </ToggleButtonGroup>
                                     </Box>
                                 }
@@ -197,26 +275,27 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, ...pr
             <Box>
 
             </Box>
-
-            {/*}
-            <Box>
-                <Typography>{siteJson[0].screens[1].values['unexplained_heamoptysis']?.display_name}</Typography>
-                <ToggleButtonGroup
-                    color="primary"
-                    value={unhaemo}
-                    exclusive
-                    onChange={(e: any, newValue: number ) => setUnHaemo(newValue)}
-                    aria-label="Platform"
-                    >
-                    <ToggleButton value={1} id="toggle_symptom">Yes</ToggleButton>
-                    <ToggleButton value={0}>No</ToggleButton>
-                </ToggleButtonGroup>
-            </Box>
-             */}
             <Button onClick={clickHandler}>Get results</Button>
             <Box>
-                <Button disabled={!furtherInvest} color="secondary" variant="contained" onClick={clickFurther}>{siteJson[0].screens[1].termination_button_text?.at(1)}</Button>
-                <Button disabled={!immediate} color="error" variant="contained">{siteJson[0].screens[1].termination_button_text?.at(0)}</Button>
+                {/* <Button disabled={!furtherInvest} color="secondary" variant="contained" onClick={clickFurther}>{siteJson[0].screens[1].termination_button_text?.at(1)}</Button>
+                <Button disabled={!immediate} color="error" variant="contained">{siteJson[0].screens[1].termination_button_text?.at(0)}</Button> */}
+                <Box>
+                    { (site!==undefined) &&
+                        siteJson[site - 1].screens[1].termination_button_text?.map((item: any, index: number ) => {
+                            if(siteJson[site-1].screens[1].condition_satisfied_actions!==undefined)
+                            {
+                                // let a = siteJson[site-1].screens[1].condition_satisfied_actions[index].color
+                                // setButtonMapping({})
+                            }
+                            return (
+                                <Box>
+                                    {/* <Button color={`${immediate?Colors.ERROR : Colors.PRIMARY}`} variant="contained" onClick={clickFurther} key={index}>{item}</Button> */}
+                                    <Button color="primary" variant="contained" onClick={clickFurther} key={index}>{item}</Button>
+                                </Box>
+                            )
+                        })
+                    }
+                </Box>
             </Box>
             {/* section for further offer screen */}
             {
