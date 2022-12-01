@@ -126,34 +126,6 @@ export default function RenderQuestions_MAIN({condition, site, ...props} : Props
     }
     return (
         <Box>
-            <Box>
-            </Box>
-            <Box>
-                <Typography>Q.1. Smoker?</Typography>
-                <ToggleButtonGroup
-                    color="primary"
-                    value={smoker}
-                    exclusive
-                    onChange={(e: any, newValue: boolean) => setSmoker(newValue)}
-                    aria-label="Platform"
-                >
-                    <ToggleButton value={true} id="toggle_symptom">Yes</ToggleButton>
-                    <ToggleButton value={false}>No</ToggleButton>
-                </ToggleButtonGroup>
-            </Box>
-            <Box>
-                <Typography>Q.2. Has he/she worked in asbestos industry?</Typography>
-                <ToggleButtonGroup
-                    color="primary"
-                    value={asbestos}
-                    exclusive
-                    onChange={(e: any, newValue: boolean) => setAsbestos(newValue)}
-                    aria-label="Platform"
-                >
-                    <ToggleButton value={true} id="toggle_symptom">Yes</ToggleButton>
-                    <ToggleButton value={false}>No</ToggleButton>
-                </ToggleButtonGroup>
-            </Box> 
             <Typography style={{color: "red"}}>Dynamic tries: START</Typography>
             {/* <Box>{condition&&renderQuestionsToggle()}</Box> */}
             {/* <Button onClick={renderQuestionsToggle}>Render</Button> */}
