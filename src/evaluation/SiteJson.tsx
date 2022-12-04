@@ -14,6 +14,7 @@ import RenderQuestions from "evaluation/RenderQuestions_Main"
 var siteData : string[];
 
 export default function SiteJson() {
+    const [siteChanged, setSiteChanged] = useState<boolean>()
     const [siteJson_blob, setSiteJson_blob]  = useState<any[]>([])
     const [siteOptions, setSiteOptions] = useState<string[]>([])
     const [site, setSite] = useState<string | null>()
@@ -103,14 +104,21 @@ export default function SiteJson() {
                         setInputValue(newInputValue);
                         console.log("new site chosen: " + newInputValue)
                     }}
-                    onChange={(e: any, newValue: string | null) => setSite(newValue)}
+                    onChange={(e: any, newValue: string | null) => {
+                        if(site!=null && site!=newValue)
+                        {
+                            console.log("site changed")
+                            setSiteChanged(true)
+                        }
+                        setSite(newValue)
+                    }}
                     renderInput={(params) => <TextField {...params} label="Search" />}
                 />
                 <Button onClick={getDataHandler} variant="contained" color="info">Next</Button>
                 {
                     getData==true &&
                     // <RenderQuestions />
-                    <RenderQuestions condition={true} site={siteId}/>
+                    <RenderQuestions condition={true} site={siteId} />
                 }
             </Box>
         </Box>

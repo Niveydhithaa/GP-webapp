@@ -10,13 +10,15 @@ import {
 import { useState, useReducer, useCallback, useMemo, useEffect } from "react"
 import siteJson from "../data/sites_master_mod.json"
 import FiltrexEval from "evaluation/FiltrexEval"
+let initialState = { name: []};
 enum ActionKind {
     STATE = "state",
-    UPDATE = "update"
+    UPDATE = "update",
+    RESET = "reset"
 }
 interface ActionProp {
     type: ActionKind
-    payload: { title: string, value: boolean, question: string }
+    payload: { title: string, value: boolean | number, question: string }
     index? : number
 }
 interface Props {
@@ -36,6 +38,11 @@ export const reducer = (state: any, action: ActionProp) => {
             // return {...state, name: [...state.name, action.payload]};
             return {...state};
         }
+        case ActionKind.RESET: {
+            state = initialState;
+            console.log(state)
+            return {...state};
+        }
         default:
             return state;
     }
@@ -44,7 +51,7 @@ export default function RenderQuestions_MAIN({condition, site, ...props} : Props
     const [smoker, setSmoker] = useState<boolean>()
     const [asbestos, setAsbestos] = useState<boolean>()
     const [startEval, setStartEval] = useState<boolean>(false)
-    let initialState = { name: []};
+    
     const [inputFields, dispatch] = useReducer(reducer, initialState)
     let states: Record<string, any>[] = [];
     const age = 45;
@@ -104,6 +111,10 @@ export default function RenderQuestions_MAIN({condition, site, ...props} : Props
         let questionsList: any[] = [];
         if(site!=undefined)
         {
+            dispatch({
+                type: ActionKind.RESET,
+                payload : {title: 'dummy', value: 9, question: 'dummy'}
+            })
             console.log(site)
             let totalDict = siteJson[site-1].screens[0].values
         let keys = Object.keys(totalDict)

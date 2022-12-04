@@ -1,0 +1,58 @@
+// if (resultsArray.filter(x => x===true).length >= 1) {
+            //     setImmediate(true)
+            //     setFurther(false)
+            // }
+            // else  {
+            //     setFurther(true)
+            //     setImmediate(false)
+            // }
+            //get true indices
+
+            //#region Commented
+            // var screen2_expr2 = siteJson[site-1].screens[1].condition?.at(0)?.at(0)
+            // console.log(typeof (screen2_expr2))
+            // console.log(screen2_expr2)
+            // if (screen2_expr2 != undefined && !Array.isArray(screen2_expr2)) {
+            //     //xrayfindings=0 : normal
+            //     //xrayfindings=1 : abnormal
+            //     var screen2_filter2 = compileExpression(screen2_expr2)
+            //     console.log(xray)
+            //     console.log(unhaemo)
+            //     var compareList:any[] = []
+            //     inputFieldsScreenTwo.name.map((item: any, index: any) => {
+
+            //         let a = item.title
+            //         let compareDict = {[a] : item.value}
+            //         console.log(compareDict)
+            //         compareList.push(compareDict)
+            //     })
+            //     inputFields.name.map((item: any, index: any) => {
+            //         let a = item.title
+            //         let compareDict = {[a] : item.value}
+            //         console.log(compareDict)
+            //         compareList.push(compareDict)
+            //     })
+            //     // iterate data array and use empty object "a" as accumulator
+            //     let totalDict = compareList.reduce((a, e) => 
+            //     // iterate each object entry as [key, value] and use "a" as accumulator
+            //     Object.entries(e).reduce((a, t) => {
+            //         // create an empty array on "a" for each key (if it does not exist yet)
+            //         // then push current value to it
+            //         a[t[0]] = t[1];
+            //         return a;
+            //     }, a), {});
+
+            //     console.log(totalDict);
+            //     var a2 = screen2_filter2(totalDict)
+            //     console.log(a2)
+            //     if (a2) {
+            //         setImmediate(true)
+            //         setFurther(false)
+            //     }
+            //     else if (!a2) {
+            //         setFurther(true)
+            //         setImmediate(false)
+            //     }
+            // }
+            //#endregion
+        

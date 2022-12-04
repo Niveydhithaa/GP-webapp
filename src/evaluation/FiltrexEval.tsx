@@ -18,14 +18,15 @@ import { isUndefined } from 'util';
 import { useNavigate } from "react-router-dom"
 import FiltrexEvalPartTwo from 'evaluation/FiltrexEvalPartTwo';
 import ImmediateReferral from "evaluation/components/ImmediateReferral"
-
+let initialState = { name: [] };
 enum Colors {
     PRIMARY = "primary",
     ERROR  = "error"
 }
 enum ActionKind {
     STATE = "state",
-    UPDATE = "update"
+    UPDATE = "update",
+    RESET = "reset"
 }
 interface ActionProp {
     type: ActionKind
@@ -52,6 +53,11 @@ export const reducer = (state: any, action: ActionProp) => {
             // return {...state, name: [...state.name, action.payload]};
             return { ...state };
         }
+        case ActionKind.RESET: {
+            state = initialState;
+            console.log(state)
+            return {...state};
+        }
         default:
             return state;
     }
@@ -75,14 +81,15 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, ...pr
     const [buttonMapping, setButtonMapping] = useState<Record<any, any>>();
     //#endregion
     const [nextScreen, setNextScreen] = useState<boolean>(false)
-    let initialState = { name: [] };
     const [inputFieldsScreenTwo, dispatch] = useReducer(reducer, initialState)
     useEffect(() => {
         // Run! Like go get some data from an API.
         setNextScreen(false)
+        
         renderQuestionsToggle()
+        
         setRuleEvalResults([])
-    }, []);
+    }, [site]);
     const handleAddMoreFields = useCallback((state_name: string, state_value: boolean | number, question: string) => {
         console.log("to add to list")
         //debugger;
@@ -151,63 +158,6 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, ...pr
             })
             console.log(resultsArray)
             setRuleEvalResults(resultsArray)
-            // if (resultsArray.filter(x => x===true).length >= 1) {
-            //     setImmediate(true)
-            //     setFurther(false)
-            // }
-            // else  {
-            //     setFurther(true)
-            //     setImmediate(false)
-            // }
-            //get true indices
-
-            //#region Commented
-            // var screen2_expr2 = siteJson[site-1].screens[1].condition?.at(0)?.at(0)
-            // console.log(typeof (screen2_expr2))
-            // console.log(screen2_expr2)
-            // if (screen2_expr2 != undefined && !Array.isArray(screen2_expr2)) {
-            //     //xrayfindings=0 : normal
-            //     //xrayfindings=1 : abnormal
-            //     var screen2_filter2 = compileExpression(screen2_expr2)
-            //     console.log(xray)
-            //     console.log(unhaemo)
-            //     var compareList:any[] = []
-            //     inputFieldsScreenTwo.name.map((item: any, index: any) => {
-
-            //         let a = item.title
-            //         let compareDict = {[a] : item.value}
-            //         console.log(compareDict)
-            //         compareList.push(compareDict)
-            //     })
-            //     inputFields.name.map((item: any, index: any) => {
-            //         let a = item.title
-            //         let compareDict = {[a] : item.value}
-            //         console.log(compareDict)
-            //         compareList.push(compareDict)
-            //     })
-            //     // iterate data array and use empty object "a" as accumulator
-            //     let totalDict = compareList.reduce((a, e) => 
-            //     // iterate each object entry as [key, value] and use "a" as accumulator
-            //     Object.entries(e).reduce((a, t) => {
-            //         // create an empty array on "a" for each key (if it does not exist yet)
-            //         // then push current value to it
-            //         a[t[0]] = t[1];
-            //         return a;
-            //     }, a), {});
-
-            //     console.log(totalDict);
-            //     var a2 = screen2_filter2(totalDict)
-            //     console.log(a2)
-            //     if (a2) {
-            //         setImmediate(true)
-            //         setFurther(false)
-            //     }
-            //     else if (!a2) {
-            //         setFurther(true)
-            //         setImmediate(false)
-            //     }
-            // }
-            //#endregion
         }
         setOpenTreatmentOptions(true)
     }
@@ -220,6 +170,10 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, ...pr
         //make the inputFields epmty here. for each site it has to be made empty
         let questionsList: any[] = [];
         if (site != undefined) {
+            dispatch({
+                type: ActionKind.RESET,
+                payload : {title: 'dummy', value: 9, question: 'dummy'}
+            })
             console.log(site)
             let totalDict = siteJson[site - 1].screens[1].values
             let keys = Object.keys(totalDict)

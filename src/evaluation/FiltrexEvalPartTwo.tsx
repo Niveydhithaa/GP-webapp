@@ -58,6 +58,8 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
     const [openTreatmentOptions, setOpenTreatmentOptions] = useState<boolean>();
     const age =45;
     const [value, setValue] = useState('female');
+    let initialState = { name: [] };
+    const [inputFieldsScreenThree, dispatch] = useReducer(reducer, initialState)
 
     const handleChangeToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
         // setImmediate(false)
@@ -220,8 +222,7 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
         setOpenTreatmentOptions(true)
     }
 
-    let initialState = { name: [] };
-    const [inputFieldsScreenThree, dispatch] = useReducer(reducer, initialState)
+    
     useEffect(() => {
         // Run! Like go get some data from an API.
         setRuleEvalResults([])
