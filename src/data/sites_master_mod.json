@@ -190,9 +190,9 @@
 
 				"condition_text": "Consider urgent X-ray in case of lung cancer for age >= 40 ",
 				"condition": [
-					"(age >= 40 and count_offer >= 2) or (smoker==true and count_offer >= 1)",
+					"(age >= 40 and count_offer >= 2) or (smoking==true and count_offer >= 1)",
 					"age >= 40 and count_consider >= 1",
-					"(age >= 40 and count_offer_mes >= 2) or (smoker and count_offer_mes >= 1) or (asbestos and count_offer_mes >= 1)",
+					"(age >= 40 and count_offer_mes >= 2) or (smoking==true and count_offer_mes >= 1) or (asbestos==true and count_offer_mes >= 1)",
 					"age >= 40 and count_consider_mes >= 1"
 			],
 			"condition_satisfied_actions": [
