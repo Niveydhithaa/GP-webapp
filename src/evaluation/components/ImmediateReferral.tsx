@@ -18,6 +18,9 @@ export default function ImmediateReferral({cause_of_immediate, ...props} : Props
             <Box mt={2}>
                 <Button variant="contained">Complete</Button>
             </Box>
+            <Box>
+                {/* onco popup */}
+            </Box>
         </Box>
     )
 }

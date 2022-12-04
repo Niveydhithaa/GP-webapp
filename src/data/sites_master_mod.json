@@ -177,13 +177,16 @@
 					"chest_signs_lung_cancer", "chest_signs_pleural_disease", "supraclavicular_lymphadenopathy", 
 					"persistent_cervical_lymphadenopathy", "persistent_chest_infection", "recurrent_chest_infection", "thrombocytosis"],
 
-				"offer_symptoms_lung_cancer": ["cough", "fatigue", "shortness_of_breath", "chest_pain", "weight_loss", "appetite_loss"],
+				"offer_symptoms": {
+					"lung_cancer": ["cough", "fatigue", "shortness_of_breath", "chest_pain", "weight_loss", "appetite_loss"],
+					"mesothelioma": ["cough", "fatigue", "shortness_of_breath", "chest_pain", "weight_loss", "appetite_loss"]
+				},
 
-				"consider_symptoms_lung_cancer": ["persistent_chest_infection", "recurrent_chest_infection", "finger_clubbing", "supraclavicular_lymphadenopathy",
+				"consider_symptoms": {
+					"lung_cancer": ["persistent_chest_infection", "recurrent_chest_infection", "finger_clubbing", "supraclavicular_lymphadenopathy",
 					"persistent_cervical_lymphadenopathy", "chest_signs_lung_cancer", "thrombocytosis"],
-
-				"offer_symptoms_mesothelioma": ["cough", "fatigue", "shortness_of_breath", "chest_pain", "weight_loss", "appetite_loss"],
-				"consider_symptoms_mesothelioma": ["finger_clubbing", "chest_signs_pleural_disease"],
+					"mesothelioma": ["finger_clubbing", "chest_signs_pleural_disease"]
+				},
 
 				"condition_text": "Consider urgent X-ray in case of lung cancer for age >= 40 ",
 				"condition": [
@@ -232,15 +235,13 @@
 				"Urgent Chest X-ray, suspect lung cancer and mesothelioma"
 			],
 			"termination_screens": [
-				"prescription",
-				"prescription",
-				"prescription",
-				"prescription",
-				"prescription"
-			]
-
+					"prescription",
+					"prescription",
+					"prescription",
+					"prescription",
+					"prescription"
+				]
 			}
-			
 		]
 	},
 	{
@@ -392,6 +393,46 @@
 							"oesophagal", "stomach"
 						]
 					},
+					"diarrhoea": {
+						"type": "boolean",
+						"num_options": 1,
+						"options": [
+							"Diarrhoea"
+						],
+						"possible_cancer": [
+							"pancreatic"
+						]
+					},
+					"back_pain": {
+						"type": "boolean",
+						"num_options": 1,
+						"options": [
+							"Back pain"
+						],
+						"possible_cancer": [
+							"pancreatic"
+						]
+					},
+					"constipation": {
+						"type": "boolean",
+						"num_options": 1,
+						"options": [
+							"Constipation"
+						],
+						"possible_cancer": [
+							"pancreatic"
+						]
+					},
+					"new_onset_diabetes": {
+						"type": "boolean",
+						"num_options": 1,
+						"options": [
+							"New onset diabetes"
+						],
+						"possible_cancer": [
+							"pancreatic"
+						]
+					},
 					"haematemesis": {
 						"type": "boolean",
 						"num_options": 1,
@@ -476,7 +517,115 @@
 							"oesophagal", "stomach", "pancreatic"
 						]
 					}
-				}
+				},
+				"state_variables": ["dysphagia", "weight_loss", "abdominal_pain", "upper_abdominal_pain", "reflux",
+					"dyspepsia", "haematemesis", "treatment_resistant_dyspepsia", "low_heamoglobin_levels",
+					"raised_platelet_count", "nausea", "vomiting", "upper_abdominal_mass_gall_bladder",
+					"upper_abdominal_mass_liver", "diarrhoea", "back_pain", "constipation", "new_onset_diabetes"],
+
+				"offer_symptoms": {
+					"this_dictionary": "intentionally_left_empty"
+				},
+				"condition_text": null,
+				"consider_symptoms": {
+					"this_dictionary": "intentionally_left_empty"
+				},
+				"condition": [
+					"(dysphagia==1 or (age >= 55 and weight_loss==1 and (upper_abdominal_pain==1 or reflux==1 or dyspepsia==1)))",
+					"(haematemesis == 1 or (age >= 55 and ((treatment_resistant_dyspepsia==1) or (upper_abdominal_pain==1 and low_heamoglobin_levels==1) or (raised_platelet_count==1 and (nausea == 1 or vomiting == 1 or weight_loss==1 or reflux ==1 or dyspepsia == 1 or upper_abdominal_pain == 1)) or ((nausea == 1 or vomiting == 1) and (weight_loss==1 or reflux==1 or dyspepsia==1 or upper_abdominal_pain==1)))))",
+					"(age >= 60 and weight_loss==1 and (diarrhoea == 1 or back_pain==1 or abdominal_pain==1 or nausea==1 or vomiting==1 or constipation==1 or new_onset_diabetes == 1 ))",
+					"(dysphagia == 1 or (age >= 55 and weight_loss==1 and (upper_abdominal_pain==1 or reflux==1 or dyspepsia==1)))",
+					"(haematemesis == 1 or (age >= 55 and ((treatment_resistant_dyspepsia==1) or (upper_abdominal_pain==1 and low_heamoglobin_levels==1) or (raised_platelet_count==1 and (nausea == 1 or vomiting == 1 or weight_loss==1 or reflux ==1 or dyspepsia == 1 or upper_abdominal_pain == 1)) or ((nausea == 1 or vomiting == 1) and (weight_loss==1 or reflux==1 or dyspepsia==1 or upper_abdominal_pain==1)))))",
+					"(upper_abdominal_mass_gall_bladder==1)",
+					"(upper_abdominal_mass_liver==1)"
+				],
+				"condition_satisfied_actions": [
+					{
+						"button_index": 0,
+						"condition_index": 0,
+						"action": "color_change",
+						"color": "#FF0000"
+					},
+					{
+						"button_index": 3,
+						"condition_index": 0,
+						"action": "color_change",
+						"color": "#FF0000"
+					},
+					{
+						"button_index": 1,
+						"condition_index": 1,
+						"action": "color_change",
+						"color": "#FF0000"
+					},
+					{
+						"button_index": 6,
+						"condition_index": 1,
+						"action": "color_change",
+						"color": "#FF0000"
+					},
+					{
+						"button_index": 3,
+						"condition_index": 2,
+						"action": "color_change",
+						"color": "#FF0000"
+					},
+					{
+						"button_index": 4,
+						"condition_index": 3,
+						"action": "color_change",
+						"color": "#FF0000"
+					},
+					{
+						"button_index": 2,
+						"condition_index": 3,
+						"action": "color_change",
+						"color": "#FF0000"
+					},
+					{
+						"button_index": 5,
+						"condition_index": 4,
+						"action": "color_change",
+						"color": "#FF0000"
+					},
+					{
+						"button_index": 6,
+						"condition_index": 4,
+						"action": "color_change",
+						"color": "#FF0000"
+					},
+					{
+						"button_index": 7,
+						"condition_index": 5,
+						"action": "color_change",
+						"color": "#FF0000"
+					},
+					{
+						"button_index": 8,
+						"condition_index": 6,
+						"action": "color_change",
+						"color": "#FF0000"
+					}
+				],
+				"termination_button_text": [
+					"Urgent upper GI endoscopy, suspect Oesophagal cancer",
+					"Consider upper GI endoscopy, suspect Oesophagal cancer",
+					"Urgent upper GI endoscopy, suspect both Oesophagal and Stomach cancer",
+					"Urgent CT scan or ultrasound (if CT not available), suspect Pancreatic cancer",
+					"Urgent upper GI endoscopy, suspect Stomach cancer",
+					"Consider upper GI endoscopy, suspect Stomach cancer",
+					"Consider upper GI endoscopy, suspect both Stomach and Oesophagal cancer",
+					"Consider ultrasound, suspect Gall bladder cancer",
+					"Consider ultrasound, suspect Liver cancer"
+				],
+				"termination_screens": [
+						"prescription",
+						"prescription",
+						"prescription",
+						"prescription",
+						"prescription"
+					]
+
 			}
 		]
 	}
