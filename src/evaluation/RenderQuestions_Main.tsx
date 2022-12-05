@@ -26,18 +26,26 @@ interface Props {
     condition: boolean
     site: number | undefined
     siteJson_blob: any[]
+    age_prefilled: number
+    gender_prefilled: any
 }
 export const reducer = (state: any, action: ActionProp) => {
     switch (action.type) {
         case ActionKind.STATE: {
             debugger;
             console.log(action)
+            // if(action.payload.title=='age')
+            // {
+            //     return {...state, name: [...state.name, ]}
+            // }
             return {...state, name: [...state.name, action.payload]};
         }
         case ActionKind.UPDATE:{
+            // state["name"][action.inde]
             if(action.index!==undefined)
                 state["name"][action.index]["value"] = action.payload.value
             // return {...state, name: [...state.name, action.payload]};
+            
             return {...state};
         }
         case ActionKind.RESET: {
@@ -49,7 +57,7 @@ export const reducer = (state: any, action: ActionProp) => {
             return state;
     }
 };
-export default function RenderQuestions_MAIN({condition, site, siteJson_blob, ...props} : Props) {
+export default function RenderQuestions_MAIN({condition, site, siteJson_blob, age_prefilled, gender_prefilled, ...props} : Props) {
     const [smoker, setSmoker] = useState<boolean>()
     const [asbestos, setAsbestos] = useState<boolean>()
     const [startEval, setStartEval] = useState<boolean>(false)
@@ -84,7 +92,7 @@ export default function RenderQuestions_MAIN({condition, site, siteJson_blob, ..
         }
         setStartEval(true)
     }
-    const handleAddMoreFields = useCallback((state_name: string, state_value: boolean, question: string) => {
+    const handleAddMoreFields = useCallback((state_name: string, state_value: boolean | number, question: string) => {
         console.log("to add to list")
         //debugger;
         dispatch({
@@ -93,7 +101,7 @@ export default function RenderQuestions_MAIN({condition, site, siteJson_blob, ..
         });
     }, [site]);
 
-    const handleUpdateValueField = (index: number, state_name: string, state_value: boolean, question: string) => {
+    const handleUpdateValueField = (index: number, state_name: string, state_value: boolean | number, question: string) => {
         console.log("update value : index: " + index + " value: " + state_value)
         dispatch({
             type: ActionKind.UPDATE,
@@ -128,7 +136,14 @@ export default function RenderQuestions_MAIN({condition, site, siteJson_blob, ..
             console.log(keys[i])
             console.log(totalDict.hasOwnProperty(keys[i]))
             // #infinite loop problem
-            handleAddMoreFields(keys[i], true, values[i].message)
+            if(keys[i]=='age')
+            {
+                handleAddMoreFields(keys[i], age_prefilled, values[i].message)
+            }
+            else
+            {
+                handleAddMoreFields(keys[i], true, values[i].message)
+            }
             
             console.log(JSON.stringify(initialState))
         }
@@ -172,10 +187,16 @@ export default function RenderQuestions_MAIN({condition, site, siteJson_blob, ..
                                     </Box>
                                 }
                                 {
-                                    (item.title=="gender" || item.title=="age")
+                                    (item.title=="age")
                                     &&
                                     <Box>
-                                        <TextField label={item.title} disabled={true}>Autofilled</TextField>
+                                        <TextField disabled={true} label={age_prefilled}></TextField>
+                                    </Box>
+                                }
+                                {
+                                    (item.title=="gender") &&
+                                    <Box>
+                                        <TextField disabled={true} label={item.title}></TextField>
                                     </Box>
                                 }
                         </Box>

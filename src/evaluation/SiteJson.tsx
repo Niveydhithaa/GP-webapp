@@ -13,7 +13,12 @@ import axios from "axios";
 import RenderQuestions from "evaluation/RenderQuestions_Main"
 var siteData : string[];
 
-export default function SiteJson() {
+interface Props {
+    age_prefilled: number
+    gender_prefilled: any
+}
+
+export default function SiteJson({age_prefilled, gender_prefilled, ...props} : Props) {
     const [siteChanged, setSiteChanged] = useState<boolean>()
     const [siteJson_blob, setSiteJson_blob]  = useState<any[]>([])
     const [siteOptions, setSiteOptions] = useState<string[]>([])
@@ -60,8 +65,10 @@ export default function SiteJson() {
     }
     useEffect(() => {
         var blobUrl = config.bloburl
+        var url = config.url
+        var getsitedata_api = "/GetSitedatadetials"
         axios
-            .get(blobUrl)
+            .get(url+getsitedata_api)
             .then((res) => {
                 console.log(res);
                 console.log(res.data);
@@ -118,7 +125,7 @@ export default function SiteJson() {
                 {
                     getData==true &&
                     // <RenderQuestions />
-                    <RenderQuestions condition={true} site={siteId} siteJson_blob = {siteJson_blob}/>
+                    <RenderQuestions condition={true} site={siteId} siteJson_blob = {siteJson_blob} age_prefilled={age_prefilled} gender_prefilled={gender_prefilled}/>
                 }
             </Box>
         </Box>

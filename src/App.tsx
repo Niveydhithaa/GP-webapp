@@ -35,7 +35,7 @@ function App() {
         <Route path="/accounts" element={<Accounts />} />
         <Route path="/analytics" element={<Analytics />} />
         <Route path="/main" element={<MainPage />} />
-        <Route path="/site" element={<SiteJson />} />
+        {/* <Route path="/site" element={<SiteJson />} /> */}
         <Route path="/reducer" element={<Reducer />} />
         {/* below requires context arguments */}
         {/* <Route path="/filtrex" element={<FiltrexEval />} /> */}

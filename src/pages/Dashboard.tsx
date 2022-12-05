@@ -575,7 +575,7 @@ export default function Dashboard() {
         {
             (topic=="site") && 
               <Box sx={{ mt: 2, minHeight: "50px" }}>
-                <SiteJson />
+                <SiteJson age_prefilled={ageV2} gender_prefilled={gender}></SiteJson>
               </Box>
           }
           {(topic == "symptom") &&
