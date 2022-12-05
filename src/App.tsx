@@ -17,7 +17,7 @@ import SiteJson from "evaluation/SiteJson"
 import Homepagev2 from "pages/Homepagev2"
 import FiltrexEval from "evaluation/FiltrexEval";
 import Screen3 from "evaluation/FiltrexEvalPartTwo";
-import Reducer from "evaluation/Reducer";
+import Reducer from "backup/Reducer";
 
 function App() {
   return (
