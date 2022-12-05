@@ -10,6 +10,7 @@ import {
 import { useState, useReducer, useCallback, useMemo, useEffect } from "react"
 import siteJson from "../data/sites_master_mod.json"
 import FiltrexEval from "evaluation/FiltrexEval"
+import {isEqual} from "lodash"
 let initialState = { name: []};
 enum ActionKind {
     STATE = "state",
@@ -24,6 +25,7 @@ interface ActionProp {
 interface Props {
     condition: boolean
     site: number | undefined
+    siteJson_blob: any[]
 }
 export const reducer = (state: any, action: ActionProp) => {
     switch (action.type) {
@@ -47,7 +49,7 @@ export const reducer = (state: any, action: ActionProp) => {
             return state;
     }
 };
-export default function RenderQuestions_MAIN({condition, site, ...props} : Props) {
+export default function RenderQuestions_MAIN({condition, site, siteJson_blob, ...props} : Props) {
     const [smoker, setSmoker] = useState<boolean>()
     const [asbestos, setAsbestos] = useState<boolean>()
     const [startEval, setStartEval] = useState<boolean>(false)
@@ -56,7 +58,7 @@ export default function RenderQuestions_MAIN({condition, site, ...props} : Props
     let states: Record<string, any>[] = [];
     const age = 45;
     console.log("Hello rendering!")
-    const vals = Object.values(siteJson[0].screens[0].values)
+    const vals = Object.values(siteJson_blob[0].screens[0].values)
     useEffect(() => {
         renderQuestionsToggle()
     }, [site])
@@ -65,7 +67,7 @@ export default function RenderQuestions_MAIN({condition, site, ...props} : Props
         console.log("asbestos val:" + asbestos)
         console.log("age: " + age)
         {
-            Object.entries(siteJson[0].screens[0].values).forEach(([k, v]) => {
+            Object.entries(siteJson_blob[0].screens[0].values).forEach(([k, v]) => {
                 console.log("The key: ", k)
                 console.log("The value: ", v)
             })
@@ -73,11 +75,11 @@ export default function RenderQuestions_MAIN({condition, site, ...props} : Props
         if (smoker == false && asbestos == false) {
         }
         else if (smoker == true && asbestos == false) {
-            // console.log(siteJson[0].screens)
-            console.log(siteJson[0].screens[2])
-            localStorage.setItem("screenname", siteJson[0].screens[2].screen_name)
-            console.log(siteJson[0].screens[2].screen_name)
-            let screen3obj = siteJson[0].screens[2]
+            // console.log(siteJson_blob[0].screens)
+            console.log(siteJson_blob[0].screens[2])
+            localStorage.setItem("screenname", siteJson_blob[0].screens[2].screen_name)
+            console.log(siteJson_blob[0].screens[2].screen_name)
+            let screen3obj = siteJson_blob[0].screens[2]
             // let total_symps = screen3obj.symptoms
         }
         setStartEval(true)
@@ -116,9 +118,9 @@ export default function RenderQuestions_MAIN({condition, site, ...props} : Props
                 payload : {title: 'dummy', value: 9, question: 'dummy'}
             })
             console.log(site)
-            let totalDict = siteJson[site-1].screens[0].values
-        let keys = Object.keys(totalDict)
-        let values = Object.values(totalDict)
+            let totalDict = siteJson_blob[site-1].screens[0].values
+        let keys: any[] = Object.keys(totalDict)
+        let values: any[] = Object.values(totalDict)
         console.log(" Initial state of input field:  " + JSON.stringify(initialState))
         for (var i in keys) {
             console.log(i)
@@ -137,10 +139,12 @@ export default function RenderQuestions_MAIN({condition, site, ...props} : Props
     }
     return (
         <Box>
-            <Typography style={{color: "red"}}>Dynamic tries: START</Typography>
+            {/* <Typography style={{color: "red"}}>Dynamic tries: START</Typography> */}
             {/* <Box>{condition&&renderQuestionsToggle()}</Box> */}
             {/* <Button onClick={renderQuestionsToggle}>Render</Button> */}
-            {JSON.stringify(inputFields.name)}
+            {/* {JSON.stringify(inputFields.name)} */}
+            {JSON.stringify("Whether the local and remote JSONs are equal - " + isEqual(siteJson, siteJson_blob))}
+            
             {inputFields.name.map((item: any, index : number) => {
                    return (
                         <Box key={index} className="Wrapper">
@@ -179,11 +183,11 @@ export default function RenderQuestions_MAIN({condition, site, ...props} : Props
                   
                 })
             }
-            <Typography style={{color: "red"}}>Dynamic tries: END</Typography>
+            {/* <Typography style={{color: "red"}}>Dynamic tries: END</Typography> */}
             <Button onClick={getResults} variant="contained">Next</Button>
             {
                 startEval &&
-                <FiltrexEval smoker={smoker} asbestos={asbestos} site={site} inputFields={inputFields}></FiltrexEval>
+                <FiltrexEval smoker={smoker} asbestos={asbestos} site={site} inputFields={inputFields} siteJson_blob = {siteJson_blob}></FiltrexEval>
             }
             
         </Box>

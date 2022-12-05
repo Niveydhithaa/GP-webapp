@@ -18,6 +18,8 @@ import { isUndefined } from 'util';
 import { useNavigate } from "react-router-dom"
 import FiltrexEvalPartTwo from 'evaluation/FiltrexEvalPartTwo';
 import ImmediateReferral from "evaluation/components/ImmediateReferral"
+import {isEqual} from "lodash"
+
 let initialState = { name: [] };
 enum Colors {
     PRIMARY = "primary",
@@ -38,6 +40,7 @@ interface Props {
     asbestos: boolean | undefined
     site: number | undefined
     inputFields: any
+    siteJson_blob: any[]
 }
 
 export const reducer = (state: any, action: ActionProp) => {
@@ -62,7 +65,7 @@ export const reducer = (state: any, action: ActionProp) => {
             return state;
     }
 };
-export default function FiltrexEval({ smoker, asbestos, site, inputFields, ...props }: Props) {
+export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJson_blob, ...props }: Props) {
     const navigate = useNavigate()
     const [value, setValue] = useState('female');
 
@@ -112,7 +115,7 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, ...pr
         if(site!==undefined)
         {
             console.log("Click handler")
-            var screen2_conditions_arr = siteJson[site-1].screens[1].condition
+            var screen2_conditions_arr = siteJson_blob[site-1].screens[1].condition
             console.log(screen2_conditions_arr)
             var compareList:any[] = []
             inputFieldsScreenTwo.name.map((item: any, index: any) => {
@@ -175,9 +178,9 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, ...pr
                 payload : {title: 'dummy', value: 9, question: 'dummy'}
             })
             console.log(site)
-            let totalDict = siteJson[site - 1].screens[1].values
-            let keys = Object.keys(totalDict)
-            let values = Object.values(totalDict)
+            let totalDict = siteJson_blob[site - 1].screens[1].values
+            let keys: any[] = Object.keys(totalDict)
+            let values: any[] = Object.values(totalDict)
             console.log(" Initial state of input field:  " + JSON.stringify(initialState))
             for (var i in keys) {
                 console.log(i)
@@ -206,11 +209,11 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, ...pr
     }
     return (
         <Box>
-
+            {JSON.stringify("Whether the local and remote JSONs are equal - " + isEqual(siteJson, siteJson_blob))}
             {
                 (site !== undefined) &&
                 <Box>
-                    <Typography>{siteJson[site - 1].screens[1].display_name}</Typography>
+                    <Typography>{siteJson_blob[site - 1].screens[1].display_name}</Typography>
                     {inputFieldsScreenTwo.name.map((item: any, index: number) => {
                         return (
                             <Box key={index} className="Wrapper">
@@ -258,8 +261,8 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, ...pr
             <Button onClick={clickHandler} variant="contained">Next</Button>
             { openTreatmentOptions && 
                 <Box>
-                {/* <Button disabled={!furtherInvest} color="secondary" variant="contained" onClick={clickFurther}>{siteJson[0].screens[1].termination_button_text?.at(1)}</Button>
-                <Button disabled={!immediate} color="error" variant="contained">{siteJson[0].screens[1].termination_button_text?.at(0)}</Button> */}
+                {/* <Button disabled={!furtherInvest} color="secondary" variant="contained" onClick={clickFurther}>{siteJson_blob[0].screens[1].termination_button_text?.at(1)}</Button>
+                <Button disabled={!immediate} color="error" variant="contained">{siteJson_blob[0].screens[1].termination_button_text?.at(0)}</Button> */}
                 <Box>
                     { (site!==undefined) &&
                         <FormControl>
@@ -271,7 +274,7 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, ...pr
                                 onChange={handleChangeToggle}
                             >
                                 {
-                                siteJson[site - 1].screens[1].termination_button_text?.map((item: any, index: number ) => {
+                                siteJson_blob[site - 1].screens[1].termination_button_text?.map((item: any, index: number ) => {
                                     return (
                                         <Box display="inline-flex">
                                             <>{console.log(ruleEvalResults)}</>
@@ -297,8 +300,9 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, ...pr
             {/* section for further offer screen */}
             {
                 furtherInvest &&
-                <FiltrexEvalPartTwo smoker={smoker} asbestos={asbestos} site={site} inputFields={inputFields}/>
+                <FiltrexEvalPartTwo smoker={smoker} asbestos={asbestos} site={site} inputFields={inputFields} siteJson_blob={siteJson_blob}/>
             }
+            {/* immediate referral - oncology popup */}
             {
                 immediate &&
                 <ImmediateReferral cause_of_immediate={value} />

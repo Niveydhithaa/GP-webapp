@@ -15,15 +15,20 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import {isEqual} from "lodash"
+ 
+let initialState = { name: [] };
 interface Props {
     smoker: boolean | undefined
     asbestos: boolean | undefined
     site: number | undefined
     inputFields: any
+    siteJson_blob: any[]
 }
 enum ActionKind {
     STATE = "state",
-    UPDATE = "update"
+    UPDATE = "update",
+    RESET = "reset"
 }
 interface ActionProp {
     type: ActionKind
@@ -43,11 +48,16 @@ export const reducer = (state: any, action: ActionProp) => {
             // return {...state, name: [...state.name, action.payload]};
             return { ...state };
         }
+        case ActionKind.RESET: {
+            state = initialState;
+            console.log(state)
+            return {...state};
+        }
         default:
             return state;
     }
 };
-export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields, ...props} : Props) {
+export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields, siteJson_blob, ...props} : Props) {
     const [cough, setCough] = useState<number>()
     const [fatigue, setFatigue] = useState<number>()
     const [shortness_breath, setShortnessBreath]= useState<number>()
@@ -58,7 +68,7 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
     const [openTreatmentOptions, setOpenTreatmentOptions] = useState<boolean>();
     const age =45;
     const [value, setValue] = useState('female');
-    let initialState = { name: [] };
+    
     const [inputFieldsScreenThree, dispatch] = useReducer(reducer, initialState)
 
     const handleChangeToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,7 +80,7 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
         if(site!==undefined)
         {
             console.log("Click handler")
-            var screen3_conditions_arr = siteJson[site-1].screens[2].condition
+            var screen3_conditions_arr = siteJson_blob[site-1].screens[2].condition
             console.log(screen3_conditions_arr)
             // step1: categorize offer, consider
             // step2: count_oofer, count_consider need to store the length of true's
@@ -106,21 +116,21 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
             console.log(totalDict);
             //total dict has tp be added with:
             // 1. count_offer
-            console.log(siteJson[0].screens[2].values)
-            console.log(siteJson[site-1].screens[2].offer_symptoms)
-            console.log(siteJson[site-1].screens[2].consider_symptoms)
+            console.log(siteJson_blob[0].screens[2].values)
+            console.log(siteJson_blob[site-1].screens[2].offer_symptoms)
+            console.log(siteJson_blob[site-1].screens[2].consider_symptoms)
             //branch 1 - offer (urgent)
             if(site-1==0)
             {
-                const completeOfferDict = siteJson[site-1].screens[2].offer_symptoms
+                const completeOfferDict = siteJson_blob[site-1].screens[2].offer_symptoms
                 let tempDict_offer : Record<string, number[]>[] = []
                 let tempDict_consider : Record<string, number[]>[] = []
                 if(completeOfferDict!==undefined)
                 {
                     console.log(Object.keys(completeOfferDict).length)
                     
-                    let keys_offer = Object.keys(completeOfferDict)
-                    let values_offer = Object.values(completeOfferDict)
+                    let keys_offer: any[] = Object.keys(completeOfferDict)
+                    let values_offer: any[] = Object.values(completeOfferDict)
                     // inputFieldsScreenThree.name.map((item_input: any, index_input: number) => {
                     //     // console.log(item_input.title)
                         
@@ -151,32 +161,32 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
                 
 
                 //branch 2 - consider
-                const completeConsiderDict = siteJson[site-1].screens[2].consider_symptoms
+                const completeConsiderDict = siteJson_blob[site-1].screens[2].consider_symptoms
                 if(completeConsiderDict!==undefined)
                 {
                     console.log(Object.keys(completeConsiderDict).length)
                     
-                    let keys_offer = Object.keys(completeConsiderDict)
-                    let values_offer = Object.values(completeConsiderDict)
+                    let keys_consider:any[] = Object.keys(completeConsiderDict)
+                    let values_consider:any[] = Object.values(completeConsiderDict)
                     let tempList:number[] = []
                     
                         // console.log(item_input.title)
-                        for(let i in keys_offer)
+                        for(let i in keys_consider)
                         {
                             tempList = []
-                            values_offer[i].map((item_actual: any, index: number) => {
+                            values_consider[i].map((item_actual: any, index: number) => {
                                 // console.log(item_actual)
                                 inputFieldsScreenThree.name.map((item_input: any, index_input: number) => {
                                     if(item_actual==item_input.title)
                                     {
-                                        console.log(keys_offer[i])
+                                        console.log(keys_consider[i])
                                         console.log("EQUAL KEYS")
                                         // tempDict.push({[keys_offer[i])
                                         tempList.push(item_input.value)
                                     }
                                 })
                             })
-                            tempDict_consider.push({[keys_offer[i]] : tempList })
+                            tempDict_consider.push({[keys_consider[i]] : tempList })
                         }
                     
                     console.log("values of consider (both types of cancer) with inputfields" + JSON.stringify(tempDict_consider))
@@ -200,7 +210,7 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
 
             }
             // CONDITIONS!
-            var screen3_conditions_arr = siteJson[site-1].screens[2].condition
+            var screen3_conditions_arr = siteJson_blob[site-1].screens[2].condition
             console.log(screen3_conditions_arr)
             console.log(totalDict)
             var resultsArray : boolean[] = []
@@ -227,7 +237,7 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
         // Run! Like go get some data from an API.
         setRuleEvalResults([])
         renderQuestionsToggle()
-    }, []);
+    }, [site]);
     const handleAddMoreFields = useCallback((state_name: string, state_value: boolean | number, question: string) => {
         console.log("to add to list")
         //debugger;
@@ -251,10 +261,14 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
         //make the inputFields epmty here. for each site it has to be made empty
         let questionsList: any[] = [];
         if (site != undefined) {
+            dispatch({
+                type: ActionKind.RESET,
+                payload : {title: 'dummy', value: 9, question: 'dummy'}
+            })
             console.log(site)
-            let totalDict = siteJson[site - 1].screens[2].values
-            let keys = Object.keys(totalDict)
-            let values = Object.values(totalDict)
+            let totalDict = siteJson_blob[site - 1].screens[2].values
+            let keys: any[] = Object.keys(totalDict)
+            let values: any[] = Object.values(totalDict)
             console.log(" Initial state of input field:  " + JSON.stringify(initialState))
             for (var i in keys) {
                 console.log(i)
@@ -275,7 +289,8 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
         <Box>
             { (site!==undefined) && 
                 <Box>
-                    <Typography>{siteJson[site-1].screens[2].display_name}</Typography>
+                    {JSON.stringify("Whether the local and remote JSONs are equal - " + isEqual(siteJson, siteJson_blob))}
+                    <Typography>{siteJson_blob[site-1].screens[2].display_name}</Typography>
                     {inputFieldsScreenThree.name.map((item: any, index: number) => {
                         return (
                             <Box key={index} className="Wrapper">
@@ -324,8 +339,8 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
             <Button onClick={getResults} variant="contained">Next</Button>
             { openTreatmentOptions && 
                 <Box>
-                {/* <Button disabled={!furtherInvest} color="secondary" variant="contained" onClick={clickFurther}>{siteJson[0].screens[1].termination_button_text?.at(1)}</Button>
-                <Button disabled={!immediate} color="error" variant="contained">{siteJson[0].screens[1].termination_button_text?.at(0)}</Button> */}
+                {/* <Button disabled={!furtherInvest} color="secondary" variant="contained" onClick={clickFurther}>{siteJson_blob[0].screens[1].termination_button_text?.at(1)}</Button>
+                <Button disabled={!immediate} color="error" variant="contained">{siteJson_blob[0].screens[1].termination_button_text?.at(0)}</Button> */}
                 <Box>
                     { (site!==undefined) &&
                         <FormControl>
@@ -337,7 +352,7 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
                                 onChange={handleChangeToggle}
                             >
                                 {
-                                siteJson[site - 1].screens[2].termination_button_text?.map((item: any, index: number ) => {
+                                siteJson_blob[site - 1].screens[2].termination_button_text?.map((item: any, index: number ) => {
                                     return (
                                         <Box display="inline-flex">
                                             <>{console.log(ruleEvalResults)}</>

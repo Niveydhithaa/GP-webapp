@@ -62,7 +62,7 @@ export default function ImmediateReferral({cause_of_immediate, ...props} : Props
                     </CardContent>
                     <CardActions>
                         <Button>Cancel</Button>
-                        <Button>Submit</Button>
+                        <Button variant="contained">Submit</Button>
                     </CardActions>
                 </Card>
             </Box>

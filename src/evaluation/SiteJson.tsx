@@ -118,7 +118,7 @@ export default function SiteJson() {
                 {
                     getData==true &&
                     // <RenderQuestions />
-                    <RenderQuestions condition={true} site={siteId} />
+                    <RenderQuestions condition={true} site={siteId} siteJson_blob = {siteJson_blob}/>
                 }
             </Box>
         </Box>
