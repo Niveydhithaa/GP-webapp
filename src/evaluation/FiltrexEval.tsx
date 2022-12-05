@@ -219,9 +219,31 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJ
                             <Box key={index} className="Wrapper">
                                 {/* {console.log(item.name.title)} */}
                                 <Typography>{item.question} - {item.title}</Typography>
-
                                 {
-                                    (item.title != "gender" && item.title != "age") &&
+                                    (item.title=="xray_findings") &&
+                                    <Box>
+                                        <ToggleButtonGroup
+                                            color="primary"
+                                            exclusive
+                                            value={item.value}
+                                            // onInput={}
+                                            // onClick={(e: React.MouseEvent<HTMLElement>, newValue: boolean) => handleUpdateValueField(index, item.title, newValue, item.question)}
+                                            onChange={(e: React.MouseEvent<HTMLElement>, newValue: boolean) => {
+                                                handleUpdateValueField(index, item.title, newValue, item.question)
+                                                item.value = newValue
+                                                setOpenTreatmentOptions(false)
+                                            }}
+                                            aria-label="Platform"
+                                        >
+                                            <ToggleButton value={1} id="toggle_symptom">Yes, Lung cancer</ToggleButton>
+                                            <ToggleButton value={2} id="toggle_symptom">Yes, Mesathelioma</ToggleButton>
+                                            <ToggleButton value={3} id="toggle_symptom">Not available</ToggleButton>
+                                            <ToggleButton value={0}>No</ToggleButton>
+                                        </ToggleButtonGroup>
+                                    </Box>
+                                }
+                                {
+                                    (item.title != "gender" && item.title != "age" && item.title!=="xray_findings") &&
                                     <Box>
                                         <ToggleButtonGroup
                                             color="primary"
