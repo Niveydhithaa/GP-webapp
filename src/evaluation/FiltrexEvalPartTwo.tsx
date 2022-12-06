@@ -7,6 +7,7 @@ import {
     ToggleButtonGroup,
     ToggleButton
 } from "@mui/material"
+import Paper from '@mui/material/Paper';
 import {useState, useCallback, useEffect, useReducer} from "react"
 import siteJson from "data/sites_master_mod.json"
 import { compileExpression } from "filtrex"
@@ -24,6 +25,7 @@ interface Props {
     site: number | undefined
     inputFields: any
     siteJson_blob: any[]
+    age_prefilled: number
 }
 enum ActionKind {
     STATE = "state",
@@ -57,7 +59,7 @@ export const reducer = (state: any, action: ActionProp) => {
             return state;
     }
 };
-export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields, siteJson_blob, ...props} : Props) {
+export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields, siteJson_blob, age_prefilled,...props} : Props) {
     const [cough, setCough] = useState<number>()
     const [fatigue, setFatigue] = useState<number>()
     const [shortness_breath, setShortnessBreath]= useState<number>()
@@ -67,6 +69,7 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
     const [ruleEvalResults, setRuleEvalResults] = useState<boolean[]>([])
     const [openTreatmentOptions, setOpenTreatmentOptions] = useState<boolean>();
     const age =45;
+    const [finalSummary, setFinalSummary] = useState<boolean>(false);
     const [value, setValue] = useState('female');
     
     const [inputFieldsScreenThree, dispatch] = useReducer(reducer, initialState)
@@ -75,6 +78,7 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
         // setImmediate(false)
         // setFurther(false)
         setValue((event.target as HTMLInputElement).value);
+        
     };
     const getResults = () => {
         if(site!==undefined)
@@ -107,12 +111,12 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
                 a[t[0]] = t[1];
                 return a;
             }, a), {});
-            for(let i in Object.keys(totalDict)) {
-                if(Object.keys(totalDict)[i] == "age")
-                {
-                    totalDict["age"] = 45;
-                }
-            }
+            // for(let i in Object.keys(totalDict)) {
+            //     if(Object.keys(totalDict)[i] == "age")
+            //     {
+            //         totalDict["age"] = 45;
+            //     }
+            // }
             console.log(totalDict);
             //total dict has tp be added with:
             // 1. count_offer
@@ -276,14 +280,24 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
                 console.log(keys[i])
                 console.log(totalDict.hasOwnProperty(keys[i]))
                 // #infinite loop problem
-                handleAddMoreFields(keys[i], true, values[i].message)
-
+                // handleAddMoreFields(keys[i], true, values[i].message)
+                if(keys[i]=='age')
+                {
+                    handleAddMoreFields(keys[i], age_prefilled, values[i].message)
+                }
+                else
+                {
+                    handleAddMoreFields(keys[i], 0, values[i].message)
+                }
                 console.log(JSON.stringify(initialState))
             }
             console.log(" Input field after loop: " + JSON.stringify(inputFieldsScreenThree))
             console.log("driver function exit")
         }
         return questionsList;
+    }
+    const showFinalSummary = () => {
+        setFinalSummary(true)
     }
     return (
         <Box>
@@ -309,6 +323,7 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
                                             onChange={(e: React.MouseEvent<HTMLElement>, newValue: boolean) => {
                                                 handleUpdateValueField(index, item.title, newValue, item.question)
                                                 item.value = newValue
+                                                setOpenTreatmentOptions(false)
                                             }}
                                             defaultValue={0}
                                             aria-label="Platform"
@@ -335,7 +350,7 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
             
             
             
-            <Typography>Further Investigation - screen 3</Typography>
+            {/* <Typography>Further Investigation - screen 3</Typography> */}
             <Button onClick={getResults} variant="contained">Next</Button>
             { openTreatmentOptions && 
                 <Box>
@@ -358,8 +373,25 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
                                             <>{console.log(ruleEvalResults)}</>
                                             <FormControlLabel value={item} control={<Radio />} label={item} />
                                             {/* recheck the below conditions */}
-                                            {(ruleEvalResults[index]==true && index!==ruleEvalResults.length) &&
+                                            {(index==siteJson_blob[site - 1].screens[2].termination_button_text.length-1 && (ruleEvalResults.filter(x => x===false).length==siteJson_blob[site - 1].screens[2].condition.length))
+                                            &&
+                                                <Typography >(Probable)</Typography>
+                                            }
+                                            {/* {(ruleEvalResults[index]==true && index!==ruleEvalResults.length) &&
                                                 <Typography>(Recommended)</Typography>
+                                            } */}
+                                            {siteJson_blob[site - 1].screens[2].condition_satisfied_actions?.map((single_condition:any, cond_satis_index: number) => {
+                                                return (
+                                                    <Box>
+                                                        {/* {JSON.stringify(single_condition.button_index)} */}
+                                                        {(ruleEvalResults[single_condition.condition_index]==true && single_condition.button_index==index)
+                                                            &&
+                                                            <Typography>(Probable)</Typography>
+                                                        }
+                                                    </Box>
+                                                )
+                                            })
+
                                             }
                                         </Box>
                                     )
@@ -371,14 +403,27 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
                             </Box>
                         </FormControl>
                     }
+                    <Box mt={2}>
+                        <Button variant="contained" onClick={showFinalSummary}>Complete</Button>
+                    </Box>
+                    {finalSummary && 
+                        <Box>
+                            <Paper square elevation={0} sx={{ p: 3 }}>
+                                {/* <Typography>All steps completed - you&apos;re finished</Typography> */}
+                                <Typography fontSize="10px">Symptom Investigation completed on 17/10/2022</Typography>
+                                <Typography color="red">Findings = Refer to oncologist</Typography>
+                                {/* <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
+                                    Reset
+                                </Button> */}
+                            </Paper>
+                        </Box>
+                    }
                 </Box>
             </Box>
 
             }
             
-            <Box mt={2}>
-                <Button variant="contained">Complete</Button>
-            </Box>
+            
         </Box>
     )
 }

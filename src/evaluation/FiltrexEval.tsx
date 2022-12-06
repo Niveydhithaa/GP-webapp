@@ -41,6 +41,7 @@ interface Props {
     site: number | undefined
     inputFields: any
     siteJson_blob: any[]
+    age_prefilled: number
 }
 
 export const reducer = (state: any, action: ActionProp) => {
@@ -65,7 +66,7 @@ export const reducer = (state: any, action: ActionProp) => {
             return state;
     }
 };
-export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJson_blob, ...props }: Props) {
+export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJson_blob, age_prefilled, ...props }: Props) {
     const navigate = useNavigate()
     const [value, setValue] = useState('female');
 
@@ -140,12 +141,6 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJ
                 a[t[0]] = t[1];
                 return a;
             }, a), {});
-            for(let i in Object.keys(totalDict)) {
-                if(Object.keys(totalDict)[i] == "age")
-                {
-                    totalDict["age"] = 45;
-                }
-            }
             console.log(totalDict);
             var resultsArray : boolean[] = []
             screen2_conditions_arr?.map((condition: any, index: any) => {
@@ -188,8 +183,15 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJ
                 console.log(keys[i])
                 console.log(totalDict.hasOwnProperty(keys[i]))
                 // #infinite loop problem
-                handleAddMoreFields(keys[i], true, values[i].message)
-
+                // handleAddMoreFields(keys[i], true, values[i].message)
+                if(keys[i]=='age')
+                {
+                    handleAddMoreFields(keys[i], age_prefilled, values[i].message)
+                }
+                else
+                {
+                    handleAddMoreFields(keys[i], 0, values[i].message)
+                }
                 console.log(JSON.stringify(initialState))
             }
             console.log(" Input field after loop: " + JSON.stringify(inputFieldsScreenTwo))
@@ -301,8 +303,25 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJ
                                         <Box display="inline-flex">
                                             <>{console.log(ruleEvalResults)}</>
                                             <FormControlLabel value={item} control={<Radio />} label={item} />
-                                            {(ruleEvalResults[index]==true && index!==ruleEvalResults.length) &&
+                                            {(index==siteJson_blob[site - 1].screens[1].termination_button_text.length-1 && (ruleEvalResults.filter(x => x===false).length==siteJson_blob[site - 1].screens[1].condition.length))
+                                            &&
+                                                <Typography color="red" fontSize="13px">(Probable)</Typography>
+                                            }
+                                            {/* {(ruleEvalResults[index]==true && index!==ruleEvalResults.length) &&
                                                 <Typography>(Recommended)</Typography>
+                                            } */}
+                                            {siteJson_blob[site - 1].screens[1].condition_satisfied_actions?.map((single_condition:any, cond_satis_index: number) => {
+                                                return (
+                                                    <Box>
+                                                        {/* {JSON.stringify(single_condition.button_index)} */}
+                                                        {(ruleEvalResults[single_condition.condition_index]==true && single_condition.button_index==index)
+                                                            &&
+                                                            <Typography color="red" fontSize="13px">(Probable)</Typography>
+                                                        }
+                                                    </Box>
+                                                )
+                                            })
+
                                             }
                                         </Box>
                                     )
@@ -322,7 +341,7 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJ
             {/* section for further offer screen */}
             {
                 furtherInvest &&
-                <FiltrexEvalPartTwo smoker={smoker} asbestos={asbestos} site={site} inputFields={inputFields} siteJson_blob={siteJson_blob}/>
+                <FiltrexEvalPartTwo smoker={smoker} asbestos={asbestos} site={site} inputFields={inputFields} siteJson_blob={siteJson_blob} age_prefilled={age_prefilled}/>
             }
             {/* immediate referral - oncology popup */}
             {
