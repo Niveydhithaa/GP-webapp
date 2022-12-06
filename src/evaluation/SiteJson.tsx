@@ -99,7 +99,7 @@ export default function SiteJson({age_prefilled, gender_prefilled, ...props} : P
             {console.log(siteJson_blob)}
             </>
             
-            <Box>
+            <Box padding={2}>
                 <Autocomplete
                     disablePortal
                     id="combo-box-demo"
@@ -118,12 +118,13 @@ export default function SiteJson({age_prefilled, gender_prefilled, ...props} : P
                             setSiteChanged(true)
                         }
                         setSite(newValue)
+                        setGetData(false)
                     }}
                     renderInput={(params) => <TextField {...params} label="Search" />}
                 />
                 <Button onClick={getDataHandler} variant="contained" color="info">Next</Button>
                 {
-                    getData==true &&
+                    getData &&
                     // <RenderQuestions />
                     <RenderQuestions condition={true} site={siteId} siteJson_blob = {siteJson_blob} age_prefilled={age_prefilled} gender_prefilled={gender_prefilled}/>
                 }

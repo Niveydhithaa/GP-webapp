@@ -142,7 +142,7 @@ export default function RenderQuestions_MAIN({condition, site, siteJson_blob, ag
             }
             else
             {
-                handleAddMoreFields(keys[i], true, values[i].message)
+                handleAddMoreFields(keys[i], false, values[i].message)
             }
             
             console.log(JSON.stringify(initialState))
@@ -178,6 +178,7 @@ export default function RenderQuestions_MAIN({condition, site, siteJson_blob, ag
                                                 onChange={(e: React.MouseEvent<HTMLElement>, newValue: boolean) => {
                                                     handleUpdateValueField(index, item.title, newValue, item.question)
                                                     item.value = newValue
+                                                    setStartEval(false)
                                                 }}
                                                 aria-label="Platform"
                                             >
@@ -208,7 +209,7 @@ export default function RenderQuestions_MAIN({condition, site, siteJson_blob, ag
             <Button onClick={getResults} variant="contained">Next</Button>
             {
                 startEval &&
-                <FiltrexEval smoker={smoker} asbestos={asbestos} site={site} inputFields={inputFields} siteJson_blob = {siteJson_blob}></FiltrexEval>
+                <FiltrexEval smoker={smoker} asbestos={asbestos} site={site} inputFields={inputFields} siteJson_blob = {siteJson_blob} age_prefilled={age_prefilled}></FiltrexEval>
             }
             
         </Box>

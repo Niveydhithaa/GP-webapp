@@ -303,7 +303,7 @@ export default function Dashboard() {
     //version 1 hard refresh
     // window.location.reload();
     setGender(null)
-    setTopic("symptom")
+    // setTopic(topi)
     // setAgeV2(0)
     // console.log(ageV2)
     // setAgeV2("")
