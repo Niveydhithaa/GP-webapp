@@ -222,9 +222,10 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                 <Typography fontWeight="bold">{selectedSymp}</Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Typography>
+                {/* below is symptom description - commented on 06-12-2022 as per instruction */}
+                {/* <Typography>
                   {selectedSymp}
-                </Typography>
+                </Typography> */}
                 <Typography>
                   {/* {!gender_specific &&
                         <Typography fontSize="10px">Not gender specific!</Typography>
