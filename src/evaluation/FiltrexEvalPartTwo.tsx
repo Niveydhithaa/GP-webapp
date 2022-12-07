@@ -359,7 +359,7 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
                 <Box>
                     { (site!==undefined) &&
                         <FormControl>
-                            <FormLabel id="demo-controlled-radio-buttons-group">Select Treatment</FormLabel>
+                            {/* <FormLabel id="demo-controlled-radio-buttons-group">Select Treatment</FormLabel> */}
                             <RadioGroup
                                 aria-labelledby="demo-controlled-radio-buttons-group"
                                 name="controlled-radio-buttons-group"
@@ -373,10 +373,10 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
                                             <>{console.log(ruleEvalResults)}</>
                                             <FormControlLabel value={item} control={<Radio />} label={item} />
                                             {/* recheck the below conditions */}
-                                            {(index==siteJson_blob[site - 1].screens[2].termination_button_text.length-1 && (ruleEvalResults.filter(x => x===false).length==siteJson_blob[site - 1].screens[2].condition.length))
+                                            {/* {(index==siteJson_blob[site - 1].screens[2].termination_button_text.length-1 && (ruleEvalResults.filter(x => x===false).length==siteJson_blob[site - 1].screens[2].condition.length))
                                             &&
-                                                <Typography >(Probable)</Typography>
-                                            }
+                                                <Typography color="red" fontSize="13px">(Probable)</Typography>
+                                            } */}
                                             {/* {(ruleEvalResults[index]==true && index!==ruleEvalResults.length) &&
                                                 <Typography>(Recommended)</Typography>
                                             } */}
@@ -386,7 +386,7 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
                                                         {/* {JSON.stringify(single_condition.button_index)} */}
                                                         {(ruleEvalResults[single_condition.condition_index]==true && single_condition.button_index==index)
                                                             &&
-                                                            <Typography>(Probable)</Typography>
+                                                            <Typography color="red" fontSize="13px">(Probable)</Typography>
                                                         }
                                                     </Box>
                                                 )
