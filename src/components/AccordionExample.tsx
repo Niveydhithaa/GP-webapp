@@ -253,10 +253,20 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                     <DialogContent >
                         <AlertMUI></AlertMUI>
                         <Stack>
-                          <br></br>
                           <Box>
-                            <SelectPatientStatic></SelectPatientStatic>
+                            <Box mt={2}>
+                              <TextField
+                                  label="GP Name"
+                                  id="input_name"
+                                  required
+                                  sx={{width: "40%"}}
+                                />
+                            </Box>
+                            <Box mt={1}>
+                              <SelectPatientStatic></SelectPatientStatic>
+                            </Box>
                           </Box>
+                          
                           <Box sx={{border: '1px solid grey'}} mt={2} padding={1} >
                           <Box display="flex" sx={{ backgroundColor: "#fff" }}>
                                 
@@ -360,7 +370,14 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                                 <ToggleButton value="6.30pmto7.30pm" disabled={true}>18:30 - 19:30</ToggleButton>
                               </ToggleButtonGroup>
                             </Box>
+                            <Box mt={2}>
+                              <TextField label="Patient EmailID"></TextField>
+                            </Box>
+                            <Box mt={2}>
+                              <TextField multiline={true} fullWidth label="Notes about patient (optional)"></TextField>
+                            </Box>
                         </Stack>
+
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleClosePrescribeDialog}>Cancel</Button>
