@@ -290,7 +290,7 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJ
                 <Box>
                     { (site!==undefined) &&
                         <FormControl>
-                            <FormLabel id="demo-controlled-radio-buttons-group">Select Treatment</FormLabel>
+                            {/* <FormLabel id="demo-controlled-radio-buttons-group">Select Treatment</FormLabel> */}
                             <RadioGroup
                                 aria-labelledby="demo-controlled-radio-buttons-group"
                                 name="controlled-radio-buttons-group"
