@@ -3,6 +3,7 @@ import {
   Autocomplete, Box, Button, Grid, TextField, ToggleButton, ToggleButtonGroup, Typography
 } from "@mui/material";
 import { debounce } from "lodash";
+import config from "config.json"
 import { useEffect, useState } from "react";
 // import MultiSelect from 'components/MultiSelect'
 import axios from "axios";
@@ -12,11 +13,132 @@ import PrimaryAccordion from "components/PrimaryAccordion";
 import configData from "config.json";
 import { MultiValue } from 'react-select';
 import SiteJson from "evaluation/SiteJson"
-
+import RenderQuestions from "evaluation/RenderQuestions_Main"
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 // let age_global : any = 0;
 var multiSelectDict_global: MultiValue<Record<string, string>>;
 var multiSelectDict_global_tags: Record<string, string>[];
-
+interface Props_SiteStart {
+  age_prefilled: number
+  gender_prefilled: any
+}
+export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Props_SiteStart) {
+  const [siteChanged, setSiteChanged] = useState<boolean>()
+  const [siteJson_blob, setSiteJson_blob]  = useState<any[]>([])
+  const [siteOptions, setSiteOptions] = useState<string[]>([])
+  const [site, setSite] = useState<string | null>()
+  const [getData, setGetData] = useState<boolean>(false)
+  const [inputValue, setInputValue] = useState<string>('')
+  const [siteId, setSiteId] = useState<number>();
+  function getOptionsArray(siteJson_blob_up:any)
+  {
+      console.log(siteJson_blob_up)
+      console.log(typeof(siteJson_blob_up))
+      var site_options = [];
+      if(siteJson_blob_up!=undefined)
+      {
+          for(let i=0; i<siteJson_blob_up.length; i++)
+          {
+              site_options.push(siteJson_blob_up[i].site)
+          }
+          console.log(site_options)
+      }
+      setSiteOptions(site_options)
+      return site_options;
+  }
+  function constructDict() {
+      var temp_dict : Record<string, any> = {};
+      var temp_array = [];
+      for(let i=0; i<siteJson_blob.length; i++)
+      {
+          temp_dict['id'] = siteJson_blob[i].site_id
+          temp_dict['site'] = siteJson_blob[i].site
+          console.log(temp_dict)
+          temp_array.push(temp_dict)
+          temp_dict = {}
+      }
+  }
+  const getIdFromSiteName = () => {
+      for(let i in siteJson_blob) {
+          if(siteJson_blob[i].site==site){
+              console.log(i)
+              return Number(i)
+          }
+      }
+      return -1;
+  }
+  useEffect(() => {
+      var blobUrl = config.bloburl
+      var url = config.url
+      var getsitedata_api = "/GetSitedatadetials"
+      axios
+          .get(url+getsitedata_api)
+          .then((res) => {
+              console.log(res);
+              console.log(res.data);
+              console.log(typeof(res))
+              setSiteJson_blob(res.data)
+              getOptionsArray(res.data)
+              // let id_name_dict = constructDict()
+              return res.data;
+          })
+          .catch((err) => {
+              console.error('Error:', err);
+          });
+  }, []);
+  
+  // constructDict()
+  const getIdFromSite = (site: string) => {
+  }
+  const getDataHandler = () => {
+      let ans : number = getIdFromSiteName()
+      console.log(ans)
+      if (ans!==-1) setSiteId(ans+1)
+      setGetData(true)
+  }
+  
+  return (
+      <Box>
+          <>
+          {console.log(siteJson_blob)}
+          </>
+          
+          <Box padding={2}>
+              <Autocomplete
+                  disablePortal
+                  id="combo-box-demo"
+                  options={siteOptions}
+                  sx={{ width: 300 }}
+                  // value={site}
+                  inputValue={inputValue}
+                  onInputChange={(event, newInputValue) => {
+                      setInputValue(newInputValue);
+                      console.log("new site chosen: " + newInputValue)
+                  }}
+                  onChange={(e: any, newValue: string | null) => {
+                      if(site!=null && site!=newValue)
+                      {
+                          console.log("site changed")
+                          setSiteChanged(true)
+                      }
+                      setSite(newValue)
+                      setGetData(false)
+                  }}
+                  renderInput={(params) => <TextField {...params} label="Search" />}
+              />
+              {site!==null &&
+                  <Button onClick={getDataHandler} variant="contained" color="info">Next</Button>
+              }
+              {
+                  getData &&
+                  // <RenderQuestions />
+                  <RenderQuestions condition={true} site={siteId} siteJson_blob = {siteJson_blob} age_prefilled={age_prefilled} gender_prefilled={gender_prefilled}/>
+              }
+          </Box>
+      </Box>
+  )
+}
 export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(false)
   const [topic, setTopic] = useState("symptom");
@@ -297,6 +419,10 @@ export default function Dashboard() {
     setIsLoading(true)
     console.log(topic + " : is the current topic!!")
     fetchData(topic)
+    if(topic=="site")
+    {
+      invokeSite()
+    }
   }, [topic, gender, ageV2]);
 
   const refreshComponents = () => {
@@ -344,11 +470,11 @@ export default function Dashboard() {
     setMultiSelectOptions([]);
     setSelectedFromMultiDict([])
     setNoOfSymptoms(0)
-    const clr = document.getElementsByClassName("MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator")[0] as HTMLElement;
-    if (clr) {
-      clr.click();
-    }
-    refreshComponents()
+      // const clr = document.getElementsByClassName("MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1glvl0p-MuiButtonBase-root-MuiIconButton-root-MuiAutocomplete-clearIndicator")[0] as HTMLElement;
+      // if (clr) {
+      //   clr.click();
+      // }
+    // refreshComponents()
   };
   const AGEhandleChange = debounce((event: React.ChangeEvent<HTMLInputElement>) => {
     console.log("AGE:GT: " + event.target.value)
@@ -363,7 +489,7 @@ export default function Dashboard() {
       console.log("number is: " + parseInt(event.target.value))
     }
     setAgeV2(Number(event.target.value));
-    refreshComponents()
+    // refreshComponents()
   }, 1000);
   // const handleChangeWithLib = debounce((value) => {
   //   fetch(`https://demo.dataverse.org/api/search?q=${value}`)
@@ -393,6 +519,13 @@ export default function Dashboard() {
     console.log(value)
     multiSelectDict_global_tags = value
     console.log("tags changes")
+  }
+  const invokeSite = () => {
+    return (
+      <Box sx={{ mt: 2, minHeight: "50px" }} key={new Date().getTime()}>
+        <SiteJson_Func age_prefilled={ageV2} gender_prefilled={gender}></SiteJson_Func>
+      </Box>
+    )
   }
   return (
     <Box
@@ -478,9 +611,19 @@ export default function Dashboard() {
                 Clear
               </Button>
             </Box>
-            <Box sx={{ mt: 6 }}>{isLoading &&
-              <Spinner/>
-            }</Box>
+            {/* <Box sx={{ mt: 6 }}>
+              {isLoading &&
+                <Spinner/>
+              }
+            </Box> */}
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={isLoading}
+                // onClick={handleClose}
+              >
+                <CircularProgress color="inherit" />
+            </Backdrop>
+            
           </Box>
         </Grid>
         <Grid item xs={12}>
@@ -575,9 +718,7 @@ export default function Dashboard() {
         <Grid item xs={12}>
         {
             (topic=="site") && 
-              <Box sx={{ mt: 2, minHeight: "50px" }}>
-                <SiteJson age_prefilled={ageV2} gender_prefilled={gender}></SiteJson>
-              </Box>
+              invokeSite()
           }
           {(topic == "symptom") &&
             <Box sx={{ mt: 2, minHeight: "50px" }}>
