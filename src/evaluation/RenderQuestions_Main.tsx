@@ -140,9 +140,14 @@ export default function RenderQuestions_MAIN({condition, site, siteJson_blob, ag
             {
                 handleAddMoreFields(keys[i], age_prefilled, values[i].message)
             }
+            else if(keys[i]=='gender')
+            {
+                console.log(typeof(gender_prefilled))
+                handleAddMoreFields(keys[i], gender_prefilled, values[i].message)
+            }
             else
             {
-                handleAddMoreFields(keys[i], false, values[i].message)
+                handleAddMoreFields(keys[i], 0, values[i].message)
             }
             
             console.log(JSON.stringify(initialState))
@@ -176,14 +181,22 @@ export default function RenderQuestions_MAIN({condition, site, siteJson_blob, ag
                                                 // onInput={}
                                                 // onClick={(e: React.MouseEvent<HTMLElement>, newValue: boolean) => handleUpdateValueField(index, item.title, newValue, item.question)}
                                                 onChange={(e: React.MouseEvent<HTMLElement>, newValue: boolean) => {
-                                                    handleUpdateValueField(index, item.title, newValue, item.question)
-                                                    item.value = newValue
+                                                    // if(newValue!==null && item.value!==newValue)
+                                                    // {
+
+                                                    // }
+                                                    if(newValue!==null)
+                                                    {
+                                                        handleUpdateValueField(index, item.title, newValue, item.question)
+                                                        item.value = newValue
+                                                    }
+                                                    
                                                     setStartEval(false)
                                                 }}
                                                 aria-label="Platform"
                                             >
-                                            <ToggleButton value={true} id="toggle_symptom">Yes</ToggleButton>
-                                            <ToggleButton value={false}>No</ToggleButton>
+                                            <ToggleButton value={1} id="toggle_symptom">Yes</ToggleButton>
+                                            <ToggleButton value={0}>No</ToggleButton>
                                         </ToggleButtonGroup>
                                     </Box>
                                 }
@@ -197,7 +210,7 @@ export default function RenderQuestions_MAIN({condition, site, siteJson_blob, ag
                                 {
                                     (item.title=="gender") &&
                                     <Box>
-                                        <TextField disabled={true} label={item.title}></TextField>
+                                        <TextField disabled={true} label={gender_prefilled}></TextField>
                                     </Box>
                                 }
                         </Box>
@@ -209,7 +222,7 @@ export default function RenderQuestions_MAIN({condition, site, siteJson_blob, ag
             <Button onClick={getResults} variant="contained">Next</Button>
             {
                 startEval &&
-                <FiltrexEval smoker={smoker} asbestos={asbestos} site={site} inputFields={inputFields} siteJson_blob = {siteJson_blob} age_prefilled={age_prefilled}></FiltrexEval>
+                <FiltrexEval smoker={smoker} asbestos={asbestos} site={site} inputFields={inputFields} siteJson_blob = {siteJson_blob} age_prefilled={age_prefilled} gender_prefilled={gender_prefilled}></FiltrexEval>
             }
             
         </Box>

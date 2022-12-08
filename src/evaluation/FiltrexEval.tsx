@@ -42,6 +42,7 @@ interface Props {
     inputFields: any
     siteJson_blob: any[]
     age_prefilled: number
+    gender_prefilled: any
 }
 
 export const reducer = (state: any, action: ActionProp) => {
@@ -66,7 +67,7 @@ export const reducer = (state: any, action: ActionProp) => {
             return state;
     }
 };
-export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJson_blob, age_prefilled, ...props }: Props) {
+export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJson_blob, age_prefilled,gender_prefilled, ...props }: Props) {
     const navigate = useNavigate()
     const [value, setValue] = useState('female');
 
@@ -188,6 +189,11 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJ
                 {
                     handleAddMoreFields(keys[i], age_prefilled, values[i].message)
                 }
+                else if(keys[i]=='gender')
+                {
+                    console.log(typeof(gender_prefilled))
+                    handleAddMoreFields(keys[i], gender_prefilled, values[i].message)
+                }
                 else
                 {
                     handleAddMoreFields(keys[i], 0, values[i].message)
@@ -231,8 +237,13 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJ
                                             // onInput={}
                                             // onClick={(e: React.MouseEvent<HTMLElement>, newValue: boolean) => handleUpdateValueField(index, item.title, newValue, item.question)}
                                             onChange={(e: React.MouseEvent<HTMLElement>, newValue: boolean) => {
-                                                handleUpdateValueField(index, item.title, newValue, item.question)
-                                                item.value = newValue
+                                                // handleUpdateValueField(index, item.title, newValue, item.question)
+                                                // item.value = newValue
+                                                if(newValue!==null)
+                                                {
+                                                    handleUpdateValueField(index, item.title, newValue, item.question)
+                                                    item.value = newValue
+                                                }
                                                 setOpenTreatmentOptions(false)
                                             }}
                                             aria-label="Platform"
@@ -254,8 +265,13 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJ
                                             // onInput={}
                                             // onClick={(e: React.MouseEvent<HTMLElement>, newValue: boolean) => handleUpdateValueField(index, item.title, newValue, item.question)}
                                             onChange={(e: React.MouseEvent<HTMLElement>, newValue: boolean) => {
-                                                handleUpdateValueField(index, item.title, newValue, item.question)
-                                                item.value = newValue
+                                                // handleUpdateValueField(index, item.title, newValue, item.question)
+                                                // item.value = newValue
+                                                if(newValue!==null)
+                                                {
+                                                    handleUpdateValueField(index, item.title, newValue, item.question)
+                                                    item.value = newValue
+                                                }
                                                 setOpenTreatmentOptions(false)
                                             }}
                                             aria-label="Platform"

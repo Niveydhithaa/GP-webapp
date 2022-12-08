@@ -78,6 +78,7 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
         // setImmediate(false)
         // setFurther(false)
         setValue((event.target as HTMLInputElement).value);
+        setFinalSummary(false)
         
     };
     const getResults = () => {
@@ -321,8 +322,13 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
                                             // onInput={}
                                             // onClick={(e: React.MouseEvent<HTMLElement>, newValue: boolean) => handleUpdateValueField(index, item.title, newValue, item.question)}
                                             onChange={(e: React.MouseEvent<HTMLElement>, newValue: boolean) => {
-                                                handleUpdateValueField(index, item.title, newValue, item.question)
-                                                item.value = newValue
+                                                // handleUpdateValueField(index, item.title, newValue, item.question)
+                                                // item.value = newValue
+                                                if(newValue!==null)
+                                                {
+                                                    handleUpdateValueField(index, item.title, newValue, item.question)
+                                                    item.value = newValue
+                                                }
                                                 setOpenTreatmentOptions(false)
                                             }}
                                             defaultValue={0}
@@ -411,7 +417,7 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
                             <Paper square elevation={0} sx={{ p: 3 }}>
                                 {/* <Typography>All steps completed - you&apos;re finished</Typography> */}
                                 <Typography fontSize="10px">Symptom Investigation completed on 17/10/2022</Typography>
-                                <Typography color="red">Findings = Refer to oncologist</Typography>
+                                <Typography color="red">{value}</Typography>
                                 {/* <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
                                     Reset
                                 </Button> */}
