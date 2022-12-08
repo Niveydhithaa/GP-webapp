@@ -167,14 +167,14 @@
 
 					}
 				},
-				"state_variables": ["cough", "fatigue", "shortness_of_breath", 
-					"chest_pain", "weight_loss", "appetite_loss", "finger_clubbing", 
-					"chest_signs_lung_cancer", "chest_signs_pleural_disease", "supraclavicular_lymphadenopathy", 
+				"state_variables": ["cough", "fatigue", "shortness_of_breath",
+					"chest_pain", "weight_loss", "appetite_loss", "finger_clubbing",
+					"chest_signs_lung_cancer", "chest_signs_pleural_disease", "supraclavicular_lymphadenopathy",
 					"persistent_cervical_lymphadenopathy", "persistent_chest_infection", "recurrent_chest_infection", "thrombocytosis"],
 
-				"symptoms": ["cough", "fatigue", "shortness_of_breath", 
-					"chest_pain", "weight_loss", "appetite_loss", "finger_clubbing", 
-					"chest_signs_lung_cancer", "chest_signs_pleural_disease", "supraclavicular_lymphadenopathy", 
+				"symptoms": ["cough", "fatigue", "shortness_of_breath",
+					"chest_pain", "weight_loss", "appetite_loss", "finger_clubbing",
+					"chest_signs_lung_cancer", "chest_signs_pleural_disease", "supraclavicular_lymphadenopathy",
 					"persistent_cervical_lymphadenopathy", "persistent_chest_infection", "recurrent_chest_infection", "thrombocytosis"],
 
 				"offer_symptoms": {
@@ -190,9 +190,9 @@
 
 				"condition_text": "Consider urgent X-ray in case of lung cancer for age >= 40 ",
 				"condition": [
-					"(age >= 40 and count_offer >= 2) or (smoking==true and count_offer >= 1)",
+					"(age >= 40 and count_offer >= 2) or (smoking==1 and count_offer >= 1)",
 					"age >= 40 and count_consider >= 1",
-					"(age >= 40 and count_offer_mes >= 2) or (smoking==true and count_offer_mes >= 1) or (asbestos==true and count_offer_mes >= 1)",
+					"(age >= 40 and count_offer_mes >= 2) or (age >= 40 and smoking==1 and count_offer_mes >= 1) or (age >= 40 and asbestos==1 and count_offer_mes >= 1)",
 					"age >= 40 and count_consider_mes >= 1"
 			],
 			"condition_satisfied_actions": [
@@ -534,7 +534,7 @@
 					"(dysphagia==1 or (age >= 55 and weight_loss==1 and (upper_abdominal_pain==1 or reflux==1 or dyspepsia==1)))",
 					"(haematemesis == 1 or (age >= 55 and ((treatment_resistant_dyspepsia==1) or (upper_abdominal_pain==1 and low_heamoglobin_levels==1) or (raised_platelet_count==1 and (nausea == 1 or vomiting == 1 or weight_loss==1 or reflux ==1 or dyspepsia == 1 or upper_abdominal_pain == 1)) or ((nausea == 1 or vomiting == 1) and (weight_loss==1 or reflux==1 or dyspepsia==1 or upper_abdominal_pain==1)))))",
 					"(age >= 60 and weight_loss==1 and (diarrhoea == 1 or back_pain==1 or abdominal_pain==1 or nausea==1 or vomiting==1 or constipation==1 or new_onset_diabetes == 1 ))",
-					"(dysphagia == 1 or (age >= 55 and weight_loss==1 and (upper_abdominal_pain==1 or reflux==1 or dyspepsia==1)))",
+					"(dysphagia==1 or (age >= 55 and weight_loss==1 and (upper_abdominal_pain==1 or reflux==1 or dyspepsia==1)))",
 					"(haematemesis == 1 or (age >= 55 and ((treatment_resistant_dyspepsia==1) or (upper_abdominal_pain==1 and low_heamoglobin_levels==1) or (raised_platelet_count==1 and (nausea == 1 or vomiting == 1 or weight_loss==1 or reflux ==1 or dyspepsia == 1 or upper_abdominal_pain == 1)) or ((nausea == 1 or vomiting == 1) and (weight_loss==1 or reflux==1 or dyspepsia==1 or upper_abdominal_pain==1)))))",
 					"(upper_abdominal_mass_gall_bladder==1)",
 					"(upper_abdominal_mass_liver==1)"
@@ -547,7 +547,13 @@
 						"color": "#FF0000"
 					},
 					{
-						"button_index": 3,
+						"button_index": 2,
+						"condition_index": 0,
+						"action": "color_change",
+						"color": "#FF0000"
+					},
+					{
+						"button_index": 4,
 						"condition_index": 0,
 						"action": "color_change",
 						"color": "#FF0000"
@@ -560,6 +566,12 @@
 					},
 					{
 						"button_index": 6,
+						"condition_index": 1,
+						"action": "color_change",
+						"color": "#FF0000"
+					},
+					{
+						"button_index": 5,
 						"condition_index": 1,
 						"action": "color_change",
 						"color": "#FF0000"
@@ -583,6 +595,12 @@
 						"color": "#FF0000"
 					},
 					{
+						"button_index": 0,
+						"condition_index": 3,
+						"action": "color_change",
+						"color": "#FF0000"
+					},
+					{
 						"button_index": 5,
 						"condition_index": 4,
 						"action": "color_change",
@@ -590,6 +608,12 @@
 					},
 					{
 						"button_index": 6,
+						"condition_index": 4,
+						"action": "color_change",
+						"color": "#FF0000"
+					},
+					{
+						"button_index": 1,
 						"condition_index": 4,
 						"action": "color_change",
 						"color": "#FF0000"
@@ -611,7 +635,7 @@
 					"Urgent upper GI endoscopy, suspect Oesophagal cancer",
 					"Consider upper GI endoscopy, suspect Oesophagal cancer",
 					"Urgent upper GI endoscopy, suspect both Oesophagal and Stomach cancer",
-					"Urgent CT scan or ultrasound (if CT not available), suspect Pancreatic cancer",
+					"Consider CT scan or ultrasound (if CT not available), suspect Pancreatic cancer",
 					"Urgent upper GI endoscopy, suspect Stomach cancer",
 					"Consider upper GI endoscopy, suspect Stomach cancer",
 					"Consider upper GI endoscopy, suspect both Stomach and Oesophagal cancer",
@@ -625,6 +649,47 @@
 						"prescription",
 						"prescription"
 					]
+
+			}
+		]
+	},
+	{
+		"site_id": "3",
+		"site": "Lower gastrointestinal tract cancers",
+		"screens": [
+			{
+				"screen_id": "3.1",
+				"screen_name": "data-collection-field",
+				"display_name": "Patient details",
+				"values":{
+					"age":{
+						"type": "numeric",
+						"message": "Patient age",
+						"comment": "If its entered in the top age box pre-populate with that value"
+					},
+					"iron‑deficiency-anaemia": {
+						"type": "boolean",
+						"message": "Iron deficiency anaemia"
+					},
+					"unexplained-rectal-bleeding": {
+						"type": "boolean",
+						"message": "Unexplained rectal bleeding"
+					},
+					"abdominal-pain": {
+						"type": "boolean",
+						"message": "Unexplained abdominal pain"
+					}
+				},
+				"state_variables": ["age", "iron‑deficiency-anaemia", "unexplained-rectal-bleeding", "abdominal-pain"],
+				"num_termination_options": 1,
+				"termination_button_text": ["Next-Immediate referral"],
+				"termination_screens": ["3.2"]
+
+			},
+			{
+				"screen_id": "3.2",
+				"screen_name": "immediate-referral-symptoms"
+
 
 			}
 		]
