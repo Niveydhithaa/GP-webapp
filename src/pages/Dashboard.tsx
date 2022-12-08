@@ -348,6 +348,7 @@ export default function Dashboard() {
     if (clr) {
       clr.click();
     }
+    refreshComponents()
   };
   const AGEhandleChange = debounce((event: React.ChangeEvent<HTMLInputElement>) => {
     console.log("AGE:GT: " + event.target.value)
@@ -362,7 +363,7 @@ export default function Dashboard() {
       console.log("number is: " + parseInt(event.target.value))
     }
     setAgeV2(Number(event.target.value));
-    
+    refreshComponents()
   }, 1000);
   // const handleChangeWithLib = debounce((value) => {
   //   fetch(`https://demo.dataverse.org/api/search?q=${value}`)
