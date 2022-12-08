@@ -70,7 +70,7 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
     const [openTreatmentOptions, setOpenTreatmentOptions] = useState<boolean>();
     const age =45;
     const [finalSummary, setFinalSummary] = useState<boolean>(false);
-    const [value, setValue] = useState('female');
+    const [value, setValue] = useState<string|null>(null);
     
     const [inputFieldsScreenThree, dispatch] = useReducer(reducer, initialState)
 
@@ -304,7 +304,7 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
         <Box>
             { (site!==undefined) && 
                 <Box>
-                    {JSON.stringify("Whether the local and remote JSONs are equal - " + isEqual(siteJson, siteJson_blob))}
+                    {/* {JSON.stringify("Whether the local and remote JSONs are equal - " + isEqual(siteJson, siteJson_blob))} */}
                     <Typography>{siteJson_blob[site-1].screens[2].display_name}</Typography>
                     {inputFieldsScreenThree.name.map((item: any, index: number) => {
                         return (
@@ -357,7 +357,9 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
             
             
             {/* <Typography>Further Investigation - screen 3</Typography> */}
-            <Button onClick={getResults} variant="contained">Next</Button>
+            <Box mt={1} mb={2}>
+                <Button onClick={getResults} variant="contained">Next</Button>
+            </Box>
             { openTreatmentOptions && 
                 <Box>
                 {/* <Button disabled={!furtherInvest} color="secondary" variant="contained" onClick={clickFurther}>{siteJson_blob[0].screens[1].termination_button_text?.at(1)}</Button>
@@ -414,7 +416,9 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
                     </Box>
                     {finalSummary && 
                         <Box>
-                            <Paper square elevation={0} sx={{ p: 3 }}>
+                            {(value!==null)
+                                &&
+                                <Paper square elevation={0} sx={{ p: 3 }}>
                                 {/* <Typography>All steps completed - you&apos;re finished</Typography> */}
                                 <Typography fontSize="10px">Symptom Investigation completed on 17/10/2022</Typography>
                                 <Typography color="red">{value}</Typography>
@@ -422,6 +426,7 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
                                     Reset
                                 </Button> */}
                             </Paper>
+                            }
                         </Box>
                     }
                 </Box>

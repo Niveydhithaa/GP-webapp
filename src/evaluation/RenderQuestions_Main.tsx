@@ -163,7 +163,7 @@ export default function RenderQuestions_MAIN({condition, site, siteJson_blob, ag
             {/* <Box>{condition&&renderQuestionsToggle()}</Box> */}
             {/* <Button onClick={renderQuestionsToggle}>Render</Button> */}
             {/* {JSON.stringify(inputFields.name)} */}
-            {JSON.stringify("Whether the local and remote JSONs are equal - " + isEqual(siteJson, siteJson_blob))}
+            {/* {JSON.stringify("Whether the local and remote JSONs are equal - " + isEqual(siteJson, siteJson_blob))} */}
             
             {inputFields.name.map((item: any, index : number) => {
                    return (
@@ -219,7 +219,9 @@ export default function RenderQuestions_MAIN({condition, site, siteJson_blob, ag
                 })
             }
             {/* <Typography style={{color: "red"}}>Dynamic tries: END</Typography> */}
-            <Button onClick={getResults} variant="contained">Next</Button>
+            <Box mt={1} mb={2}>
+                <Button onClick={getResults} variant="contained">Next</Button>
+            </Box>
             {
                 startEval &&
                 <FiltrexEval smoker={smoker} asbestos={asbestos} site={site} inputFields={inputFields} siteJson_blob = {siteJson_blob} age_prefilled={age_prefilled} gender_prefilled={gender_prefilled}></FiltrexEval>

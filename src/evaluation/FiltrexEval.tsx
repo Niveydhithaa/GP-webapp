@@ -69,7 +69,7 @@ export const reducer = (state: any, action: ActionProp) => {
 };
 export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJson_blob, age_prefilled,gender_prefilled, ...props }: Props) {
     const navigate = useNavigate()
-    const [value, setValue] = useState('female');
+    const [value, setValue] = useState<string|null>(null);
 
     const handleChangeToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
         setImmediate(false)
@@ -217,7 +217,7 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJ
     }
     return (
         <Box>
-            {JSON.stringify("Whether the local and remote JSONs are equal - " + isEqual(siteJson, siteJson_blob))}
+            {/* {JSON.stringify("Whether the local and remote JSONs are equal - " + isEqual(siteJson, siteJson_blob))} */}
             {
                 (site !== undefined) &&
                 <Box>
@@ -298,7 +298,9 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJ
             <Box>
 
             </Box>
-            <Button onClick={clickHandler} variant="contained">Next</Button>
+            <Box mt={1} mb={2}>
+                <Button onClick={clickHandler} variant="contained">Next</Button>
+            </Box>
             { openTreatmentOptions && 
                 <Box>
                 {/* <Button disabled={!furtherInvest} color="secondary" variant="contained" onClick={clickFurther}>{siteJson_blob[0].screens[1].termination_button_text?.at(1)}</Button>
@@ -345,7 +347,7 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJ
                                 }
                             </RadioGroup>
                             <Box>
-                            <Button onClick={onSubmitScreen2} variant="contained">Next</Button>
+                                <Button onClick={onSubmitScreen2} variant="contained">Next</Button>
                             </Box>
                         </FormControl>
                     }

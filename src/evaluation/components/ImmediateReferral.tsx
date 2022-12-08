@@ -19,7 +19,7 @@ import SelectHospitalStatic from "components/hooks/SelectHospitalStatic"
 import SelectPatientStatic from "components/hooks/SelectPatientStatic"
 
 interface Props {
-    cause_of_immediate: string
+    cause_of_immediate: string | null
 }
 
 export default function ImmediateReferral({cause_of_immediate, ...props} : Props) {

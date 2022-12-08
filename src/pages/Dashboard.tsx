@@ -128,7 +128,9 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
                   renderInput={(params) => <TextField {...params} label="Search" />}
               />
               {site!==null &&
-                  <Button onClick={getDataHandler} variant="contained" color="info">Next</Button>
+                <Box mt={1} mb={2}>
+                     <Button onClick={getDataHandler} variant="contained" color="info">Next</Button>
+                </Box>
               }
               {
                   getData &&
