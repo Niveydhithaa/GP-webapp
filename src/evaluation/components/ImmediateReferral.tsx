@@ -1,4 +1,5 @@
 import * as React from "react";
+import {useState} from "react"
 import {
     Box,
     Typography,
@@ -9,7 +10,7 @@ import {
     IconButton,
     TextField,
     Stack,
-
+    Paper
 }
 from "@mui/material"
 import {Close as CloseIcon, FileUpload as FileUploadIcon} from '@mui/icons-material';
@@ -22,6 +23,10 @@ interface Props {
 }
 
 export default function ImmediateReferral({cause_of_immediate, ...props} : Props) {
+    const [finalSummary, setFinalSummary] = useState<boolean>(false);
+    const handleImmediateRefer = () => {
+      setFinalSummary(true)
+    }
     return (
         <Box>
             {/* <Typography>Immediate Referral!!</Typography>
@@ -62,10 +67,22 @@ export default function ImmediateReferral({cause_of_immediate, ...props} : Props
                     </CardContent>
                     <CardActions>
                         <Button>Cancel</Button>
-                        <Button variant="contained">Submit</Button>
+                        <Button variant="contained" onClick={handleImmediateRefer}>Submit</Button>
                     </CardActions>
                 </Card>
             </Box>
+            {finalSummary && 
+                <Box>
+                    <Paper square elevation={0} sx={{ p: 3 }}>
+                        {/* <Typography>All steps completed - you&apos;re finished</Typography> */}
+                        <Typography fontSize="10px">Symptom Investigation completed on 17/10/2022</Typography>
+                        <Typography color="red">{cause_of_immediate}</Typography>
+                        {/* <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
+                            Reset
+                        </Button> */}
+                    </Paper>
+                </Box>
+            }
         </Box>
     )
 }
