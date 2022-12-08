@@ -13,12 +13,12 @@ import axios from "axios";
 import RenderQuestions from "evaluation/RenderQuestions_Main"
 var siteData : string[];
 
-interface Props {
+interface Props_SiteStart {
     age_prefilled: number
     gender_prefilled: any
 }
 
-export default function SiteJson({age_prefilled, gender_prefilled, ...props} : Props) {
+export default function SiteJson({age_prefilled, gender_prefilled, ...props} : Props_SiteStart) {
     const [siteChanged, setSiteChanged] = useState<boolean>()
     const [siteJson_blob, setSiteJson_blob]  = useState<any[]>([])
     const [siteOptions, setSiteOptions] = useState<string[]>([])
