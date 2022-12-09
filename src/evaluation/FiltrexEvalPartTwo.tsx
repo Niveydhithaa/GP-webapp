@@ -376,9 +376,14 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
                             >
                                 {
                                 siteJson_blob[site - 1].screens[2].termination_button_text?.map((item: any, index: number ) => {
+                                    var flag;
+                                    const setFlag = (newFlag: boolean) => {
+                                        flag = newFlag;
+                                    }
                                     return (
                                         <Box display="inline-flex">
                                             <>{console.log(ruleEvalResults)}</>
+                                            <>{setFlag(false)}</>
                                             <FormControlLabel value={item} control={<Radio />} label={item} />
                                             {/* recheck the below conditions */}
                                             {/* {(index==siteJson_blob[site - 1].screens[2].termination_button_text.length-1 && (ruleEvalResults.filter(x => x===false).length==siteJson_blob[site - 1].screens[2].condition.length))
@@ -389,17 +394,27 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
                                                 <Typography>(Recommended)</Typography>
                                             } */}
                                             {siteJson_blob[site - 1].screens[2].condition_satisfied_actions?.map((single_condition:any, cond_satis_index: number) => {
+                                                
                                                 return (
                                                     <Box>
                                                         {/* {JSON.stringify(single_condition.button_index)} */}
                                                         {(ruleEvalResults[single_condition.condition_index]==true && single_condition.button_index==index)
                                                             &&
-                                                            <Typography color="red" fontSize="13px">(Probable)</Typography>
+                                                            <Box>
+                                                                <>{setFlag(true)}</>
+                                                                {/* <Typography color="red" fontSize="13px">(Probable)</Typography> */}
+                                                            </Box>
                                                         }
                                                     </Box>
                                                 )
                                             })
-
+                                            
+                                            }
+                                            {
+                                                (flag==true) &&
+                                                <Box className="probable-box">
+                                                    <Typography >(Probable)</Typography>
+                                                </Box>
                                             }
                                         </Box>
                                     )

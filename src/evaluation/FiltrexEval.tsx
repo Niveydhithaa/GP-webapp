@@ -259,6 +259,7 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJ
                                                     handleUpdateValueField(index, item.title, newValue, item.question)
                                                     item.value = newValue
                                                 }
+                                                setValue(null);
                                                 setOpenTreatmentOptions(false)
                                             }}
                                             aria-label="Platform"
@@ -332,13 +333,19 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJ
                             >
                                 {
                                 siteJson_blob[site - 1].screens[1].termination_button_text?.map((item: any, index: number ) => {
+                                    var flag;
+                                    const setFlag = (newFlag: boolean) => {
+                                        flag = newFlag;
+                                    }
                                     return (
                                         <Box display="inline-flex">
                                             <>{console.log(ruleEvalResults)}</>
                                             <FormControlLabel value={item} control={<Radio />} label={item} />
                                             {(index==siteJson_blob[site - 1].screens[1].termination_button_text.length-1 && (ruleEvalResults.filter(x => x===false).length==siteJson_blob[site - 1].screens[1].condition.length))
                                             &&
-                                                <Typography color="red" fontSize="13px">(Probable)</Typography>
+                                                <Box className="probable-box">
+                                                    <Typography >(Probable)</Typography>
+                                                </Box>
                                             }
                                             {/* {(ruleEvalResults[index]==true && index!==ruleEvalResults.length) &&
                                                 <Typography>(Recommended)</Typography>
@@ -349,12 +356,19 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJ
                                                         {/* {JSON.stringify(single_condition.button_index)} */}
                                                         {(ruleEvalResults[single_condition.condition_index]==true && single_condition.button_index==index)
                                                             &&
-                                                            <Typography color="red" fontSize="13px">(Probable)</Typography>
+                                                            <>{setFlag(true)}</>
+                                                            // <Typography color="red" fontSize="13px">(Probable)</Typography>
                                                         }
                                                     </Box>
                                                 )
                                             })
 
+                                            }
+                                            {
+                                                (flag==true) &&
+                                                <Box className="probable-box">
+                                                    <Typography >(Probable)</Typography>
+                                                </Box>
                                             }
                                         </Box>
                                     )
