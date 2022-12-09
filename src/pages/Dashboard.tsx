@@ -95,6 +95,10 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
       let ans : number = getIdFromSiteName()
       console.log(ans)
       if (ans!==-1) setSiteId(ans+1)
+      if(gender_prefilled==0 && site=="Breast cancer")
+      {
+        console.log("na for men")
+      }
       setGetData(true)
   }
   
@@ -572,8 +576,8 @@ export default function Dashboard() {
                   aria-label="Platform"
 
                 >
-                  <ToggleButton value="male">Male</ToggleButton>
-                  <ToggleButton value="female">Female</ToggleButton>
+                  <ToggleButton value={0}>Male</ToggleButton>
+                  <ToggleButton value={1}>Female</ToggleButton>
                 </ToggleButtonGroup>
               </Box>
             </Box>

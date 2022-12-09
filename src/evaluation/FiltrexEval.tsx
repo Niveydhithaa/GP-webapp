@@ -210,9 +210,24 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJ
         {
             setImmediate(true)
         }
+
         else
         {
             setFurther(true)
+        }
+        if(site!=undefined)
+        {
+            console.log(siteJson_blob[site-1].screens.length)
+            //#region to handle breast cancer - now redundant
+            // if(siteJson_blob[site-1].screens.length==2)
+            // {
+            //     setEndhere(true)
+            // }
+            // else
+            // {
+            //     setFurther(true)
+            // }
+            //#endregion
         }
     }
     return (
