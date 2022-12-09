@@ -204,12 +204,20 @@ export default function RenderQuestions_MAIN({condition, site, siteJson_blob, ag
                                     (item.title=="age")
                                     &&
                                     <Box>
-                                        <TextField disabled={true} label={age_prefilled}></TextField>
+                                        {age_prefilled==0 &&
+                                            <TextField disabled={true} label="Age"></TextField>
+                                        }
+                                        {age_prefilled!==0 &&
+                                            <TextField disabled={true} label={age_prefilled}></TextField>
+                                        }
                                     </Box>
                                 }
                                 {
                                     (item.title=="gender") &&
                                     <Box>
+                                        {(gender_prefilled!=0 && gender_prefilled!==1) &&
+                                            <TextField disabled={true} label="Gender"></TextField>
+                                        }
                                         {gender_prefilled==0 &&
                                             <TextField disabled={true} label="Male"></TextField>
                                         }
