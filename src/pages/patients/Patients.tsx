@@ -129,7 +129,7 @@ export default function Patients() {
         <div>
             <Box>
                 <Box mb={4}>
-                    <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+                    <Box display="flex" justifyContent="normal" alignItems="center" mb={2}>
                         { /*<Autocomplete
                                 freeSolo
                                 disableClearable
@@ -149,9 +149,12 @@ export default function Patients() {
                                 )}
                                 sx={{width: "350px"}}
                             /> */}
+                        <Button variant="contained" color="primary" onClick={addNewPatientHandler}>
+                            Create Patient
+                            </Button>
                         <Paper
                             component="form"
-                            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400, boxShadow: "none", outline: "1px solid #ccc" }}
+                            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400, boxShadow: "none", outline: "1px solid #ccc" , marginLeft: "16px"}}
                         >
                             <InputBase
                                 sx={{ ml: 1, flex: 1 }}
@@ -165,9 +168,7 @@ export default function Patients() {
                                 <SearchIcon />
                             </IconButton>
                         </Paper>
-                        <Button variant="contained" color="primary" onClick={addNewPatientHandler}>
-                            Create Patient
-                            </Button>
+                        
 
                     </Box>
                     <Box mb={2}>
