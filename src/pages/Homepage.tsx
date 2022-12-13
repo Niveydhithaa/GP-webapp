@@ -15,9 +15,14 @@ import {
   IconButton,
   ToggleButtonGroup,
   ToggleButton,
-  Stack
+  Stack,
+  Alert,
+  FormGroup,
+  FormControlLabel,
+  Checkbox
 } from "@mui/material";
-import Alert from '@mui/joy/Alert';
+import {useEffect} from "react";
+// import Alert from '@mui/joy/Alert';
 import SelectPatientStatic from "components/hooks/SelectPatientStatic"
 import Box1  from '@mui/joy/Box';
 import Navbar from "components/Navbar"
@@ -34,6 +39,13 @@ import axios from "axios"
 import configData from "config.json"
 import VerifiedIcon from '@mui/icons-material/Verified';
 import { config } from 'process';
+import {
+  CheckCircle as CheckCircleIcon,
+  Dangerous as DangerousIcon,
+  ErrorOutline as ErrorOutlineIcon
+} from "@mui/icons-material"
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 interface LinkTabProps {
   label?: string;
@@ -53,6 +65,8 @@ function LinkTab(props: LinkTabProps) {
 }
 
 export default function NavTabs() {
+  const check_referral_url = configData.url + "/Getreferalptdetails"
+  const refer_email_url = configData.url + "/sendemail"
   const [tabIndex, setIndexValue] = React.useState(0);
   const location = useLocation();
   const [gender, setGender] = React.useState("");
@@ -62,11 +76,16 @@ export default function NavTabs() {
   const [gpName, setGPName] = React.useState("")
   const [phoneNumber, setPhoneNumber] = React.useState("")
   const [age, setAge] = React.useState(0)
-  const [yasmedId, setYasmedId] = React.useState(0)
+  const [yasmedId, setYasmedId] = React.useState("")
+  const [emailLoading, setEmailLoading] = React.useState(false)
+  const [referredPatientDate, setReferredPatientDate]= React.useState('')
 
+  // const [input_dict, setInputDict ] = React.useState<any>();
   const [referDialog, setReferDialog] = React.useState<boolean>(false)
-  const [emailSuccess, setEmailSuccess] = React.useState<boolean>(false);
+  const [emailSuccess, setEmailSuccess] = React.useState<boolean | string>('default');
   const [addPatientDialog, setAddPatientDialog] = React.useState<boolean>(false);
+  const [warnDuplicateReferral, setWarnDuplicateReferral] = React.useState<boolean>(false);
+  const [warningConfirm, setWarningConfirm] = React.useState<boolean>(false);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setIndexValue(newValue);
     localStorage.setItem("tabIndex", newValue.toString())
@@ -82,7 +101,7 @@ export default function NavTabs() {
     setFirstName(newFirstName)
   }
   const handleLastName = (newLastName: string) => {
-    console.log("Onchange: LastName: from: " + firstName + "--to: " + newLastName)
+    console.log("Onchange: LastName: from: " + lastName + "--to: " + newLastName)
     setLastName(newLastName)
   }
   const handleGPName = (newGPName: string) => {
@@ -97,35 +116,56 @@ export default function NavTabs() {
   const handleAge = (newAge: number) => {
     setAge(newAge)
   }
-  const handleYasmedID = (newYasmedID: number) => {
+  const handleYasmedID = (newYasmedID: string) => {
     console.log(newYasmedID)
     setYasmedId(newYasmedID)
+  }
+  const handlePatientID = (newPatientID: string) => {
+    console.log(newPatientID)
   }
   const openReferDialog = () =>{
     setReferDialog(true)
   }
+  
   const handleCloseAddPatientDialog = () => {
     setReferDialog(false)
-    setEmailSuccess(false)
+    setPatientNotes('')
+    setAge(0)    
+    setPatientNotes('')
+    setFirstName('')
+    setLastName('')
+    setGPName('')
+    setGender('')
+    setYasmedId('')
+    setPhoneNumber('')
+    setWarningConfirm(false)
+    // setWarnDuplicateReferral(false)
+    setEmailSuccess('default')
   }
-  const handleReferPatient = () => {
-    console.log("API integration to validate and save the new patient with given details")
-    const refer_email_url = configData.url + "/sendemail"
+  const closeDuplicateWarning = () => {
+    setWarnDuplicateReferral(false)
+    handleCloseAddPatientDialog()
+  }
+  const sendEmailTrigger = () => {
+    console.log("into email part")
     var input_dict : Record<string, any> = {}
-    input_dict["patient_name"] = firstName + lastName
-    input_dict["age"] = 12
+    input_dict["first_name"] = firstName
+    input_dict["last_name"] = lastName
+    input_dict["age"] = age
     input_dict["gender"] = gender
-    input_dict["mobile_number"] = "96567892911"
-    input_dict["patient_id"] = 19
-    input_dict["yasmed_id"] = 20
-    input_dict["gp_name"] = "Dr. Mohan"
-    input_dict["notes"] = "Lorem ipsum deor Lorem ipsum deor Lorem ipsum deor Lorem ipsum deor"
-    // inputDict["lastname"] = lastName
-    
+    input_dict["phone_number"] = phoneNumber
+    input_dict["oopatient_id"] = '99'
+    input_dict["yasmed_id"] = yasmedId
+    input_dict["gp_name"] = gpName
+    input_dict["notes"] = patientNotes
+    console.log(input_dict)
+    setWarnDuplicateReferral(false)
+    setEmailLoading(true)
     axios
       .post(refer_email_url, input_dict)
       .then(result => {
         console.log(result);
+        setEmailLoading(false)
         console.log(result.data);
         console.log(result.data.message)
         console.log(typeof(result.data.message))
@@ -134,13 +174,58 @@ export default function NavTabs() {
             console.log("yes sent")
             setEmailSuccess(true)
         }
+        else
+        {
+            console.log("no no not sent")
+            setEmailSuccess(false)
+        }
         return String(result.data);
       })
       .catch(error =>
         console.log(error)
       );
-      // setEmailSuccess(true)
-      // setReferDialog(false)
+  }
+  const handleReferPatient = () => {
+    setEmailLoading(true)
+    console.log("API integration to validate and save the new patient with given details")
+    
+    var input_dict : Record<string, any> = {}
+    input_dict["first_name"] = firstName
+    input_dict["last_name"] = lastName
+    input_dict["age"] = age
+    input_dict["gender"] = gender
+    input_dict["phone_number"] = phoneNumber
+    input_dict["oopatient_id"] = '99'
+    input_dict["yasmed_id"] = yasmedId
+    input_dict["gp_name"] = gpName
+    input_dict["notes"] = patientNotes
+    // setInputDict(input_dict)
+    // inputDict["lastname"] = lastName
+    axios.post(check_referral_url, input_dict)
+    .then(result => {
+      setEmailLoading(false)
+      console.log(result);
+      // setPatientAlreadyReferred(result.data.isSuccess)
+      if(result.data.isSuccess==true)
+      {
+        console.log("already there")
+        setReferredPatientDate(result.data.referalptatient_Details.updated_datetime)
+        setWarnDuplicateReferral(true)
+      }
+      else
+      {
+        setWarnDuplicateReferral(false)
+        //run the sending email part here
+        sendEmailTrigger()
+      }
+      return String(result.data);
+    })
+    .catch(error =>
+      console.log(error)
+    );
+    
+    //   // setEmailSuccess(true)
+    //   // setReferDialog(false)
   }
   return (
     <Box sx={{backgroundColor: "#EEEEEE", minHeight: "100vh"}}>
@@ -173,8 +258,17 @@ export default function NavTabs() {
             </DialogTitle>
             <DialogContent >
                 {/* <AlertMUI></AlertMUI> */}
-                {!emailSuccess &&
-                  <Box>
+                <Box>
+                  <Backdrop
+                        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                        open={emailLoading}
+                        // onClick={handleClose}
+                      >
+                        <CircularProgress color="inherit" />
+                    </Backdrop>
+                </Box>
+                {(emailSuccess=='default') &&
+                  <Box className="refer-dialog">
                   {/* <ReferPatientDialog/> */}
                     <Stack>
                       <Box>
@@ -205,8 +299,20 @@ export default function NavTabs() {
                           <TextField
                               label="Age"
                               id="age"
-                              value={age}
+                              // value={age}
+                              InputProps={{
+                                inputProps: { min: 0, max: 150 }
+                              }}
+                              // inputProps={{ type: 'number'}}
                               type="number"
+                              placeholder="--"
+                              onKeyPress={(event) => {
+                                if (event.key == '-' || event.key === '+' || event.key == '.' || event.key === 'e') {
+                                  console.log("prohibited")
+                                  // event.key=''
+                                  event.preventDefault();
+                                }
+                              }}
                               onChange={(e) => handleAge(Number(e.target.value))}
                               sx={{ width: "44%" }}
                           />
@@ -254,8 +360,7 @@ export default function NavTabs() {
                               label="Yasmed ID"
                               id="yasmed_id"
                               value={yasmedId}
-                              type="number"
-                              onChange={(e) => handleYasmedID(Number(e.target.value))}
+                              onChange={(e) => handleYasmedID(e.target.value)}
                               style={{ marginBottom: "12px", width: "44%" }}
                           />
                           <TextField
@@ -280,35 +385,89 @@ export default function NavTabs() {
                           />
                       </Box>
                   </Stack>
+                  {/* {warnDuplicateReferral &&
+                    <Box>
+                      <Alert severity="warning" sx={{mt: "1rem", width:"100%"}}>
+                        <Box justifyContent="center" margin={0} sx={{textAlign: "center"}}>
+                          <Typography fontWeight="bold">Proceed further? </Typography>
+                          <Typography>Patient Already Referred On: <br></br>{referredPatientDate}</Typography>
+                        </Box>
+                      </Alert>
+                    </Box>
+                  } */}
                 </Box>
-
+                
                 }
-                {emailSuccess
+                {(emailSuccess==true)
                   &&
-                  <Box>
-                      <Box display="flex" justifyContent="center" sx={{height: "calc(100% - 64px)", maxWidth: "600px"}}>
-                        <img src="green-checkmark-icon.svg" height="250"></img>
+                  <Box className="refer-dialog">
+                      <Box display="flex" justifyContent="center" alignContent="center" sx={{margin:0, padding: "4rem", fontSize: "12rem", color:"green"}}>
+                        {/* <img src="green-checkmark-icon.svg" height="200" width="auto"></img> */}
+                        <CheckCircleIcon fontSize="inherit"></CheckCircleIcon>
                       </Box>
-                      <Typography>Referral sent!</Typography>
+                      <Box justifyContent="center" margin={0} sx={{textAlign: "center"}}>
+                        <Box className="referral-success-heading">
+                          <Typography variant="h4">Referral sent!</Typography>
+                        </Box>
+                        <Box display="flex" justifyContent="center" margin={0} sx={{textAlign: "center"}}>
+                          <Typography>Reference Number:  </Typography> &nbsp; &nbsp;
+                          <Typography>GP0001</Typography>
+                        </Box>
+                      </Box>
+                  </Box>
+                }
+                {
+                  (emailSuccess==false)
+                  &&
+                  <Box className="refer-dialog">
+                      <Box display="flex" justifyContent="center" alignContent="center" sx={{margin:0, padding: "4rem", fontSize: "12rem", color:"red"}}>
+                        {/* <img src="green-checkmark-icon.svg" height="200" width="auto"></img> */}
+                        <DangerousIcon fontSize="inherit"></DangerousIcon>
+                      </Box>
+                      <Box justifyContent="center" margin={0} sx={{textAlign: "center"}}>
+                        <Box className="referral-success-heading">
+                          <Typography variant="h4">Referral not sent!</Typography>
+                        </Box>
+                        <Box display="flex" justifyContent="center" margin={0} sx={{textAlign: "center"}}>
+                          <Typography>Reference Number:  </Typography> &nbsp; &nbsp;
+                          <Typography>GP0001</Typography>
+                        </Box>
+                      </Box>
                   </Box>
                 }
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleCloseAddPatientDialog}>Cancel</Button>
-                {!emailSuccess && <Button onClick={handleReferPatient} variant="contained">Submit</Button>}
-                {emailSuccess && <Button onClick={handleCloseAddPatientDialog} variant="contained">Done</Button>}
-
+                {(emailSuccess=='default') && <Button onClick={handleCloseAddPatientDialog}>Cancel</Button>}
+                {(emailSuccess=='default') && <Button onClick={handleReferPatient} variant="contained">Submit</Button>}
             </DialogActions>
         </Dialog>
-        {/* <Dialog open={emailSuccess} onClose={handleCloseAddPatientDialog}>
+        <Dialog open={warnDuplicateReferral} onClose={closeDuplicateWarning}>
           <DialogTitle>
-            <Typography>Title of succcess email</Typography>
+            <Typography variant="h5">Warning</Typography>
           </DialogTitle>
           <DialogContent>
-            <VerifiedIcon />
-            <Typography>Referral sent!</Typography>
+            <Box display="flex" justifyContent="center" alignContent="center" sx={{margin:0, padding: "1rem", fontSize: "9rem", color:"#ffcc00"}}>
+              <ErrorOutlineIcon fontSize="inherit"></ErrorOutlineIcon>
+            </Box>
+            <Box justifyContent="center" margin={0} sx={{textAlign: "center"}}>
+              <Typography fontWeight="bold">Proceed further? </Typography>
+              <Typography>Patient Already Referred On: <br></br>{referredPatientDate}</Typography>
+              <Box sx={{marginTop: 2}}>
+                <FormGroup>
+                  <FormControlLabel control={<Checkbox checked={warningConfirm} onChange={
+                    (e: any, newValue: boolean) =>
+                    setWarningConfirm(newValue)
+                  } />} 
+                  label="Re-refer the patient again" />
+                </FormGroup>
+              </Box>
+            </Box>
           </DialogContent>
-        </Dialog> */}
+          <DialogActions>
+            <Button onClick={closeDuplicateWarning}>Cancel</Button>
+            <Button onClick={sendEmailTrigger} disabled={!warningConfirm} variant="contained">Yes</Button>
+          </DialogActions>
+        </Dialog>
                 
           <Box sx={{ padding: 2 }}>
             {tabIndex === 0 && (

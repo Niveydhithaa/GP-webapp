@@ -18,7 +18,7 @@ import Homepagev2 from "pages/Homepagev2"
 import FiltrexEval from "evaluation/FiltrexEval";
 import Screen3 from "evaluation/FiltrexEvalPartTwo";
 import Reducer from "backup/Reducer";
-
+import LoadingButton from "components/TestLoadingButton"
 function App() {
   return (
     <BrowserRouter>
@@ -37,6 +37,8 @@ function App() {
         <Route path="/main" element={<MainPage />} />
         {/* <Route path="/site" element={<SiteJson />} /> */}
         <Route path="/reducer" element={<Reducer />} />
+        <Route path="/loadingButton" element={<LoadingButton />} />
+        
         {/* below requires context arguments */}
         {/* <Route path="/filtrex" element={<FiltrexEval />} /> */}
         {/* <Route path="/filtrex/screen3" element={<Screen3 />} /> */}
