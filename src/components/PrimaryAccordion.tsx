@@ -135,9 +135,9 @@ export default function AccordionExample({ findings, possible_cancer, gender_spe
           <Typography fontWeight="bold">{findings}</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
+          {/* <Typography>
             {findings}
-          </Typography>
+          </Typography> */}
           <Typography>
             {/* {!gender_specific &&
                         <Typography fontSize="10px">Not gender specific!</Typography>
