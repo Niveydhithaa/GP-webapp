@@ -129,28 +129,9 @@ export default function Patients() {
         <div>
             <Box>
                 <Box mb={4}>
-                    <Box display="flex" justifyContent="normal" alignItems="center" mb={2}>
-                        { /*<Autocomplete
-                                freeSolo
-                                disableClearable
-                                options={patientOptions}
-                                renderInput={(params) => (
-                                    <TextField
-                                        {...params}
-                                        label="Search patient"
-                                        // size="small"
-                                        // multiline={true}
-                                        // rows={2}
-                                        InputProps={{
-                                            ...params.InputProps,
-                                            type: "Age",
-                                        }}
-                                    />
-                                )}
-                                sx={{width: "350px"}}
-                            /> */}
-                        <Button variant="contained" color="primary" onClick={addNewPatientHandler}>
-                            Create Patient
+                    <Box display="flex" justifyContent="normal" alignItems="center" mb={2} >
+                            <Button variant="contained" color="primary" onClick={addNewPatientHandler} sx={{textAlign: "center"}}>
+                                Create Patient
                             </Button>
                         <Paper
                             component="form"
