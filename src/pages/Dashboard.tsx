@@ -108,7 +108,7 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
           {console.log(siteJson_blob)}
           </>
           
-          <Box padding={2}>
+          <Box>
               <Autocomplete
                   disablePortal
                   id="combo-box-demo"
