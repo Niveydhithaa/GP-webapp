@@ -67,6 +67,9 @@ function LinkTab(props: LinkTabProps) {
 export default function NavTabs() {
   const check_referral_url = configData.url + "/Getreferalptdetails"
   const refer_email_url = configData.url + "/sendemail"
+  const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
+  const special_chars = ';/:,}{[]()_-`~><.?""&@#$%*!^'.split('');
+  // console.log(alphabet);
   const [tabIndex, setIndexValue] = React.useState(0);
   const location = useLocation();
   const [gender, setGender] = React.useState("");
@@ -154,7 +157,7 @@ export default function NavTabs() {
     input_dict["age"] = age
     input_dict["gender"] = gender
     input_dict["phone_number"] = phoneNumber
-    input_dict["oopatient_id"] = '99'
+    input_dict["oopatient_id"] = ''
     input_dict["yasmed_id"] = yasmedId
     input_dict["gp_name"] = gpName
     input_dict["notes"] = patientNotes
@@ -195,7 +198,7 @@ export default function NavTabs() {
     input_dict["age"] = age
     input_dict["gender"] = gender
     input_dict["phone_number"] = phoneNumber
-    input_dict["oopatient_id"] = '99'
+    input_dict["oopatient_id"] = ''
     input_dict["yasmed_id"] = yasmedId
     input_dict["gp_name"] = gpName
     input_dict["notes"] = patientNotes
@@ -232,17 +235,26 @@ export default function NavTabs() {
       <Navbar></Navbar>
       <Grid container maxWidth="xl" sx={{margin: "0 auto", p: 4}}>
         <Card sx={{p: 2, borderRadius: 4, minHeight: "calc(100vh - 128px)", minWidth: "100%"}}>
-          <Box sx={{alignItems: "center", justifyContent: "space-around"}} >
-            <Tabs value={tabIndex} onChange={handleChange} aria-label="nav tabs example" sx={{display: "flex"}}>
-              
-              <LinkTab label="Patients" href="/patientslist" />
-              <LinkTab label="Search Guidelines" href="/dashboard" />
-              <LinkTab label="Analytics" href="/" />
-              <LinkTab label="Accounts" href="/accounts" />
-              <Box display="flex" sx={{marginLeft: "52%", justifyContent: "flex-end"}}>
+          <Box sx={{display: "flex", alignItems: "center", justifyContent: "space-between"}} >
+            <Box sx={{display: "flex", width:"80%"}}>
+              <Tabs 
+                value={tabIndex} 
+                onChange={handleChange} 
+                aria-label="nav tabs example" 
+                variant="scrollable"
+                // scrollButtons
+                // allowScrollButtonsMobile
+              >
+                
+                <LinkTab label="Patients" href="/patientslist" />
+                <LinkTab label="Search Guidelines" href="/dashboard" />
+                <LinkTab label="Analytics" href="/" />
+                <LinkTab label="Accounts" href="/accounts" />
+              </Tabs>
+            </Box>
+            <Box display="flex" sx={{textAlign: "center"}}>
                 <Button variant="contained" onClick={openReferDialog} color="error">Refer Patient</Button>
               </Box>
-            </Tabs>
           </Box>
           <Dialog open={referDialog} onClose={handleCloseAddPatientDialog} fullWidth maxWidth="sm">
               <DialogTitle>
@@ -334,6 +346,28 @@ export default function NavTabs() {
                           <TextField
                               label="Phone number"
                               required
+                              onKeyPress={(event) => {
+                                for(let i in alphabet)
+                                {
+                                  if (event.key == alphabet[i]) {
+                                    console.log("prohibited")
+                                    // event.key=''
+                                    event.preventDefault();
+                                  }
+                                }
+                                for(let i in special_chars)
+                                {
+                                  if (event.key == special_chars[i]) {
+                                    console.log("prohibited")
+                                    // event.key=''
+                                    event.preventDefault();
+                                  }
+                                }
+                                if(event.key=="'" || event.key=="=" || event.key==' ')
+                                {
+                                  event.preventDefault();
+                                }
+                              }}
                               id="mobile_num"
                               value={phoneNumber}
                               onChange={(e) => handlePhoneNumber(e.target.value)}
@@ -367,9 +401,7 @@ export default function NavTabs() {
                               label="OO Patient ID"
                               sx={{ width: "44%", marginLeft: 2 }}
                               id="patient_id"
-                              value={99}
                               disabled
-                              // style={{ marginBottom: "12px", width: "44%", marginLeft: 1 }}
                           />
                       </Box>
                       <Box>
@@ -438,7 +470,14 @@ export default function NavTabs() {
             </DialogContent>
             <DialogActions>
                 {(emailSuccess=='default') && <Button onClick={handleCloseAddPatientDialog}>Cancel</Button>}
-                {(emailSuccess=='default') && <Button onClick={handleReferPatient} variant="contained">Submit</Button>}
+                {(emailSuccess=='default') && 
+                  <Button 
+                    onClick={handleReferPatient} 
+                    variant="contained" 
+                    disabled={(firstName=='' || phoneNumber=='' )}>
+                      Submit
+                  </Button>
+                }
             </DialogActions>
         </Dialog>
         <Dialog open={warnDuplicateReferral} onClose={closeDuplicateWarning}>
