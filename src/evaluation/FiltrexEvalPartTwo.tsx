@@ -305,12 +305,12 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
             { (site!==undefined) && 
                 <Box>
                     {/* {JSON.stringify("Whether the local and remote JSONs are equal - " + isEqual(siteJson, siteJson_blob))} */}
-                    <Typography>{siteJson_blob[site-1].screens[2].display_name}</Typography>
+                    <Typography fontWeight="bold">{siteJson_blob[site-1].screens[2].display_name}</Typography>
                     {inputFieldsScreenThree.name.map((item: any, index: number) => {
                         return (
                             <Box key={index} className="Wrapper">
                                 {/* {console.log(item.name.title)} */}
-                                <Typography>{item.question} - {item.title}</Typography>
+                                <Typography>{item.question}</Typography>
 
                                 {
                                     (item.title != "gender" && item.title != "age") &&

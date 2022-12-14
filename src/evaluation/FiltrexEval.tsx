@@ -236,12 +236,12 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJ
             {
                 (site !== undefined) &&
                 <Box>
-                    <Typography>{siteJson_blob[site - 1].screens[1].display_name}</Typography>
+                    <Typography fontWeight="bold">{siteJson_blob[site - 1].screens[1].display_name}</Typography>
                     {inputFieldsScreenTwo.name.map((item: any, index: number) => {
                         return (
                             <Box key={index} className="Wrapper">
                                 {/* {console.log(item.name.title)} */}
-                                <Typography>{item.question} - {item.title}</Typography>
+                                <Typography>{item.question}</Typography>
                                 {
                                     (item.title=="xray_findings") &&
                                     <Box>

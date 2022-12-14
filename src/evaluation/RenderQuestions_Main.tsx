@@ -169,7 +169,7 @@ export default function RenderQuestions_MAIN({condition, site, siteJson_blob, ag
                    return (
                         <Box key={index} className="Wrapper">
                             {/* {console.log(item.name.title)} */}
-                            <Typography>{item.question} - {item.title}</Typography>
+                            <Typography>{item.question}</Typography>
                             
                                 {
                                     (item.title!="gender" && item.title!="age") &&
