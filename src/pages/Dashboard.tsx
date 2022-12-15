@@ -156,7 +156,7 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
               />
               <>{console.log(site)}</>
               <Box mt={1} mb={2}>
-                     <Button onClick={getDataHandler} disabled={(site==undefined || site==null)} variant="contained" color="info">Next</Button>
+                     <Button onClick={getDataHandler} disabled={(site==undefined  || site==null)} variant="contained" color="info">Next</Button>
                 </Box>
               </Box>
               {/* {site!==null &&
