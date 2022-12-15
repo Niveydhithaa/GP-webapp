@@ -109,11 +109,17 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
       async function hitEvent() {
         //event status code: 4
         let inputDict:any = {}
-        inputDict["params"] = {"site" : site}
-        inputDict["userId"] = user
-        inputDict["eventCode"] = EventStatus.SITE
-        let hitApiUrl = "https://fakestoreapi.com/products/3"
-        const response = await axios.get(hitApiUrl);
+        let site_array: string[] = []
+        if(site!=null && site!==undefined)
+        {
+          site_array.push(site)
+        }
+        inputDict["prams"] = site_array 
+        inputDict["user_id"] = user
+        inputDict["event_code"] = EventStatus.SITE
+        
+        let hitApiUrl = configData.url + "/Eventhandle"
+        const response = await axios.post(hitApiUrl, inputDict);
         console.log(response)
       }
       hitEvent()
@@ -125,12 +131,12 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
           {console.log(siteJson_blob)}
           </>
           
-          <Box>
+          <Box >
+              <Box width="50%" mt={4}>
               <Autocomplete
                   disablePortal
                   id="combo-box-demo"
                   options={siteOptions}
-                  sx={{ width: 300 }}
                   // value={site}
                   inputValue={inputValue}
                   onInputChange={(event, newInputValue) => {
@@ -148,11 +154,16 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
                   }}
                   renderInput={(params) => <TextField {...params} label="Search" />}
               />
-              {site!==null &&
+              <>{console.log(site)}</>
+              <Box mt={1} mb={2}>
+                     <Button onClick={getDataHandler} disabled={(site==undefined || site==null)} variant="contained" color="info">Next</Button>
+                </Box>
+              </Box>
+              {/* {site!==null &&
                 <Box mt={1} mb={2}>
                      <Button onClick={getDataHandler} variant="contained" color="info">Next</Button>
                 </Box>
-              }
+              } */}
               {
                   getData &&
                   // <RenderQuestions />
@@ -163,6 +174,7 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
   )
 }
 export default function Dashboard() {
+  const user = sessionStorage.getItem("userid")
   const [isLoading, setIsLoading] = useState(false)
   const [topic, setTopic] = useState("symptom");
   const [gender, setGender] = useState<any>(null);
@@ -536,6 +548,42 @@ export default function Dashboard() {
     console.log(multiSelectDict_global_tags)
     setSelectedFromMultiDict(multiSelectDict_global_tags)
     setNoOfSymptoms(multiSelectDict_global_tags.length)
+    async function hitEvent() {
+      //event status code: 4
+      let inputDict:any = {}
+      if(topic=="symptom")
+      {
+        let symptom_array: string[] = []
+        for(let i in multiSelectDict_global_tags)
+        {
+            symptom_array.push(multiSelectDict_global_tags[i].label)
+        }
+        console.log(symptom_array)
+        console.log(JSON.stringify({"symptoms" : symptom_array}))
+        console.log(typeof(JSON.stringify({"symptoms" : symptom_array})))
+        inputDict["prams"] = symptom_array
+        inputDict["user_id"] = user
+        inputDict["event_code"] = EventStatus.SYMPTOM
+      }
+      else if(topic=="primary")
+      {
+        let primary_array: string[] = []
+        for(let i in multiSelectDict_global_tags)
+        {
+          primary_array.push(multiSelectDict_global_tags[i].label)
+        }
+        console.log(primary_array)
+        console.log(JSON.stringify({"symptoms" : primary_array}))
+        console.log(typeof(JSON.stringify({"symptoms" : primary_array})))
+        inputDict["prams"] = primary_array
+        inputDict["user_id"] = user
+        inputDict["event_code"] = EventStatus.PRIMARY
+      }
+      let hitApiUrl = configData.url + "/Eventhandle"
+      const response = await axios.post(hitApiUrl, inputDict);
+      console.log(response)
+    }
+    hitEvent()
     // console.log(pswd)
   }
   const onTagsChange = (e: React.SyntheticEvent<Element, Event>, value: Record<string, string>[]) => {
