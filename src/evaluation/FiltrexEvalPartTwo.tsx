@@ -24,6 +24,7 @@ interface Props {
     asbestos: boolean | undefined
     site: number | undefined
     inputFields: any
+    inputFieldsScreenTwo : any
     siteJson_blob: any[]
     age_prefilled: number
 }
@@ -59,7 +60,7 @@ export const reducer = (state: any, action: ActionProp) => {
             return state;
     }
 };
-export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields, siteJson_blob, age_prefilled,...props} : Props) {
+export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields, inputFieldsScreenTwo, siteJson_blob, age_prefilled,...props} : Props) {
     const [cough, setCough] = useState<number>()
     const [fatigue, setFatigue] = useState<number>()
     const [shortness_breath, setShortnessBreath]= useState<number>()
@@ -91,6 +92,7 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
             // step2: count_oofer, count_consider need to store the length of true's
             // merge the valyes needed for comparing condition
             var compareList:any[] = []
+            console.log(inputFieldsScreenThree)
             inputFieldsScreenThree.name.map((item: any, index: any) => {
 
                 let a = item.title
@@ -98,7 +100,15 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
                 console.log(compareDict)
                 compareList.push(compareDict)
             })
+            console.log(inputFields)
             inputFields.name.map((item: any, index: any) => {
+                let a = item.title
+                let compareDict = {[a] : item.value}
+                console.log(compareDict)
+                compareList.push(compareDict)
+            })
+            console.log(inputFieldsScreenTwo)
+            inputFieldsScreenTwo.name.map((item: any, index: any) => {
                 let a = item.title
                 let compareDict = {[a] : item.value}
                 console.log(compareDict)

@@ -388,7 +388,7 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJ
             {/* section for further offer screen */}
             {
                 furtherInvest &&
-                <FiltrexEvalPartTwo smoker={smoker} asbestos={asbestos} site={site} inputFields={inputFields} siteJson_blob={siteJson_blob} age_prefilled={age_prefilled}/>
+                <FiltrexEvalPartTwo smoker={smoker} asbestos={asbestos} site={site} inputFields={inputFields} inputFieldsScreenTwo={inputFieldsScreenTwo} siteJson_blob={siteJson_blob} age_prefilled={age_prefilled}/>
             }
             {/* immediate referral - oncology popup */}
             {
