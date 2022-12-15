@@ -32,11 +32,11 @@ export default function ImmediateReferral({cause_of_immediate, ...props} : Props
             {/* <Typography>Immediate Referral!!</Typography>
             <Typography>{cause_of_immediate}</Typography> */}
             
-            <Box>
+            <Box width="80%" mt={2}>
                 {/* onco popup */}
-                <Card>
+                <Card >
                     <CardContent>
-                    <Box display="flex">
+                    <Box display="flex" >
                         <Box display="flex" width="100%">
                            Oncology referral  (Coming Soon...)
                         </Box>
@@ -66,7 +66,6 @@ export default function ImmediateReferral({cause_of_immediate, ...props} : Props
                         </Box>
                     </CardContent>
                     <CardActions>
-                        <Button>Cancel</Button>
                         <Button variant="contained" onClick={handleImmediateRefer}>Submit</Button>
                     </CardActions>
                 </Card>
