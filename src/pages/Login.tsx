@@ -54,6 +54,7 @@ export default function Login() {
 
           sessionStorage.setItem("user", "true")
           sessionStorage.setItem("userid", res_Dict.userDetails.userId)
+          sessionStorage.setItem("doctorsname", res_Dict.userDetails.doctors_name)
           navigate("/home")
         }
         else {
