@@ -22,6 +22,14 @@ export default function Login() {
   const handleClose = () => {
     setOpenLoginFail(false);
   }
+  const onEnterPressCallSubmit = (event: any) => {
+    // 'keypress' event misbehaves on mobile so we track 'Enter' key via 'keydown' event
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      event.stopPropagation();
+      handleOnSignin()
+    }
+  }
   const handleOnSignin = () => {
     setIsLoading(true)
     const uname = (document.getElementById("username_input") as HTMLInputElement).value
@@ -45,6 +53,7 @@ export default function Login() {
         if (isSuccess) {
 
           sessionStorage.setItem("user", "true")
+          sessionStorage.setItem("userid", res_Dict.userDetails.userId)
           navigate("/home")
         }
         else {
@@ -92,7 +101,7 @@ export default function Login() {
                 </Typography>
                 <Box display="flex" flexDirection="column" gap={2} >
                   <TextField label="Username" variant="outlined" type="text" id="username_input" error={openUnameFail} onChange={(e) => setOpenUnameFail(false)} helperText={openUnameFail && "Username not found!"} />
-                  <TextField label="Password" variant="outlined" type="password" id="password_input" error={openLoginFail} onChange={(e) => setOpenLoginFail(false)} helperText={openLoginFail && "Incorrect password!"} />
+                  <TextField label="Password" onKeyDown={onEnterPressCallSubmit} variant="outlined" type="password" id="password_input" error={openLoginFail} onChange={(e) => setOpenLoginFail(false)} helperText={openLoginFail && "Incorrect password!"} />
                   {/* { openLoginFail &&
                 <Typography fontSize="12px" color="red">Password incorrect</Typography>
               } */}
