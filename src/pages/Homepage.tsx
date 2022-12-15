@@ -81,7 +81,7 @@ export default function NavTabs() {
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
   const [patientNotes, setPatientNotes] = React.useState("")
-  const [gpName, setGPName] = React.useState("")
+  const [gpName, setGPName] = React.useState<string | null | undefined>(sessionStorage.getItem("doctorsname")?.trim())
   const [phoneNumber, setPhoneNumber] = React.useState("")
   const [age, setAge] = React.useState(0)
   const [yasmedId, setYasmedId] = React.useState("")
@@ -99,11 +99,11 @@ export default function NavTabs() {
     async function hitEvent() {
       //event login code : 1
       let inputDict:any = {}
-      inputDict["params"] = {"empty" : "placeholder"}
-      inputDict["userId"] = user
-      inputDict["eventCode"] = EventStatus.LOGIN 
-      let hitApiUrl = "https://fakestoreapi.com/products/1"
-      const response = await axios.get(hitApiUrl);
+      // inputDict["prams"] = JSON.stringify({"empty" : "placeholder"})
+      inputDict["user_id"] = user
+      inputDict["event_code"] = EventStatus.LOGIN 
+      let hitApiUrl = configData.url + "/Eventhandle"
+      const response = await axios.post(hitApiUrl, inputDict);
       console.log(response)
     }
     hitEvent()
@@ -127,7 +127,7 @@ export default function NavTabs() {
     setLastName(newLastName)
   }
   const handleGPName = (newGPName: string) => {
-    setGPName(newGPName)
+    // setGPName(newGPName)
   }
   const handlePatientNotes = (newNotes: string) => {
     setPatientNotes(newNotes)
@@ -156,7 +156,6 @@ export default function NavTabs() {
     setPatientNotes('')
     setFirstName('')
     setLastName('')
-    setGPName('')
     setGender('')
     setYasmedId('')
     setPhoneNumber('')
@@ -440,6 +439,7 @@ export default function NavTabs() {
                               label="Doctor Name"
                               id="gpname"
                               value={gpName}
+                              disabled
                               onChange={(e) => handleGPName(e.target.value)}
                               sx={{  width: "44%" }}
                           />
