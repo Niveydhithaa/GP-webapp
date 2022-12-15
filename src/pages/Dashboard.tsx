@@ -23,7 +23,13 @@ interface Props_SiteStart {
   age_prefilled: number
   gender_prefilled: any
 }
+enum EventStatus {
+  SYMPTOM = 2,
+  PRIMARY = 3,
+  SITE = 4
+}
 export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Props_SiteStart) {
+  const user = sessionStorage.getItem("userid")
   const [siteChanged, setSiteChanged] = useState<boolean>()
   const [siteJson_blob, setSiteJson_blob]  = useState<any[]>([])
   const [siteOptions, setSiteOptions] = useState<string[]>([])
@@ -100,6 +106,17 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
         console.log("na for men")
       }
       setGetData(true)
+      async function hitEvent() {
+        //event status code: 4
+        let inputDict:any = {}
+        inputDict["params"] = {"site" : site}
+        inputDict["userId"] = user
+        inputDict["eventCode"] = EventStatus.SITE
+        let hitApiUrl = "https://fakestoreapi.com/products/3"
+        const response = await axios.get(hitApiUrl);
+        console.log(response)
+      }
+      hitEvent()
   }
   
   return (
