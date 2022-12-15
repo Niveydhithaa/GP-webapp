@@ -47,6 +47,9 @@ import {
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
+enum EventStatus {
+  LOGIN = 1
+}
 interface LinkTabProps {
   label?: string;
   href?: string;
@@ -65,9 +68,11 @@ function LinkTab(props: LinkTabProps) {
 }
 
 export default function NavTabs() {
+  const user = sessionStorage.getItem("userid")
   const check_referral_url = configData.url + "/Getreferalptdetails"
   const refer_email_url = configData.url + "/sendemail"
   const alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
+  const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
   const special_chars = ';/:,}{[]()_-`~><.?""&@#$%*!^'.split('');
   // console.log(alphabet);
   const [tabIndex, setIndexValue] = React.useState(0);
@@ -89,6 +94,20 @@ export default function NavTabs() {
   const [addPatientDialog, setAddPatientDialog] = React.useState<boolean>(false);
   const [warnDuplicateReferral, setWarnDuplicateReferral] = React.useState<boolean>(false);
   const [warningConfirm, setWarningConfirm] = React.useState<boolean>(false);
+  
+  useEffect(() => {
+    async function hitEvent() {
+      //event login code : 1
+      let inputDict:any = {}
+      inputDict["params"] = {"empty" : "placeholder"}
+      inputDict["userId"] = user
+      inputDict["eventCode"] = EventStatus.LOGIN
+      let hitApiUrl = "https://fakestoreapi.com/products/1"
+      const response = await axios.get(hitApiUrl);
+      console.log(response)
+    }
+    hitEvent()
+  }, [])
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setIndexValue(newValue);
     localStorage.setItem("tabIndex", newValue.toString())
@@ -233,6 +252,7 @@ export default function NavTabs() {
   return (
     <Box sx={{backgroundColor: "#EEEEEE", minHeight: "100vh"}}>
       <Navbar></Navbar>
+      <>{console.log(sessionStorage.getItem("userid"))}</>
       <Grid container maxWidth="xl" sx={{margin: "0 auto", p: 4}}>
         <Card sx={{p: 2, borderRadius: 4, minHeight: "calc(100vh - 128px)", minWidth: "100%"}}>
           <Box sx={{display: "flex", alignItems: "center", justifyContent: "space-between"}} >
@@ -358,6 +378,14 @@ export default function NavTabs() {
                                 for(let i in special_chars)
                                 {
                                   if (event.key == special_chars[i]) {
+                                    console.log("prohibited")
+                                    // event.key=''
+                                    event.preventDefault();
+                                  }
+                                }
+                                for(let i in ALPHABET)
+                                {
+                                  if (event.key == ALPHABET[i]) {
                                     console.log("prohibited")
                                     // event.key=''
                                     event.preventDefault();
