@@ -121,7 +121,7 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
             console.log(totalDict);
             //total dict has tp be added with:
             // 1. count_offer
-            console.log(siteJson_blob[0].screens[2].values)
+            // console.log(siteJson_blob[0].screens[2].values)
             console.log(siteJson_blob[site-1].screens[2].offer_symptoms)
             console.log(siteJson_blob[site-1].screens[2].consider_symptoms)
             //branch 1 - offer (urgent)
