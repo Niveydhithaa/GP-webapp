@@ -101,7 +101,7 @@ export default function NavTabs() {
       let inputDict:any = {}
       inputDict["params"] = {"empty" : "placeholder"}
       inputDict["userId"] = user
-      inputDict["eventCode"] = EventStatus.LOGIN
+      inputDict["eventCode"] = EventStatus.LOGIN 
       let hitApiUrl = "https://fakestoreapi.com/products/1"
       const response = await axios.get(hitApiUrl);
       console.log(response)
