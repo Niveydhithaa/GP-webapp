@@ -164,7 +164,9 @@ export default function RenderQuestions_MAIN({condition, site, siteJson_blob, ag
             {/* <Button onClick={renderQuestionsToggle}>Render</Button> */}
             {/* {JSON.stringify(inputFields.name)} */}
             {/* {JSON.stringify("Whether the local and remote JSONs are equal - " + isEqual(siteJson, siteJson_blob))} */}
-            
+            {(site!==undefined) &&
+                <Typography fontWeight="bold">{siteJson_blob[site-1].screens[0].display_name}</Typography>
+            }
             {inputFields.name.map((item: any, index : number) => {
                    return (
                         <Box key={index} className="Wrapper">
@@ -232,7 +234,7 @@ export default function RenderQuestions_MAIN({condition, site, siteJson_blob, ag
                 })
             }
             {/* <Typography style={{color: "red"}}>Dynamic tries: END</Typography> */}
-            <Box mt={1} mb={2}>
+            <Box mt={1} mb={3}>
                 <Button onClick={getResults} variant="contained">Next</Button>
             </Box>
             {

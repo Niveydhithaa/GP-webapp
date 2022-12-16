@@ -130,7 +130,7 @@ export default function Patients() {
             <Box>
                 <Box mb={4}>
                     <Box display="flex" justifyContent="normal" alignItems="center" mb={2} >
-                            <Button variant="contained" color="primary" onClick={addNewPatientHandler} sx={{textAlign: "center"}}>
+                            <Button variant="outlined" color="primary" onClick={addNewPatientHandler} sx={{textAlign: "center"}}>
                                 Create Patient
                             </Button>
                         <Paper

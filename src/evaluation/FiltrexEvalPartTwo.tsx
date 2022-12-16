@@ -367,7 +367,7 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
             
             
             {/* <Typography>Further Investigation - screen 3</Typography> */}
-            <Box mt={1} mb={2}>
+            <Box mt={1} mb={3}>
                 <Button onClick={getResults} variant="contained">Next</Button>
             </Box>
             { openTreatmentOptions && 
@@ -437,7 +437,7 @@ export default function FiltrexEvalPartTwo({smoker, asbestos, site, inputFields,
                         </FormControl>
                     }
                     <Box mt={2}>
-                        <Button variant="contained" onClick={showFinalSummary}>Complete</Button>
+                        <Button variant="contained" onClick={showFinalSummary} color="success">Complete</Button>
                     </Box>
                     {finalSummary && 
                         <Box>

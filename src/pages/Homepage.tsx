@@ -46,6 +46,7 @@ import {
 } from "@mui/icons-material"
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import SendIcon from '@mui/icons-material/Send';
 
 enum EventStatus {
   LOGIN = 1
@@ -265,14 +266,15 @@ export default function NavTabs() {
                 // allowScrollButtonsMobile
               >
                 
-                <LinkTab label="Patients" href="/patientslist" />
+                {/* <LinkTab label="Patients" href="/patientslist" /> */}
                 <LinkTab label="Search Guidelines" href="/dashboard" />
                 <LinkTab label="Analytics" href="/" />
                 <LinkTab label="Accounts" href="/accounts" />
               </Tabs>
             </Box>
             <Box display="flex" sx={{textAlign: "center"}}>
-                <Button variant="contained" onClick={openReferDialog} color="error">Refer Patient</Button>
+                
+                <Button variant="contained" onClick={openReferDialog} color="error"><SendIcon sx={{marginRight: "8px"}}/> Refer Patient</Button>
             </Box>
           </Box>
           <Dialog open={referDialog} onClose={handleCloseAddPatientDialog} fullWidth maxWidth="sm">
@@ -469,10 +471,10 @@ export default function NavTabs() {
                         <Box className="referral-success-heading">
                           <Typography variant="h4">Referral sent!</Typography>
                         </Box>
-                        <Box display="flex" justifyContent="center" margin={0} sx={{textAlign: "center"}}>
+                        {/* <Box display="flex" justifyContent="center" margin={0} sx={{textAlign: "center"}}>
                           <Typography>Reference Number:  </Typography> &nbsp; &nbsp;
                           <Typography>GP0001</Typography>
-                        </Box>
+                        </Box> */}
                       </Box>
                   </Box>
                 }
@@ -489,8 +491,8 @@ export default function NavTabs() {
                           <Typography variant="h4">Referral not sent!</Typography>
                         </Box>
                         <Box display="flex" justifyContent="center" margin={0} sx={{textAlign: "center"}}>
-                          <Typography>Reference Number:  </Typography> &nbsp; &nbsp;
-                          <Typography>GP0001</Typography>
+                          <Typography>Please Logout and Try Again </Typography> &nbsp; &nbsp;
+                          
                         </Box>
                       </Box>
                   </Box>
@@ -537,24 +539,24 @@ export default function NavTabs() {
         </Dialog>
                 
           <Box sx={{ padding: 2 }}>
-            {tabIndex === 0 && (
+            {/* {tabIndex === 0 && (
               <Box>
-                {/* <Typography>The first tab</Typography> */}
+                
                 <Patients></Patients>
               </Box>
-            )}
-            {tabIndex === 1 && (
+            )} */}
+            {tabIndex === 0 && (
               <Box>
                 {/* <Typography>The second tab</Typography> */}
                 <Dashboard></Dashboard>
               </Box>
             )}
-            {tabIndex === 2 && (
+            {tabIndex === 1 && (
               <Box>
                 <Analytics></Analytics>
               </Box>
             )}
-            {tabIndex === 3 && (
+            {tabIndex === 2 && (
               <Box>
                 <Accounts></Accounts>
               </Box>

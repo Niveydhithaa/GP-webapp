@@ -123,7 +123,7 @@ export default function SiteJson({age_prefilled, gender_prefilled, ...props} : P
                     renderInput={(params) => <TextField {...params} label="Search" />}
                 />
                 {site!==null &&
-                    <Box mt={1} mb={2}>
+                    <Box mt={1} mb={3}>
                         <Button onClick={getDataHandler} variant="contained" color="info">Next</Button>
                     </Box>
                 }

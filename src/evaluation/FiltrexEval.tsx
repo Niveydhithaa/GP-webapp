@@ -314,7 +314,7 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJ
             <Box>
 
             </Box>
-            <Box mt={1} mb={2}>
+            <Box mt={1} mb={3}>
                 <Button onClick={clickHandler} variant="contained">Next</Button>
             </Box>
             { openTreatmentOptions && 
@@ -375,7 +375,7 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJ
                                 })
                                 }
                             </RadioGroup>
-                            <Box>
+                            <Box mt={1} mb={3}>
                                 <Button onClick={onSubmitScreen2} variant="contained">Next</Button>
                             </Box>
                         </FormControl>

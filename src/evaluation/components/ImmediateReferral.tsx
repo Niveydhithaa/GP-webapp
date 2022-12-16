@@ -32,7 +32,7 @@ export default function ImmediateReferral({cause_of_immediate, ...props} : Props
             {/* <Typography>Immediate Referral!!</Typography>
             <Typography>{cause_of_immediate}</Typography> */}
             
-            <Box width="80%" mt={2}>
+            <Box width="50%" mt={2}>
                 {/* onco popup */}
                 <Card >
                     <CardContent>

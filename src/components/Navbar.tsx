@@ -71,7 +71,7 @@ const Navbar = () => {
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
               {/* <Avatar alt="Remy Sharp" src="https://picsum.photos/200" /> */}
               <Avatar alt="avatar">
-                RP
+                D
               </Avatar>
             </IconButton>
             <Menu
