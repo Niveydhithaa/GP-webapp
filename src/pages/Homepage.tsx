@@ -277,7 +277,7 @@ export default function NavTabs() {
                 <Button variant="contained" onClick={openReferDialog} color="error"><SendIcon sx={{marginRight: "8px"}}/> Refer Patient</Button>
             </Box>
           </Box>
-          <Dialog open={referDialog} onClose={handleCloseAddPatientDialog} fullWidth maxWidth="sm">
+          <Dialog open={referDialog} fullWidth maxWidth="sm">
               <DialogTitle>
                   <Box display="flex">
                       <Box display="flex" width="100%">

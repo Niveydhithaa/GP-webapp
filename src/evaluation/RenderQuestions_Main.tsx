@@ -10,8 +10,8 @@ import {
 import { useState, useReducer, useCallback, useMemo, useEffect } from "react"
 import siteJson from "../data/sites_master_mod.json"
 import FiltrexEval from "evaluation/FiltrexEval"
-import {isEqual} from "lodash"
-let initialState = { name: []};
+import { isEqual } from "lodash"
+let initialState = { name: [] };
 enum ActionKind {
     STATE = "state",
     UPDATE = "update",
@@ -20,7 +20,7 @@ enum ActionKind {
 interface ActionProp {
     type: ActionKind
     payload: { title: string, value: boolean | number, question: string }
-    index? : number
+    index?: number
 }
 interface Props {
     condition: boolean
@@ -29,6 +29,14 @@ interface Props {
     age_prefilled: number
     gender_prefilled: any
 }
+const commonStyles = {
+    width:"60%",
+    bgcolor: 'background.paper',
+    p: 2,
+    borderColor: 'grey.500',
+    borderRadius: '8px',
+    marginBottom: '16px'
+};
 export const reducer = (state: any, action: ActionProp) => {
     switch (action.type) {
         case ActionKind.STATE: {
@@ -38,30 +46,30 @@ export const reducer = (state: any, action: ActionProp) => {
             // {
             //     return {...state, name: [...state.name, ]}
             // }
-            return {...state, name: [...state.name, action.payload]};
+            return { ...state, name: [...state.name, action.payload] };
         }
-        case ActionKind.UPDATE:{
+        case ActionKind.UPDATE: {
             // state["name"][action.inde]
-            if(action.index!==undefined)
+            if (action.index !== undefined)
                 state["name"][action.index]["value"] = action.payload.value
             // return {...state, name: [...state.name, action.payload]};
-            
-            return {...state};
+
+            return { ...state };
         }
         case ActionKind.RESET: {
             state = initialState;
             console.log(state)
-            return {...state};
+            return { ...state };
         }
         default:
             return state;
     }
 };
-export default function RenderQuestions_MAIN({condition, site, siteJson_blob, age_prefilled, gender_prefilled, ...props} : Props) {
+export default function RenderQuestions_MAIN({ condition, site, siteJson_blob, age_prefilled, gender_prefilled, ...props }: Props) {
     const [smoker, setSmoker] = useState<boolean>()
     const [asbestos, setAsbestos] = useState<boolean>()
     const [startEval, setStartEval] = useState<boolean>(false)
-    
+
     const [inputFields, dispatch] = useReducer(reducer, initialState)
     let states: Record<string, any>[] = [];
     const age = 45;
@@ -105,7 +113,7 @@ export default function RenderQuestions_MAIN({condition, site, siteJson_blob, ag
         console.log("update value : index: " + index + " value: " + state_value)
         dispatch({
             type: ActionKind.UPDATE,
-            payload: { title: state_name, value: state_value, question: question},
+            payload: { title: state_name, value: state_value, question: question },
             index: index
         });
         console.log(inputFields.name)
@@ -119,41 +127,37 @@ export default function RenderQuestions_MAIN({condition, site, siteJson_blob, ag
         console.log("driver function enter")
         //make the inputFields epmty here. for each site it has to be made empty
         let questionsList: any[] = [];
-        if(site!=undefined)
-        {
+        if (site != undefined) {
             dispatch({
                 type: ActionKind.RESET,
-                payload : {title: 'dummy', value: 9, question: 'dummy'}
+                payload: { title: 'dummy', value: 9, question: 'dummy' }
             })
             console.log(site)
-            let totalDict = siteJson_blob[site-1].screens[0].values
-        let keys: any[] = Object.keys(totalDict)
-        let values: any[] = Object.values(totalDict)
-        console.log(" Initial state of input field:  " + JSON.stringify(initialState))
-        for (var i in keys) {
-            console.log(i)
-            console.log(values[i])
-            console.log(keys[i])
-            console.log(totalDict.hasOwnProperty(keys[i]))
-            // #infinite loop problem
-            if(keys[i]=='age')
-            {
-                handleAddMoreFields(keys[i], age_prefilled, values[i].message)
+            let totalDict = siteJson_blob[site - 1].screens[0].values
+            let keys: any[] = Object.keys(totalDict)
+            let values: any[] = Object.values(totalDict)
+            console.log(" Initial state of input field:  " + JSON.stringify(initialState))
+            for (var i in keys) {
+                console.log(i)
+                console.log(values[i])
+                console.log(keys[i])
+                console.log(totalDict.hasOwnProperty(keys[i]))
+                // #infinite loop problem
+                if (keys[i] == 'age') {
+                    handleAddMoreFields(keys[i], age_prefilled, values[i].message)
+                }
+                else if (keys[i] == 'gender') {
+                    console.log(typeof (gender_prefilled))
+                    handleAddMoreFields(keys[i], gender_prefilled, values[i].message)
+                }
+                else {
+                    handleAddMoreFields(keys[i], 0, values[i].message)
+                }
+
+                console.log(JSON.stringify(initialState))
             }
-            else if(keys[i]=='gender')
-            {
-                console.log(typeof(gender_prefilled))
-                handleAddMoreFields(keys[i], gender_prefilled, values[i].message)
-            }
-            else
-            {
-                handleAddMoreFields(keys[i], 0, values[i].message)
-            }
-            
-            console.log(JSON.stringify(initialState))
-        }
-        console.log(" Input field after loop: " + JSON.stringify(inputFields))
-        console.log("driver function exit")
+            console.log(" Input field after loop: " + JSON.stringify(inputFields))
+            console.log("driver function exit")
         }
         return questionsList;
     }
@@ -164,84 +168,88 @@ export default function RenderQuestions_MAIN({condition, site, siteJson_blob, ag
             {/* <Button onClick={renderQuestionsToggle}>Render</Button> */}
             {/* {JSON.stringify(inputFields.name)} */}
             {/* {JSON.stringify("Whether the local and remote JSONs are equal - " + isEqual(siteJson, siteJson_blob))} */}
-            {(site!==undefined) &&
-                <Typography fontWeight="bold">{siteJson_blob[site-1].screens[0].display_name}</Typography>
-            }
-            {inputFields.name.map((item: any, index : number) => {
-                   return (
-                        <Box key={index} className="Wrapper">
-                            {/* {console.log(item.name.title)} */}
-                            <Typography>{item.question}</Typography>
-                            
-                                {
-                                    (item.title!="gender" && item.title!="age") &&
-                                    <Box>
-                                        <ToggleButtonGroup
-                                                color="primary"
-                                                exclusive
-                                                value={item.value}
-                                                // onInput={}
-                                                // onClick={(e: React.MouseEvent<HTMLElement>, newValue: boolean) => handleUpdateValueField(index, item.title, newValue, item.question)}
-                                                onChange={(e: React.MouseEvent<HTMLElement>, newValue: boolean) => {
-                                                    // if(newValue!==null && item.value!==newValue)
-                                                    // {
+            <Box sx={{ ...commonStyles, border: "1px solid #9e9e9e"}}>
+                <Box padding={1}>
+                    {(site !== undefined) &&
+                        <Typography className="title-screen-site">{siteJson_blob[site - 1].screens[0].display_name}</Typography>
+                    }
+                    {inputFields.name.map((item: any, index: number) => {
+                        return (
+                            <Box key={index} className="Wrapper">
+                                {/* {console.log(item.name.title)} */}
+                                <Typography className="question-display-name-site">{item.question}</Typography>
 
-                                                    // }
-                                                    if(newValue!==null)
-                                                    {
-                                                        handleUpdateValueField(index, item.title, newValue, item.question)
-                                                        item.value = newValue
-                                                    }
-                                                    
-                                                    setStartEval(false)
-                                                }}
-                                                aria-label="Platform"
-                                            >
+                                {
+                                    (item.title != "gender" && item.title != "age") &&
+                                    <Box className="site-toggles-group">
+                                        <ToggleButtonGroup
+                                            color="primary"
+                                            exclusive
+                                            value={item.value}
+                                            // onInput={}
+                                            // onClick={(e: React.MouseEvent<HTMLElement>, newValue: boolean) => handleUpdateValueField(index, item.title, newValue, item.question)}
+                                            onChange={(e: React.MouseEvent<HTMLElement>, newValue: boolean) => {
+                                                // if(newValue!==null && item.value!==newValue)
+                                                // {
+
+                                                // }
+                                                if (newValue !== null) {
+                                                    handleUpdateValueField(index, item.title, newValue, item.question)
+                                                    item.value = newValue
+                                                }
+
+                                                setStartEval(false)
+                                            }}
+                                            aria-label="Platform"
+                                        >
                                             <ToggleButton value={1} id="toggle_symptom">Yes</ToggleButton>
                                             <ToggleButton value={0}>No</ToggleButton>
                                         </ToggleButtonGroup>
                                     </Box>
                                 }
                                 {
-                                    (item.title=="age")
+                                    (item.title == "age")
                                     &&
-                                    <Box>
-                                        {age_prefilled==0 &&
+                                    <Box className="site-toggles-group">
+                                        {age_prefilled == 0 &&
                                             <TextField disabled={true} label="Age"></TextField>
                                         }
-                                        {age_prefilled!==0 &&
+                                        {age_prefilled !== 0 &&
                                             <TextField disabled={true} label={age_prefilled}></TextField>
                                         }
                                     </Box>
                                 }
                                 {
-                                    (item.title=="gender") &&
-                                    <Box>
-                                        {(gender_prefilled!=0 && gender_prefilled!==1) &&
+                                    (item.title == "gender") &&
+                                    <Box className="site-toggles-group">
+                                        {(gender_prefilled != 0 && gender_prefilled !== 1) &&
                                             <TextField disabled={true} label="Gender"></TextField>
                                         }
-                                        {gender_prefilled==0 &&
+                                        {gender_prefilled == 0 &&
                                             <TextField disabled={true} label="Male"></TextField>
                                         }
-                                        {gender_prefilled==1 &&
+                                        {gender_prefilled == 1 &&
                                             <TextField disabled={true} label="Female"></TextField>
                                         }
                                     </Box>
                                 }
-                        </Box>
-                   )
-                  
-                })
-            }
-            {/* <Typography style={{color: "red"}}>Dynamic tries: END</Typography> */}
-            <Box mt={1} mb={3}>
-                <Button onClick={getResults} variant="contained">Next</Button>
+                            </Box>
+                        )
+
+                    })
+                    }
+                    <Box mt={1} mb={3}>
+                        <Button onClick={getResults} variant="contained">Next</Button>
+                    </Box>
+                </Box>
+                
             </Box>
+            {/* <Typography style={{color: "red"}}>Dynamic tries: END</Typography> */}
+            
             {
                 startEval &&
-                <FiltrexEval smoker={smoker} asbestos={asbestos} site={site} inputFields={inputFields} siteJson_blob = {siteJson_blob} age_prefilled={age_prefilled} gender_prefilled={gender_prefilled}></FiltrexEval>
+                <FiltrexEval smoker={smoker} asbestos={asbestos} site={site} inputFields={inputFields} siteJson_blob={siteJson_blob} age_prefilled={age_prefilled} gender_prefilled={gender_prefilled}></FiltrexEval>
             }
-            
         </Box>
     );
 }

@@ -131,45 +131,47 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
           {console.log(siteJson_blob)}
           </>
           
-          <Box >
-              <Box width="50%" mt={4}>
-              <Autocomplete
-                  disablePortal
-                  id="combo-box-demo"
-                  options={siteOptions}
-                  // value={site}
-                  inputValue={inputValue}
-                  onInputChange={(event, newInputValue) => {
-                      setInputValue(newInputValue);
-                      console.log("new site chosen: " + newInputValue)
-                  }}
-                  onChange={(e: any, newValue: string | null) => {
-                      if(site!=null && site!=newValue)
-                      {
-                          console.log("site changed")
-                          setSiteChanged(true)
-                      }
-                      setSite(newValue)
-                      setGetData(false)
-                  }}
-                  renderInput={(params) => <TextField {...params} label="Search" />}
-              />
-              <>{console.log(site)}</>
-              <Box mt={1} mb={3}>
-                     <Button onClick={getDataHandler} disabled={(site==undefined  || site==null)} variant="contained" color="info">Next</Button>
-                </Box>
+          <Box display="flex" gap={2} marginTop={4} >
+              <Box width="50%" >
+                <Autocomplete
+                    disablePortal
+                    id="combo-box-demo"
+                    options={siteOptions}
+                    // value={site}
+                    inputValue={inputValue}
+                    onInputChange={(event, newInputValue) => {
+                        setInputValue(newInputValue);
+                        console.log("new site chosen: " + newInputValue)
+                    }}
+                    onChange={(e: any, newValue: string | null) => {
+                        if(site!=null && site!=newValue)
+                        {
+                            console.log("site changed")
+                            setSiteChanged(true)
+                        }
+                        setSite(newValue)
+                        setGetData(false)
+                    }}
+                    renderInput={(params) => <TextField {...params} label="Search" />}
+                />
+                <>{console.log(site)}</>
               </Box>
               {/* {site!==null &&
                 <Box mt={1} mb={3}>
                      <Button onClick={getDataHandler} variant="contained" color="info">Next</Button>
                 </Box>
               } */}
-              {
+              <Box >
+                     <Button onClick={getDataHandler} disabled={(site==undefined  || site==null)} variant="contained" color="info">Search</Button>
+                </Box>
+          </Box>
+          {
                   getData &&
                   // <RenderQuestions />
-                  <RenderQuestions condition={true} site={siteId} siteJson_blob = {siteJson_blob} age_prefilled={age_prefilled} gender_prefilled={gender_prefilled}/>
+                  <Box mt={4}>
+                    <RenderQuestions condition={true} site={siteId} siteJson_blob = {siteJson_blob} age_prefilled={age_prefilled} gender_prefilled={gender_prefilled}/>
+                  </Box>
               }
-          </Box>
       </Box>
   )
 }

@@ -166,7 +166,8 @@ export default function AccordionExample({ findings, possible_cancer, gender_spe
                         {possible_cancer}
                       </StyledTableCell>
                       <StyledTableCell>
-                        <Link onClick={(e) => testClickHandler(e, recommendation)}><p className="prescribelink">{recommendation}</p></Link>
+                        {recommendation}
+                        {/* <Link onClick={(e) => testClickHandler(e, recommendation)}><p className="prescribelink">{recommendation}</p></Link> */}
                       </StyledTableCell>
                     </StyledTableRow>
                   </TableBody>

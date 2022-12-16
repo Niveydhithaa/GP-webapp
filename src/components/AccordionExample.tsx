@@ -407,7 +407,8 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                                   {possible_cancer}
                                 </StyledTableCell>
                                 <StyledTableCell>
-                                  <Link onClick={(e) => testClick_OpenOncologistPopup(e, step1)} style={{color: "red"}}><p className="prescribelink">{step1.replace("message: ", "")}</p></Link>
+                                  {step1}
+                                  {/* <Link onClick={(e) => testClick_OpenOncologistPopup(e, step1)} style={{color: "red"}}><p className="prescribelink">{step1.replace("message: ", "")}</p></Link> */}
                                 </StyledTableCell>
                               </StyledTableRow>
                           </TableBody>
@@ -439,7 +440,8 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                                     {possible_cancer}
                                   </StyledTableCell>
                                   <StyledTableCell>
-                                    <Link onClick={(e) => testClickHandler(e, step1)}><p className="prescribelink">{step1}</p></Link>
+                                    {step1}
+                                    {/* <Link onClick={(e) => testClickHandler(e, step1)}><p className="prescribelink">{step1}</p></Link> */}
                                   </StyledTableCell>
                                 </StyledTableRow>
                             </TableBody>
@@ -468,7 +470,8 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                                   </StyledTableCell> */}
                                   <StyledTableCell>{rsponse1_1}</StyledTableCell>
                                   <StyledTableCell>
-                                        <Link onClick={(e) => testClickHandler(e, step2_1)}><p className="prescribelink">{step2_1}</p></Link>
+                                        {step2_1}
+                                        {/* <Link onClick={(e) => testClickHandler(e, step2_1)}><p className="prescribelink">{step2_1}</p></Link> */}
                                   </StyledTableCell>
                                 </TableRow>
                                 <TableRow>
@@ -477,7 +480,8 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                                   </StyledTableCell> */}
                                   <StyledTableCell>{rsponse1_2}</StyledTableCell>
                                     <StyledTableCell>
-                                      <Link onClick={(e) => testClick_OpenOncologistPopup(e, step2_2)} style={{color: "red"}}><p className="prescribelink">{step2_2}</p></Link>
+                                      {step2_2}
+                                      {/* <Link onClick={(e) => testClick_OpenOncologistPopup(e, step2_2)} style={{color: "red"}}><p className="prescribelink">{step2_2}</p></Link> */}
                                     </StyledTableCell>
                                 </TableRow>
                             </TableBody>
@@ -510,7 +514,8 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                                     {possible_cancer}
                                   </StyledTableCell>
                                   <StyledTableCell>
-                                    <Link onClick={(e) => testClickHandler(e, step1)}><p className="prescribelink">{step1}</p></Link>
+                                    {step1}
+                                    {/* <Link onClick={(e) => testClickHandler(e, step1)}><p className="prescribelink">{step1}</p></Link> */}
                                   </StyledTableCell>
                                 </StyledTableRow>
                             </TableBody>
@@ -538,7 +543,8 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                                   </StyledTableCell> */}
                                   <StyledTableCell>{rsponse1_1}</StyledTableCell>
                                   <StyledTableCell>
-                                        <Link onClick={(e) => testClickHandler(e, step2_1)}><p className="prescribelink">{step2_1}</p></Link>
+                                        {step2_1}
+                                        {/* <Link onClick={(e) => testClickHandler(e, step2_1)}><p className="prescribelink">{step2_1}</p></Link> */}
                                   </StyledTableCell>
                                 </StyledTableRow>
                                 <StyledTableRow>
@@ -547,7 +553,8 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                                   </StyledTableCell> */}
                                   <StyledTableCell>{rsponse1_2}</StyledTableCell>
                                   <StyledTableCell>
-                                        <Link onClick={(e) => testClickHandler(e, step2_2)}><p className="prescribelink">{step2_2}</p></Link>
+                                        {step2_2}
+                                        {/* <Link onClick={(e) => testClickHandler(e, step2_2)}><p className="prescribelink">{step2_2}</p></Link> */}
                                   </StyledTableCell>
                                 </StyledTableRow>
                             </TableBody>
@@ -575,7 +582,8 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                                   </StyledTableCell> */}
                                   <StyledTableCell>{response2_1}</StyledTableCell>
                                   <StyledTableCell>
-                                        <Link onClick={(e) => testClickHandler(e, step3_1)}><p className="prescribelink">{step3_1}</p></Link>
+                                        {step3_1}
+                                        {/* <Link onClick={(e) => testClickHandler(e, step3_1)}><p className="prescribelink">{step3_1}</p></Link> */}
                                   </StyledTableCell>
                                 </StyledTableRow>
                                 <StyledTableRow>
@@ -584,7 +592,8 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
                                   </StyledTableCell> */}
                                   <StyledTableCell>{response2_2}</StyledTableCell>
                                     <StyledTableCell>
-                                      <Link onClick={(e) => testClick_OpenOncologistPopup(e, step3_2)} style={{color: "red"}}><p className="prescribelink">{step3_2}</p></Link>
+                                        {step3_2}
+                                      {/* <Link onClick={(e) => testClick_OpenOncologistPopup(e, step3_2)} style={{color: "red"}}><p className="prescribelink">{step3_2}</p></Link> */}
                                     </StyledTableCell>
                                 </StyledTableRow>
                             </TableBody>
