@@ -66,7 +66,7 @@ export default function ImmediateReferral({cause_of_immediate, ...props} : Props
                         </Box>
                     </CardContent>
                     <CardActions>
-                        <Button variant="contained" onClick={handleImmediateRefer}>Submit</Button>
+                        <Button variant="contained" color="success" disabled onClick={handleImmediateRefer}>Submit</Button>
                     </CardActions>
                 </Card>
             </Box>
