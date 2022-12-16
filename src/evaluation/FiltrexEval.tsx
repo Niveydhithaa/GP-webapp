@@ -341,11 +341,18 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJ
                                         <Box display="inline-flex">
                                             <>{console.log(ruleEvalResults)}</>
                                             <FormControlLabel value={item} control={<Radio />} label={item} />
-                                            {(index==siteJson_blob[site - 1].screens[1].termination_button_text.length-1 && (ruleEvalResults.filter(x => x===false).length==siteJson_blob[site - 1].screens[1].condition.length))
-                                            &&
-                                                <Box className="probable-box">
-                                                    <Typography >(Probable)</Typography>
-                                                </Box>
+                                            <>{console.log((siteJson_blob[site-1].screens[2].site)==undefined)}</>
+                                            {/* to handle Breast cancer , similar case where only one termination */}
+                                            {
+                                                (siteJson_blob[site-1].screens[2].site!==undefined) &&
+                                                    <Box>
+                                                        {(index==siteJson_blob[site - 1].screens[1].termination_button_text.length-1 && (ruleEvalResults.filter(x => x===false).length==siteJson_blob[site - 1].screens[1].condition.length))
+                                                            &&
+                                                            <Box className="probable-box">
+                                                                <Typography >(Probable)</Typography>
+                                                            </Box>
+                                                        }
+                                                    </Box>
                                             }
                                             {/* {(ruleEvalResults[index]==true && index!==ruleEvalResults.length) &&
                                                 <Typography>(Recommended)</Typography>
