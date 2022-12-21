@@ -57,7 +57,7 @@ export const reducer = (state: any, action: ActionProp) => {
     switch (action.type) {
         case ActionKind.STATE: {
             debugger;
-            console.log(action)
+            // console.log(action)
             return { ...state, name: [...state.name, action.payload] };
         }
         case ActionKind.UPDATE: {
@@ -68,7 +68,7 @@ export const reducer = (state: any, action: ActionProp) => {
         }
         case ActionKind.RESET: {
             state = initialState;
-            console.log(state)
+            // console.log(state)
             return { ...state };
         }
         default:
@@ -104,7 +104,7 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJ
         setRuleEvalResults([])
     }, [site]);
     const handleAddMoreFields = useCallback((state_name: string, state_value: boolean | number, question: string) => {
-        console.log("to add to list")
+        // console.log("to add to list")
         //debugger;
         dispatch({
             type: ActionKind.STATE,
@@ -113,31 +113,31 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJ
     }, [site]);
 
     const handleUpdateValueField = (index: number, state_name: string, state_value: boolean | number, question: string) => {
-        console.log("update value : index: " + index + " value: " + state_value)
+        // console.log("update value : index: " + index + " value: " + state_value)
         dispatch({
             type: ActionKind.UPDATE,
             payload: { title: state_name, value: state_value, question: question },
             index: index
         });
-        console.log(inputFieldsScreenTwo.name)
+        // console.log(inputFieldsScreenTwo.name)
     };
     const clickHandler = () => {
         if (site !== undefined) {
-            console.log("Click handler")
+            // console.log("Click handler")
             var screen2_conditions_arr = siteJson_blob[site - 1].screens[1].condition
-            console.log(screen2_conditions_arr)
+            // console.log(screen2_conditions_arr)
             var compareList: any[] = []
             inputFieldsScreenTwo.name.map((item: any, index: any) => {
 
                 let a = item.title
                 let compareDict = { [a]: item.value }
-                console.log(compareDict)
+                // console.log(compareDict)
                 compareList.push(compareDict)
             })
             inputFields.name.map((item: any, index: any) => {
                 let a = item.title
                 let compareDict = { [a]: item.value }
-                console.log(compareDict)
+                // console.log(compareDict)
                 compareList.push(compareDict)
             })
             // iterate data array and use empty object "a" as accumulator
@@ -149,19 +149,19 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJ
                     a[t[0]] = t[1];
                     return a;
                 }, a), {});
-            console.log(totalDict);
+            // console.log(totalDict);
             var resultsArray: boolean[] = []
             screen2_conditions_arr?.map((condition: any, index: any) => {
-                console.log(condition)
-                console.log(typeof (condition))
+                // console.log(condition)
+                // console.log(typeof (condition))
                 if (condition != undefined) {
                     var ruleEngine = compileExpression(condition)
                     var a2 = ruleEngine(totalDict)
-                    console.log(a2)
+                    // console.log(a2)
                     resultsArray.push(a2)
                 }
             })
-            console.log(resultsArray)
+            // console.log(resultsArray)
             setRuleEvalResults(resultsArray)
         }
         setOpenTreatmentOptions(true)
@@ -171,7 +171,7 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJ
         setNextScreen(true)
     }
     const renderQuestionsToggle = () => {
-        console.log("driver function enter")
+        // console.log("driver function enter")
         //make the inputFields epmty here. for each site it has to be made empty
         let questionsList: any[] = [];
         if (site != undefined) {
@@ -179,32 +179,32 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJ
                 type: ActionKind.RESET,
                 payload: { title: 'dummy', value: 9, question: 'dummy' }
             })
-            console.log(site)
+            // console.log(site)
             let totalDict = siteJson_blob[site - 1].screens[1].values
             let keys: any[] = Object.keys(totalDict)
             let values: any[] = Object.values(totalDict)
-            console.log(" Initial state of input field:  " + JSON.stringify(initialState))
+            // console.log(" Initial state of input field:  " + JSON.stringify(initialState))
             for (var i in keys) {
-                console.log(i)
-                console.log(values[i])
-                console.log(keys[i])
-                console.log(totalDict.hasOwnProperty(keys[i]))
+                // console.log(i)
+                // console.log(values[i])
+                // console.log(keys[i])
+                // console.log(totalDict.hasOwnProperty(keys[i]))
                 // #infinite loop problem
                 // handleAddMoreFields(keys[i], true, values[i].message)
                 if (keys[i] == 'age') {
                     handleAddMoreFields(keys[i], age_prefilled, values[i].message)
                 }
                 else if (keys[i] == 'gender') {
-                    console.log(typeof (gender_prefilled))
+                    // console.log(typeof (gender_prefilled))
                     handleAddMoreFields(keys[i], gender_prefilled, values[i].message)
                 }
                 else {
                     handleAddMoreFields(keys[i], 0, values[i].message)
                 }
-                console.log(JSON.stringify(initialState))
+                // console.log(JSON.stringify(initialState))
             }
-            console.log(" Input field after loop: " + JSON.stringify(inputFieldsScreenTwo))
-            console.log("driver function exit")
+            // console.log(" Input field after loop: " + JSON.stringify(inputFieldsScreenTwo))
+            // console.log("driver function exit")
         }
         return questionsList;
     }
@@ -217,7 +217,7 @@ export default function FiltrexEval({ smoker, asbestos, site, inputFields, siteJ
             setFurther(true)
         }
         if (site != undefined) {
-            console.log(siteJson_blob[site - 1].screens.length)
+            // console.log(siteJson_blob[site - 1].screens.length)
             //#region to handle breast cancer - now redundant
             // if(siteJson_blob[site-1].screens.length==2)
             // {

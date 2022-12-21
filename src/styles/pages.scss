@@ -91,3 +91,42 @@
 	border: thin;
 	border-color: red;
 }
+.parent-box {
+    display: flex;
+	width: 100%;
+	height: 100vh;
+	align-items: center;
+}
+.parent-box .card1 {
+	width: 50%;
+	vertical-align: middle;
+	text-align: center;
+}
+.parent-box .card2 {
+	width: 50%;
+}
+
+@media screen and (max-width: 768px)
+{
+    .parent-box {
+        display: grid;
+        width: 100%;
+        grid-template-rows: 40% 60%;
+    }
+    .parent-box .card2 {
+		display: flex;
+		justify-content: center;
+        width: 100%;
+    }
+    .parent-box .card1 {
+		display: flex;
+		width: 100%;
+		justify-content: center;
+	}
+}
+@media screen and (min-width: 375px) and (max-width: 768px)
+{
+	.unamesignin {
+		width: 250px;
+	}
+}

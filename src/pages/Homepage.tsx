@@ -105,7 +105,7 @@ export default function NavTabs() {
       inputDict["event_code"] = EventStatus.LOGIN 
       let hitApiUrl = configData.url + "/Eventhandle"
       const response = await axios.post(hitApiUrl, inputDict);
-      console.log(response)
+      // console.log(response)
     }
     hitEvent()
   }, [])
@@ -120,11 +120,11 @@ export default function NavTabs() {
     setGender(newGender);
 };
   const handleFirstName = (newFirstName: string) => {
-    console.log("Onchange: FirstName: from: " + firstName + "--to: " + newFirstName)
+    // console.log("Onchange: FirstName: from: " + firstName + "--to: " + newFirstName)
     setFirstName(newFirstName)
   }
   const handleLastName = (newLastName: string) => {
-    console.log("Onchange: LastName: from: " + lastName + "--to: " + newLastName)
+    // console.log("Onchange: LastName: from: " + lastName + "--to: " + newLastName)
     setLastName(newLastName)
   }
   const handleGPName = (newGPName: string) => {
@@ -140,11 +140,11 @@ export default function NavTabs() {
     setAge(newAge)
   }
   const handleYasmedID = (newYasmedID: string) => {
-    console.log(newYasmedID)
+    // console.log(newYasmedID)
     setYasmedId(newYasmedID)
   }
   const handlePatientID = (newPatientID: string) => {
-    console.log(newPatientID)
+    // console.log(newPatientID)
   }
   const openReferDialog = () =>{
     setReferDialog(true)
@@ -169,7 +169,7 @@ export default function NavTabs() {
     handleCloseAddPatientDialog()
   }
   const sendEmailTrigger = () => {
-    console.log("into email part")
+    // console.log("into email part")
     var input_dict : Record<string, any> = {}
     input_dict["first_name"] = firstName
     input_dict["last_name"] = lastName
@@ -180,25 +180,25 @@ export default function NavTabs() {
     input_dict["yasmed_id"] = yasmedId
     input_dict["gp_name"] = gpName
     input_dict["notes"] = patientNotes
-    console.log(input_dict)
+    // console.log(input_dict)
     setWarnDuplicateReferral(false)
     setEmailLoading(true)
     axios
       .post(refer_email_url, input_dict)
       .then(result => {
-        console.log(result);
+        // console.log(result);
         setEmailLoading(false)
-        console.log(result.data);
-        console.log(result.data.message)
-        console.log(typeof(result.data.message))
+        // console.log(result.data);
+        // console.log(result.data.message)
+        // console.log(typeof(result.data.message))
         if(result.data.status==200)
         {
-            console.log("yes sent")
+            // console.log("yes sent")
             setEmailSuccess(true)
         }
         else
         {
-            console.log("no no not sent")
+            // console.log("no no not sent")
             setEmailSuccess(false)
         }
         return String(result.data);
@@ -209,7 +209,7 @@ export default function NavTabs() {
   }
   const handleReferPatient = () => {
     setEmailLoading(true)
-    console.log("API integration to validate and save the new patient with given details")
+    // console.log("API integration to validate and save the new patient with given details")
     
     var input_dict : Record<string, any> = {}
     input_dict["first_name"] = firstName
@@ -226,11 +226,11 @@ export default function NavTabs() {
     axios.post(check_referral_url, input_dict)
     .then(result => {
       setEmailLoading(false)
-      console.log(result);
+      // console.log(result);
       // setPatientAlreadyReferred(result.data.isSuccess)
       if(result.data.isSuccess==true)
       {
-        console.log("already there")
+        // console.log("already there")
         setReferredPatientDate(result.data.referalptatient_Details.updated_datetime)
         setWarnDuplicateReferral(true)
       }
@@ -252,7 +252,7 @@ export default function NavTabs() {
   return (
     <Box sx={{backgroundColor: "#EEEEEE", minHeight: "100vh"}}>
       <Navbar></Navbar>
-      <>{console.log(sessionStorage.getItem("userid"))}</>
+      {/* <>{console.log(sessionStorage.getItem("userid"))}</> */}
       <Grid container maxWidth="xl" sx={{margin: "0 auto", p: 4}}>
         <Card sx={{p: 2, borderRadius: 4, minHeight: "calc(100vh - 128px)", minWidth: "100%"}}>
           <Box sx={{display: "flex", alignItems: "center", justifyContent: "space-between"}} >
@@ -341,7 +341,7 @@ export default function NavTabs() {
                               placeholder="--"
                               onKeyPress={(event) => {
                                 if (event.key == '-' || event.key === '+' || event.key == '.' || event.key === 'e') {
-                                  console.log("prohibited")
+                                  // console.log("prohibited")
                                   // event.key=''
                                   event.preventDefault();
                                 }
@@ -371,7 +371,7 @@ export default function NavTabs() {
                                 for(let i in alphabet)
                                 {
                                   if (event.key == alphabet[i]) {
-                                    console.log("prohibited")
+                                    // console.log("prohibited")
                                     // event.key=''
                                     event.preventDefault();
                                   }
@@ -379,7 +379,7 @@ export default function NavTabs() {
                                 for(let i in special_chars)
                                 {
                                   if (event.key == special_chars[i]) {
-                                    console.log("prohibited")
+                                    // console.log("prohibited")
                                     // event.key=''
                                     event.preventDefault();
                                   }
@@ -387,7 +387,7 @@ export default function NavTabs() {
                                 for(let i in ALPHABET)
                                 {
                                   if (event.key == ALPHABET[i]) {
-                                    console.log("prohibited")
+                                    // console.log("prohibited")
                                     // event.key=''
                                     event.preventDefault();
                                   }

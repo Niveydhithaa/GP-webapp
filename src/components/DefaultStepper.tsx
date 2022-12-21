@@ -56,7 +56,7 @@ export default function VerticalLinearStepper({possible_cancer, ...props} : Prop
     setActiveStep(0);
   };
   const handleSerumLess = () => {
-      console.log("less than click!!!!!!")
+      // console.log("less than click!!!!!!")
   }
 
   return (

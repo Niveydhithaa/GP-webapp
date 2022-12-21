@@ -50,7 +50,7 @@ export const reducer = (state: any, action: ActionProp) => {
     switch (action.type) {
         case ActionKind.STATE: {
             debugger;
-            console.log(action)
+            // console.log(action)
             return { ...state, name: [...state.name, action.payload] };
         }
         case ActionKind.UPDATE: {
@@ -61,7 +61,7 @@ export const reducer = (state: any, action: ActionProp) => {
         }
         case ActionKind.RESET: {
             state = initialState;
-            console.log(state)
+            // console.log(state)
             return { ...state };
         }
         default:
@@ -92,33 +92,33 @@ export default function FiltrexEvalPartTwo({ smoker, asbestos, site, inputFields
     };
     const getResults = () => {
         if (site !== undefined) {
-            console.log("Click handler")
+            // console.log("Click handler")
             var screen3_conditions_arr = siteJson_blob[site - 1].screens[2].condition
-            console.log(screen3_conditions_arr)
+            // console.log(screen3_conditions_arr)
             // step1: categorize offer, consider
             // step2: count_oofer, count_consider need to store the length of true's
             // merge the valyes needed for comparing condition
             var compareList: any[] = []
-            console.log(inputFieldsScreenThree)
+            // console.log(inputFieldsScreenThree)
             inputFieldsScreenThree.name.map((item: any, index: any) => {
 
                 let a = item.title
                 let compareDict = { [a]: item.value }
-                console.log(compareDict)
+                // console.log(compareDict)
                 compareList.push(compareDict)
             })
-            console.log(inputFields)
+            // console.log(inputFields)
             inputFields.name.map((item: any, index: any) => {
                 let a = item.title
                 let compareDict = { [a]: item.value }
-                console.log(compareDict)
+                // console.log(compareDict)
                 compareList.push(compareDict)
             })
-            console.log(inputFieldsScreenTwo)
+            // console.log(inputFieldsScreenTwo)
             inputFieldsScreenTwo.name.map((item: any, index: any) => {
                 let a = item.title
                 let compareDict = { [a]: item.value }
-                console.log(compareDict)
+                // console.log(compareDict)
                 compareList.push(compareDict)
             })
             let totalDict = compareList.reduce((a, e) =>
@@ -135,19 +135,19 @@ export default function FiltrexEvalPartTwo({ smoker, asbestos, site, inputFields
             //         totalDict["age"] = 45;
             //     }
             // }
-            console.log(totalDict);
+            // console.log(totalDict);
             //total dict has tp be added with:
             // 1. count_offer
             // console.log(siteJson_blob[0].screens[2].values)
-            console.log(siteJson_blob[site - 1].screens[2].offer_symptoms)
-            console.log(siteJson_blob[site - 1].screens[2].consider_symptoms)
+            // console.log(siteJson_blob[site - 1].screens[2].offer_symptoms)
+            // console.log(siteJson_blob[site - 1].screens[2].consider_symptoms)
             //branch 1 - offer (urgent)
             if (site - 1 == 0) {
                 const completeOfferDict = siteJson_blob[site - 1].screens[2].offer_symptoms
                 let tempDict_offer: Record<string, number[]>[] = []
                 let tempDict_consider: Record<string, number[]>[] = []
                 if (completeOfferDict !== undefined) {
-                    console.log(Object.keys(completeOfferDict).length)
+                    // console.log(Object.keys(completeOfferDict).length)
 
                     let keys_offer: any[] = Object.keys(completeOfferDict)
                     let values_offer: any[] = Object.values(completeOfferDict)
@@ -164,8 +164,8 @@ export default function FiltrexEvalPartTwo({ smoker, asbestos, site, inputFields
                             // console.log(item_actual)
                             inputFieldsScreenThree.name.map((item_input: any, index_input: number) => {
                                 if (item_actual == item_input.title) {
-                                    console.log(keys_offer[i])
-                                    console.log("EQUAL KEYS")
+                                    // console.log(keys_offer[i])
+                                    // console.log("EQUAL KEYS")
                                     // tempDict.push({[keys_offer[i])
                                     tempList.push(item_input.value)
                                 }
@@ -174,28 +174,28 @@ export default function FiltrexEvalPartTwo({ smoker, asbestos, site, inputFields
                         tempDict_offer.push({ [keys_offer[i]]: tempList })
                     }
 
-                    console.log("values of offer (both types of cancer) with inputfields" + JSON.stringify(tempDict_offer))
+                    // console.log("values of offer (both types of cancer) with inputfields" + JSON.stringify(tempDict_offer))
                 }
 
 
                 //branch 2 - consider
                 const completeConsiderDict = siteJson_blob[site - 1].screens[2].consider_symptoms
                 if (completeConsiderDict !== undefined) {
-                    console.log(Object.keys(completeConsiderDict).length)
+                    // console.log(Object.keys(completeConsiderDict).length)
 
                     let keys_consider: any[] = Object.keys(completeConsiderDict)
                     let values_consider: any[] = Object.values(completeConsiderDict)
                     let tempList: number[] = []
 
-                    // console.log(item_input.title)
+                    // // console.log(item_input.title)
                     for (let i in keys_consider) {
                         tempList = []
                         values_consider[i].map((item_actual: any, index: number) => {
-                            // console.log(item_actual)
+                            // // console.log(item_actual)
                             inputFieldsScreenThree.name.map((item_input: any, index_input: number) => {
                                 if (item_actual == item_input.title) {
-                                    console.log(keys_consider[i])
-                                    console.log("EQUAL KEYS")
+                                    // console.log(keys_consider[i])
+                                    // console.log("EQUAL KEYS")
                                     // tempDict.push({[keys_offer[i])
                                     tempList.push(item_input.value)
                                 }
@@ -204,20 +204,20 @@ export default function FiltrexEvalPartTwo({ smoker, asbestos, site, inputFields
                         tempDict_consider.push({ [keys_consider[i]]: tempList })
                     }
 
-                    console.log("values of consider (both types of cancer) with inputfields" + JSON.stringify(tempDict_consider))
+                    // console.log("values of consider (both types of cancer) with inputfields" + JSON.stringify(tempDict_consider))
                 }
                 // var count_offer = tempDict_offer[0].lung_cancer.length
                 // var count_offer_mes = tempDict_offer[1].mesathelioma.length
-                // console.log(tempDict_offer[0].lung_cancer.filter(x => x==1).length)
+                // // console.log(tempDict_offer[0].lung_cancer.filter(x => x==1).length)
                 var count_offer = tempDict_offer[0].lung_cancer.filter(x => x == 1).length
-                // console.log(tempDict_offer[1].mesothelioma.filter(x => x==1).length)
+                // // console.log(tempDict_offer[1].mesothelioma.filter(x => x==1).length)
                 var count_offer_mes = tempDict_offer[1].mesothelioma.filter(x => x == 1).length
                 var count_consider = tempDict_consider[0].lung_cancer.filter(x => x == 1).length
                 var count_consider_mes = tempDict_consider[1].mesothelioma.filter(x => x == 1).length
-                console.log(count_offer + "---- LUNG cancer, offer")
-                console.log(count_consider + "---- LUNG cancer, consider")
-                console.log(count_offer_mes + "---- MESOTHELIOMA cancer, offer")
-                console.log(count_consider_mes + "---- MESOTHELIOMA cancer, consider")
+                // console.log(count_offer + "---- LUNG cancer, offer")
+                // console.log(count_consider + "---- LUNG cancer, consider")
+                // console.log(count_offer_mes + "---- MESOTHELIOMA cancer, offer")
+                // console.log(count_consider_mes + "---- MESOTHELIOMA cancer, consider")
                 totalDict["count_offer"] = count_offer
                 totalDict["count_offer_mes"] = count_offer_mes
                 totalDict["count_consider"] = count_consider
@@ -226,20 +226,20 @@ export default function FiltrexEvalPartTwo({ smoker, asbestos, site, inputFields
             }
             // CONDITIONS!
             var screen3_conditions_arr = siteJson_blob[site - 1].screens[2].condition
-            console.log(screen3_conditions_arr)
-            console.log(totalDict)
+            // console.log(screen3_conditions_arr)
+            // console.log(totalDict)
             var resultsArray: boolean[] = []
             screen3_conditions_arr?.map((condition: any, index: any) => {
-                console.log(condition)
-                console.log(typeof (condition))
+                // console.log(condition)
+                // console.log(typeof (condition))
                 if (condition != undefined) {
                     var ruleEngine = compileExpression(condition)
                     var a3 = ruleEngine(totalDict)
-                    console.log(a3)
+                    // console.log(a3)
                     resultsArray.push(a3)
                 }
             })
-            console.log(resultsArray)
+            // console.log(resultsArray)
             setRuleEvalResults(resultsArray)
 
         }
@@ -253,7 +253,7 @@ export default function FiltrexEvalPartTwo({ smoker, asbestos, site, inputFields
         renderQuestionsToggle()
     }, [site]);
     const handleAddMoreFields = useCallback((state_name: string, state_value: boolean | number, question: string) => {
-        console.log("to add to list")
+        // console.log("to add to list")
         //debugger;
         dispatch({
             type: ActionKind.STATE,
@@ -262,16 +262,16 @@ export default function FiltrexEvalPartTwo({ smoker, asbestos, site, inputFields
     }, [site]);
 
     const handleUpdateValueField = (index: number, state_name: string, state_value: boolean | number, question: string) => {
-        console.log("update value : index: " + index + " value: " + state_value)
+        // console.log("update value : index: " + index + " value: " + state_value)
         dispatch({
             type: ActionKind.UPDATE,
             payload: { title: state_name, value: state_value, question: question },
             index: index
         });
-        console.log(inputFieldsScreenThree.name)
+        // console.log(inputFieldsScreenThree.name)
     };
     const renderQuestionsToggle = () => {
-        console.log("driver function enter")
+        // console.log("driver function enter")
         //make the inputFields epmty here. for each site it has to be made empty
         let questionsList: any[] = [];
         if (site != undefined) {
@@ -279,16 +279,16 @@ export default function FiltrexEvalPartTwo({ smoker, asbestos, site, inputFields
                 type: ActionKind.RESET,
                 payload: { title: 'dummy', value: 9, question: 'dummy' }
             })
-            console.log(site)
+            // console.log(site)
             let totalDict = siteJson_blob[site - 1].screens[2].values
             let keys: any[] = Object.keys(totalDict)
             let values: any[] = Object.values(totalDict)
-            console.log(" Initial state of input field:  " + JSON.stringify(initialState))
+            // console.log(" Initial state of input field:  " + JSON.stringify(initialState))
             for (var i in keys) {
-                console.log(i)
-                console.log(values[i])
-                console.log(keys[i])
-                console.log(totalDict.hasOwnProperty(keys[i]))
+                // console.log(i)
+                // console.log(values[i])
+                // console.log(keys[i])
+                // console.log(totalDict.hasOwnProperty(keys[i]))
                 // #infinite loop problem
                 // handleAddMoreFields(keys[i], true, values[i].message)
                 if (keys[i] == 'age') {
@@ -297,10 +297,10 @@ export default function FiltrexEvalPartTwo({ smoker, asbestos, site, inputFields
                 else {
                     handleAddMoreFields(keys[i], 0, values[i].message)
                 }
-                console.log(JSON.stringify(initialState))
+                // console.log(JSON.stringify(initialState))
             }
-            console.log(" Input field after loop: " + JSON.stringify(inputFieldsScreenThree))
-            console.log("driver function exit")
+            // console.log(" Input field after loop: " + JSON.stringify(inputFieldsScreenThree))
+            // console.log("driver function exit")
         }
         return questionsList;
     }

@@ -1,5 +1,5 @@
 
 {
-    "url": "http://20.112.74.99/GPValues",
+    "url": "http://20.216.16.92:81/GPValues",
     "bloburl" : "https://cdssmvp.blob.core.windows.net/gp-web/Site_data/sites_master_data.json"
 }

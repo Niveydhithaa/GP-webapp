@@ -48,7 +48,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 function createData(name: string, calories: string, fat: string) {
-    console.log(sessionStorage.getItem("noofsymptoms"))
+    // console.log(sessionStorage.getItem("noofsymptoms"))
     return { name, calories, fat };
 }
 function createData_StepTwo(name: string, result: string, action: string) {

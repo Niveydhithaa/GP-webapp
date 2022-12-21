@@ -91,7 +91,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 function createData(name: string, calories: string, fat: string) {
-    console.log(sessionStorage.getItem("noofsymptoms"))
+    // console.log(sessionStorage.getItem("noofsymptoms"))
     return { name, calories, fat };
   }
   function createData_StepTwo(name: string, result: string, action: string) {
@@ -174,26 +174,26 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
     };
     const testClickHandler = (e: React.MouseEvent<HTMLSpanElement> | React.MouseEvent<HTMLAnchorElement>, test_name: string) => {
       setPatientDialogOpen(true)
-      console.log(selectedSymp)
-      console.log("Testname selected: " +test_name)
+      // console.log(selectedSymp)
+      // console.log("Testname selected: " +test_name)
       localStorage.setItem("selected_test_for_prescription", test_name)
       // setTestNameSelected(test_name)
     }
     const testClick_AssessOtherSymptomsHandler = (e: React.MouseEvent<HTMLSpanElement> | React.MouseEvent<HTMLAnchorElement>, other_symp_action: string) => {
       setSuggestionsDialog(true)
-      console.log("Other symptom action " + other_symp_action)
+      // console.log("Other symptom action " + other_symp_action)
     }
     const testClick_OpenOncologistPopup = (e: React.MouseEvent<HTMLSpanElement> | React.MouseEvent<HTMLAnchorElement>, other_symp_action: string) => {
       setOncologyReferralPopup(true)
-      console.log("Other symptom action " + other_symp_action)
+      // console.log("Other symptom action " + other_symp_action)
     }
     const handleClosePrescribeDialog = () => {
       setPatientDialogOpen(false)
     }
     const handlePrescribeModuleOpen = () => {
-      console.log(document.getElementById("mobile_num"))
-      console.log(document.getElementById("name_input"))
-      console.log(localStorage.getItem("selected_test_for_prescription"))
+      // console.log(document.getElementById("mobile_num"))
+      // console.log(document.getElementById("name_input"))
+      // console.log(localStorage.getItem("selected_test_for_prescription"))
 
       setPatientDialogOpen(false)
     }

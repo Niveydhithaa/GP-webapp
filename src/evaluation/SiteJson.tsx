@@ -28,8 +28,8 @@ export default function SiteJson({age_prefilled, gender_prefilled, ...props} : P
     const [siteId, setSiteId] = useState<number>();
     function getOptionsArray(siteJson_blob_up:any)
     {
-        console.log(siteJson_blob_up)
-        console.log(typeof(siteJson_blob_up))
+        // console.log(siteJson_blob_up)
+        // console.log(typeof(siteJson_blob_up))
         var site_options = [];
         if(siteJson_blob_up!=undefined)
         {
@@ -37,7 +37,7 @@ export default function SiteJson({age_prefilled, gender_prefilled, ...props} : P
             {
                 site_options.push(siteJson_blob_up[i].site)
             }
-            console.log(site_options)
+            // console.log(site_options)
         }
         setSiteOptions(site_options)
         return site_options;
@@ -49,7 +49,7 @@ export default function SiteJson({age_prefilled, gender_prefilled, ...props} : P
         {
             temp_dict['id'] = siteJson_blob[i].site_id
             temp_dict['site'] = siteJson_blob[i].site
-            console.log(temp_dict)
+            // console.log(temp_dict)
             temp_array.push(temp_dict)
             temp_dict = {}
         }
@@ -57,7 +57,7 @@ export default function SiteJson({age_prefilled, gender_prefilled, ...props} : P
     const getIdFromSiteName = () => {
         for(let i in siteJson_blob) {
             if(siteJson_blob[i].site==site){
-                console.log(i)
+                // console.log(i)
                 return Number(i)
             }
         }
@@ -70,9 +70,9 @@ export default function SiteJson({age_prefilled, gender_prefilled, ...props} : P
         axios
             .get(url+getsitedata_api)
             .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                console.log(typeof(res))
+                // console.log(res);
+                // console.log(res.data);
+                // console.log(typeof(res))
                 setSiteJson_blob(res.data)
                 getOptionsArray(res.data)
                 // let id_name_dict = constructDict()
@@ -88,16 +88,16 @@ export default function SiteJson({age_prefilled, gender_prefilled, ...props} : P
     }
     const getDataHandler = () => {
         let ans : number = getIdFromSiteName()
-        console.log(ans)
+        // console.log(ans)
         if (ans!==-1) setSiteId(ans+1)
         setGetData(true)
     }
     
     return (
         <Box>
-            <>
-            {console.log(siteJson_blob)}
-            </>
+            {/* <>
+            { console.log(siteJson_blob)}
+            </> */}
             
             <Box padding={2}>
                 <Autocomplete
@@ -109,12 +109,12 @@ export default function SiteJson({age_prefilled, gender_prefilled, ...props} : P
                     inputValue={inputValue}
                     onInputChange={(event, newInputValue) => {
                         setInputValue(newInputValue);
-                        console.log("new site chosen: " + newInputValue)
+                        // console.log("new site chosen: " + newInputValue)
                     }}
                     onChange={(e: any, newValue: string | null) => {
                         if(site!=null && site!=newValue)
                         {
-                            console.log("site changed")
+                            // console.log("site changed")
                             setSiteChanged(true)
                         }
                         setSite(newValue)

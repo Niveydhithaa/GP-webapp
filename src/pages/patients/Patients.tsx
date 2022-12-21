@@ -58,7 +58,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 function createData(name: string, calories: string, fat: string) {
-    console.log(sessionStorage.getItem("noofsymptoms"))
+    // console.log(sessionStorage.getItem("noofsymptoms"))
     return { name, calories, fat };
 }
 function createData_StepTwo(name: string, result: string, action: string) {
@@ -112,7 +112,7 @@ export default function Patients() {
         navigate("/patientprofile")
     }
     const handleSavePatient = () => {
-        console.log("API integration to validate and save the new patient with given details")
+        // console.log("API integration to validate and save the new patient with given details")
         setAddPatientDialog(false)
     }
     const handleCloseAddPatientDialog = () => {
@@ -122,7 +122,7 @@ export default function Patients() {
         setPatientClicked(false)
     }
     const addNewPatientHandler = () => {
-        console.log("On Add patient button click")
+        // console.log("On Add patient button click")
         setAddPatientDialog(true)
     }
     return (

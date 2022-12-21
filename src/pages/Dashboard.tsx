@@ -39,8 +39,8 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
   const [siteId, setSiteId] = useState<number>();
   function getOptionsArray(siteJson_blob_up:any)
   {
-      console.log(siteJson_blob_up)
-      console.log(typeof(siteJson_blob_up))
+      // console.log(siteJson_blob_up)
+      // console.log(typeof(siteJson_blob_up))
       var site_options = [];
       if(siteJson_blob_up!=undefined)
       {
@@ -48,7 +48,7 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
           {
               site_options.push(siteJson_blob_up[i].site)
           }
-          console.log(site_options)
+          // console.log(site_options)
       }
       setSiteOptions(site_options)
       return site_options;
@@ -60,7 +60,7 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
       {
           temp_dict['id'] = siteJson_blob[i].site_id
           temp_dict['site'] = siteJson_blob[i].site
-          console.log(temp_dict)
+          // console.log(temp_dict)
           temp_array.push(temp_dict)
           temp_dict = {}
       }
@@ -68,7 +68,7 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
   const getIdFromSiteName = () => {
       for(let i in siteJson_blob) {
           if(siteJson_blob[i].site==site){
-              console.log(i)
+              // console.log(i)
               return Number(i)
           }
       }
@@ -81,9 +81,9 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
       axios
           .get(url+getsitedata_api)
           .then((res) => {
-              console.log(res);
-              console.log(res.data);
-              console.log(typeof(res))
+              // console.log(res);
+              // console.log(res.data);
+              // console.log(typeof(res))
               setSiteJson_blob(res.data)
               getOptionsArray(res.data)
               // let id_name_dict = constructDict()
@@ -99,11 +99,11 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
   }
   const getDataHandler = () => {
       let ans : number = getIdFromSiteName()
-      console.log(ans)
+      // console.log(ans)
       if (ans!==-1) setSiteId(ans+1)
       if(gender_prefilled==0 && site=="Breast cancer")
       {
-        console.log("na for men")
+        // console.log("na for men")
       }
       setGetData(true)
       async function hitEvent() {
@@ -120,16 +120,16 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
         
         let hitApiUrl = configData.url + "/Eventhandle"
         const response = await axios.post(hitApiUrl, inputDict);
-        console.log(response)
+        // console.log(response)
       }
       hitEvent()
   }
   
   return (
       <Box>
-          <>
+          {/* <>
           {console.log(siteJson_blob)}
-          </>
+          </> */}
           
           <Box display="flex" gap={2} marginTop={4} >
               <Box width="50%" >
@@ -141,12 +141,12 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
                     inputValue={inputValue}
                     onInputChange={(event, newInputValue) => {
                         setInputValue(newInputValue);
-                        console.log("new site chosen: " + newInputValue)
+                        // console.log("new site chosen: " + newInputValue)
                     }}
                     onChange={(e: any, newValue: string | null) => {
                         if(site!=null && site!=newValue)
                         {
-                            console.log("site changed")
+                            // console.log("site changed")
                             setSiteChanged(true)
                         }
                         setSite(newValue)
@@ -154,7 +154,7 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
                     }}
                     renderInput={(params) => <TextField {...params} label="Search" />}
                 />
-                <>{console.log(site)}</>
+                {/* <>{console.log(site)}</> */}
               </Box>
               {/* {site!==null &&
                 <Box mt={1} mb={3}>
@@ -205,16 +205,16 @@ export default function Dashboard() {
   }
   const fetchData = debounce((value) => {
     setColor("#800020")
-    console.log(topic + " : is the current topic!!")
+    // console.log(topic + " : is the current topic!!")
     if (ageV2 == 0 || isNaN(ageV2)) {
-      console.log('no age selected')
+      // console.log('no age selected')
       axios
         .get(url + `/Getgpdata?input=${topic}`)
         .then(result => {
           // debugger;
           setIsLoading(false)
           if (topic == "symptom") {
-            console.log(result.data)
+            // console.log(result.data)
             let symptomdata_Details = result.data.data_Details;
             // console.log(symptomdata_Details)
             var symptoms_temp_dict: Record<string, string>[] = [];
@@ -265,13 +265,13 @@ export default function Dashboard() {
               }
 
             });
-            console.log(symptoms_temp_dict)
+            // console.log(symptoms_temp_dict)
             // const a = [
             //   ...new Set(
             //     symptoms_temp_dict.map((person) => { return person.label; })
             //   ),
             // ];
-            console.log(symptoms_temp_dict.length)
+            // console.log(symptoms_temp_dict.length)
             // console.log(a.length)
             // setTagsStrings(a)
             setOptionsTags(symptoms_temp_dict)
@@ -320,7 +320,7 @@ export default function Dashboard() {
               }
 
             });
-            console.log(primary_temp_dict)
+            // console.log(primary_temp_dict)
             setOptionsTags(primary_temp_dict)
             primary_temp_dict = []
           }
@@ -335,11 +335,11 @@ export default function Dashboard() {
         );
     }
     else if (ageV2 != 0 && !isNaN(ageV2)) {
-      console.log("age filter applied")
+      // console.log("age filter applied")
       axios
         .get(url + `/Getgpdata?input=${topic}&agegtlt=${ageV2}`)
         .then(result => {
-          console.log(result.data)
+          // console.log(result.data)
           setIsLoading(false)
           if (topic === "symptom") {
             let symptomdata_Details = result.data.data_Details
@@ -362,7 +362,7 @@ export default function Dashboard() {
                 let g: string = value.gender;
                 if (g !== null) {
                   //remove redundant white spaces
-                  console.log(g)
+                  // console.log(g)
                   g = g.replace(/^\s+|\s+$/gm, '');
                 }
                 // console.log(g)
@@ -388,7 +388,7 @@ export default function Dashboard() {
               }
 
             });
-            console.log(symptoms_temp_dict)
+            // console.log(symptoms_temp_dict)
             setOptionsTags(symptoms_temp_dict)
             symptoms_temp_dict = []
           }
@@ -434,7 +434,7 @@ export default function Dashboard() {
               }
 
             });
-            console.log(primary_temp_dict)
+            // console.log(primary_temp_dict)
             setOptionsTags(primary_temp_dict)
             primary_temp_dict = []
           }
@@ -454,7 +454,7 @@ export default function Dashboard() {
   // debounce
   useEffect(() => {
     setIsLoading(true)
-    console.log(topic + " : is the current topic!!")
+    // console.log(topic + " : is the current topic!!")
     fetchData(topic)
     if(topic=="site")
     {
@@ -481,15 +481,15 @@ export default function Dashboard() {
   ) => {
     if(topic==newTopic) 
     {
-      console.log("same topic")
+      // console.log("same topic")
     }
     else if (newTopic!==null && topic!==newTopic)
     {
-      console.log(newTopic)
+      // console.log(newTopic)
       setNoOfSymptoms(0)
     }
     if (newTopic !== null) {
-      console.log("NEW TOPIC: " + newTopic)
+      // console.log("NEW TOPIC: " + newTopic)
       setTopic(newTopic);
     }
     // setTopic(newTopic)
@@ -500,7 +500,7 @@ export default function Dashboard() {
     newGender: string
   ) => {
     if (newGender !== null) {
-      console.log("gender is:" + newGender)
+      // console.log("gender is:" + newGender)
       setGender(newGender);
     }
     setOptionsTags([])
@@ -514,16 +514,16 @@ export default function Dashboard() {
     // refreshComponents()
   };
   const AGEhandleChange = debounce((event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("AGE:GT: " + event.target.value)
+    // console.log("AGE:GT: " + event.target.value)
     setOptionsTags([])
     setMultiSelectOptions([]);
     setSelectedFromMultiDict([])
     setNoOfSymptoms(0)
     if (isNaN(parseInt(event.target.value))) {
-      console.log("yes blank")
+      // console.log("yes blank")
     }
     else {
-      console.log("number is: " + parseInt(event.target.value))
+      // console.log("number is: " + parseInt(event.target.value))
     }
     setAgeV2(Number(event.target.value));
     // refreshComponents()
@@ -534,10 +534,10 @@ export default function Dashboard() {
   //     .then((json) => setSuggestions(json.data.items));
   // }, 500);
   const AGEhandleChange_Dropdown = debounce((event: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log("AGE:from dropdown" + event.target.value)
+    // console.log("AGE:from dropdown" + event.target.value)
     if(parseInt(event.target.value)==0)
     {
-      console.log("no age filter")
+      // console.log("no age filter")
     }
     
       setAgeV2(parseInt(event.target.value));
@@ -547,7 +547,7 @@ export default function Dashboard() {
     var tempDict: Record<string, string>[];
     // console.log(multiSelectDict_global)
     // setSelectedFromMultiDict(multiSelectDict_global)
-    console.log(multiSelectDict_global_tags)
+    // console.log(multiSelectDict_global_tags)
     setSelectedFromMultiDict(multiSelectDict_global_tags)
     setNoOfSymptoms(multiSelectDict_global_tags.length)
     async function hitEvent() {
@@ -560,9 +560,9 @@ export default function Dashboard() {
         {
             symptom_array.push(multiSelectDict_global_tags[i].label)
         }
-        console.log(symptom_array)
-        console.log(JSON.stringify({"symptoms" : symptom_array}))
-        console.log(typeof(JSON.stringify({"symptoms" : symptom_array})))
+        // console.log(symptom_array)
+        // console.log(JSON.stringify({"symptoms" : symptom_array}))
+        // console.log(typeof(JSON.stringify({"symptoms" : symptom_array})))
         inputDict["prams"] = symptom_array
         inputDict["user_id"] = user
         inputDict["event_code"] = EventStatus.SYMPTOM
@@ -574,24 +574,24 @@ export default function Dashboard() {
         {
           primary_array.push(multiSelectDict_global_tags[i].label)
         }
-        console.log(primary_array)
-        console.log(JSON.stringify({"symptoms" : primary_array}))
-        console.log(typeof(JSON.stringify({"symptoms" : primary_array})))
+        // console.log(primary_array)
+        // console.log(JSON.stringify({"symptoms" : primary_array}))
+        // console.log(typeof(JSON.stringify({"symptoms" : primary_array})))
         inputDict["prams"] = primary_array
         inputDict["user_id"] = user
         inputDict["event_code"] = EventStatus.PRIMARY
       }
       let hitApiUrl = configData.url + "/Eventhandle"
       const response = await axios.post(hitApiUrl, inputDict);
-      console.log(response)
+      // console.log(response)
     }
     hitEvent()
     // console.log(pswd)
   }
   const onTagsChange = (e: React.SyntheticEvent<Element, Event>, value: Record<string, string>[]) => {
-    console.log(value)
+    // console.log(value)
     multiSelectDict_global_tags = value
-    console.log("tags changes")
+    // console.log("tags changes")
   }
   const invokeSite = () => {
     return (
@@ -670,7 +670,7 @@ export default function Dashboard() {
                 placeholder="--"
                 onKeyPress={(event) => {
                   if (event.key == '-' || event.key === '+' || event.key == '.' || event.key === 'e') {
-                    console.log("prohibited")
+                    // console.log("prohibited")
                     // event.key=''
                     event.preventDefault();
                   }

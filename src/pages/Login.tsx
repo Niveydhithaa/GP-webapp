@@ -45,11 +45,11 @@ export default function Login() {
       .post(url1, input_dict)
       .then(result => {
         setIsLoading(false)
-        console.log(result);
-        console.log(result.data);
+        // console.log(result);
+        // console.log(result.data);
         let res_Dict = result.data
         let isSuccess = res_Dict.isSuccess
-        console.log(isSuccess)
+        // console.log(isSuccess)
         if (isSuccess) {
 
           sessionStorage.setItem("user", "true")
@@ -88,21 +88,21 @@ export default function Login() {
     
     >
       <Grid >
-        <Box display="flex" height="100vh" alignItems="center">
-          <Box width="50%" sx={{ textAlign: "center", verticalAlign: "middle" }}>
+        <Box className="parent-box">
+          <Box className="card1">
           <Box>
-              <img src="Optimal Oncology Logo - Full.png" height="120"></img>
+              <img src="Optimal Oncology Logo - Full.png" ></img>
             </Box>
           </Box>
-          <Box width="50%" sx={{ textAlign: "" }}>
+          <Box className="card2" >
             <Card variant="outlined" sx={{ borderRadius: "30px", maxWidth:"500px" }}>
               <Box px={6} py={4}>
-                <Typography fontSize={32} mb={4} mt={4}>
+                <Typography fontSize={32} mb={4}>
                   Sign in
                 </Typography>
                 <Box display="flex" flexDirection="column" gap={2} >
-                  <TextField label="Username" variant="outlined" type="text" id="username_input" error={openUnameFail} onChange={(e) => setOpenUnameFail(false)} helperText={openUnameFail && "Username not found!"} />
-                  <TextField label="Password" onKeyDown={onEnterPressCallSubmit} variant="outlined" type="password" id="password_input" error={openLoginFail} onChange={(e) => setOpenLoginFail(false)} helperText={openLoginFail && "Incorrect password!"} />
+                  <TextField className="unamesignin" label="Username" variant="outlined" type="text" id="username_input" error={openUnameFail} onChange={(e) => setOpenUnameFail(false)} helperText={openUnameFail && "Username not found!"} />
+                  <TextField className="pswdsignin" label="Password" onKeyDown={onEnterPressCallSubmit} variant="outlined" type="password" id="password_input" error={openLoginFail} onChange={(e) => setOpenLoginFail(false)} helperText={openLoginFail && "Incorrect password!"} />
                   {/* { openLoginFail &&
                 <Typography fontSize="12px" color="red">Password incorrect</Typography>
               } */}
@@ -115,7 +115,7 @@ export default function Login() {
                   }
                   {
                     !isLoading &&
-                    <Button type="submit" variant="contained" sx={{ borderRadius: "50px", marginTop: "2rem", height:"55px",  marginBottom: "4rem" }}  onClick={handleOnSignin}>
+                    <Button type="submit" variant="contained" sx={{ borderRadius: "50px", marginTop: "2rem", height:"55px" }}  onClick={handleOnSignin}>
                       <Typography fontSize="16px">Sign in</Typography>
                     </Button>
                   }

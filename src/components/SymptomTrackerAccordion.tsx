@@ -57,7 +57,7 @@ export default function SymptomTracker({selectedSymp, possible_cancer, ...props}
 
     const testClickHandler = (e: React.MouseEvent<HTMLButtonElement>, test_name: string) => {
       setPatientDialogOpen(true)
-      console.log("Testname selected: " +test_name)
+      // console.log("Testname selected: " +test_name)
       localStorage.setItem("selected_test_for_prescription", test_name)
       // setTestNameSelected(test_name)
     }
@@ -65,9 +65,9 @@ export default function SymptomTracker({selectedSymp, possible_cancer, ...props}
       setPatientDialogOpen(false)
     }
     const handlePrescribeModuleOpen = () => {
-      console.log(document.getElementById("mobile_num"))
-      console.log(document.getElementById("name_input"))
-      console.log(localStorage.getItem("selected_test_for_prescription"))
+      // console.log(document.getElementById("mobile_num"))
+      // console.log(document.getElementById("name_input"))
+      // console.log(localStorage.getItem("selected_test_for_prescription"))
 
       setPatientDialogOpen(false)
     }
