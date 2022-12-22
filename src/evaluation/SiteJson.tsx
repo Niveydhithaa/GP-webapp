@@ -1,4 +1,4 @@
-import config from "config.json"
+import configData from "config.json"
 import {
     Box,
     Autocomplete,
@@ -12,7 +12,7 @@ import {useState, useEffect} from "react"
 import axios from "axios";
 import RenderQuestions from "evaluation/RenderQuestions_Main"
 var siteData : string[];
-
+const debugMode = configData.debug
 interface Props_SiteStart {
     age_prefilled: number
     gender_prefilled: any
@@ -28,8 +28,8 @@ export default function SiteJson({age_prefilled, gender_prefilled, ...props} : P
     const [siteId, setSiteId] = useState<number>();
     function getOptionsArray(siteJson_blob_up:any)
     {
-        console.log(siteJson_blob_up)
-        console.log(typeof(siteJson_blob_up))
+        if(debugMode) console.log(siteJson_blob_up)
+        if(debugMode) console.log(typeof(siteJson_blob_up))
         var site_options = [];
         if(siteJson_blob_up!=undefined)
         {
@@ -37,7 +37,7 @@ export default function SiteJson({age_prefilled, gender_prefilled, ...props} : P
             {
                 site_options.push(siteJson_blob_up[i].site)
             }
-            console.log(site_options)
+            if(debugMode) console.log(site_options)
         }
         setSiteOptions(site_options)
         return site_options;
@@ -49,7 +49,7 @@ export default function SiteJson({age_prefilled, gender_prefilled, ...props} : P
         {
             temp_dict['id'] = siteJson_blob[i].site_id
             temp_dict['site'] = siteJson_blob[i].site
-            console.log(temp_dict)
+            if(debugMode) console.log(temp_dict)
             temp_array.push(temp_dict)
             temp_dict = {}
         }
@@ -57,22 +57,22 @@ export default function SiteJson({age_prefilled, gender_prefilled, ...props} : P
     const getIdFromSiteName = () => {
         for(let i in siteJson_blob) {
             if(siteJson_blob[i].site==site){
-                console.log(i)
+                if(debugMode) console.log(i)
                 return Number(i)
             }
         }
         return -1;
     }
     useEffect(() => {
-        var blobUrl = config.bloburl
-        var url = config.url
+        var blobUrl = configData.bloburl
+        var url = configData.url
         var getsitedata_api = "/GetSitedatadetials"
         axios
             .get(url+getsitedata_api)
             .then((res) => {
-                console.log(res);
-                console.log(res.data);
-                console.log(typeof(res))
+                if(debugMode) console.log(res);
+                if(debugMode) console.log(res.data);
+                if(debugMode) console.log(typeof(res))
                 setSiteJson_blob(res.data)
                 getOptionsArray(res.data)
                 // let id_name_dict = constructDict()
@@ -88,7 +88,7 @@ export default function SiteJson({age_prefilled, gender_prefilled, ...props} : P
     }
     const getDataHandler = () => {
         let ans : number = getIdFromSiteName()
-        console.log(ans)
+        if(debugMode) console.log(ans)
         if (ans!==-1) setSiteId(ans+1)
         setGetData(true)
     }
@@ -96,7 +96,7 @@ export default function SiteJson({age_prefilled, gender_prefilled, ...props} : P
     return (
         <Box>
             <>
-            {console.log(siteJson_blob)}
+            {(debugMode) && console.log(siteJson_blob)}
             </>
             
             <Box padding={2}>
@@ -109,12 +109,12 @@ export default function SiteJson({age_prefilled, gender_prefilled, ...props} : P
                     inputValue={inputValue}
                     onInputChange={(event, newInputValue) => {
                         setInputValue(newInputValue);
-                        console.log("new site chosen: " + newInputValue)
+                        if(debugMode) console.log("new site chosen: " + newInputValue)
                     }}
                     onChange={(e: any, newValue: string | null) => {
                         if(site!=null && site!=newValue)
                         {
-                            console.log("site changed")
+                            if(debugMode) console.log("site changed")
                             setSiteChanged(true)
                         }
                         setSite(newValue)

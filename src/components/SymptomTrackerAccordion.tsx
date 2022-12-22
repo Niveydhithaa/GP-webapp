@@ -33,13 +33,13 @@ import dayjs, { Dayjs } from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import DefaultStepper from "components/DefaultStepper"
-
+import configData from "config.json"
+const debugMode = configData.debug
 interface Props {
   selectedSymp: string  
   possible_cancer: string
   // any props that come into the component
 }
-
 export default function SymptomTracker({selectedSymp, possible_cancer, ...props} : Props) {
     const [topic, setTopic] = useState("New Patient");
     const [patientDialogOpen, setPatientDialogOpen] = useState<boolean>(false);
@@ -57,7 +57,7 @@ export default function SymptomTracker({selectedSymp, possible_cancer, ...props}
 
     const testClickHandler = (e: React.MouseEvent<HTMLButtonElement>, test_name: string) => {
       setPatientDialogOpen(true)
-      console.log("Testname selected: " +test_name)
+      if(debugMode) console.log("Testname selected: " +test_name)
       localStorage.setItem("selected_test_for_prescription", test_name)
       // setTestNameSelected(test_name)
     }
@@ -65,10 +65,11 @@ export default function SymptomTracker({selectedSymp, possible_cancer, ...props}
       setPatientDialogOpen(false)
     }
     const handlePrescribeModuleOpen = () => {
-      console.log(document.getElementById("mobile_num"))
-      console.log(document.getElementById("name_input"))
-      console.log(localStorage.getItem("selected_test_for_prescription"))
-
+      if(debugMode) {
+        console.log(document.getElementById("mobile_num"))
+        console.log(document.getElementById("name_input"))
+        console.log(localStorage.getItem("selected_test_for_prescription"))
+      }
       setPatientDialogOpen(false)
     }
     return(

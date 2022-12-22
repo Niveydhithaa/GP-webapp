@@ -3,7 +3,6 @@ import {
   Autocomplete, Box, Button, Grid, TextField, ToggleButton, ToggleButtonGroup, Typography
 } from "@mui/material";
 import { debounce } from "lodash";
-import config from "config.json"
 import { useEffect, useState } from "react";
 // import MultiSelect from 'components/MultiSelect'
 import axios from "axios";
@@ -19,6 +18,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 // let age_global : any = 0;
 var multiSelectDict_global: MultiValue<Record<string, string>>;
 var multiSelectDict_global_tags: Record<string, string>[];
+const debugMode = configData.debug
+
 interface Props_SiteStart {
   age_prefilled: number
   gender_prefilled: any
@@ -39,8 +40,11 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
   const [siteId, setSiteId] = useState<number>();
   function getOptionsArray(siteJson_blob_up:any)
   {
-      console.log(siteJson_blob_up)
-      console.log(typeof(siteJson_blob_up))
+      if(debugMode)
+      {
+        console.log(siteJson_blob_up)
+        console.log(typeof(siteJson_blob_up))
+      }
       var site_options = [];
       if(siteJson_blob_up!=undefined)
       {
@@ -48,7 +52,7 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
           {
               site_options.push(siteJson_blob_up[i].site)
           }
-          console.log(site_options)
+          if(debugMode) console.log(site_options)
       }
       setSiteOptions(site_options)
       return site_options;
@@ -60,7 +64,7 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
       {
           temp_dict['id'] = siteJson_blob[i].site_id
           temp_dict['site'] = siteJson_blob[i].site
-          console.log(temp_dict)
+          if(debugMode) console.log(temp_dict)
           temp_array.push(temp_dict)
           temp_dict = {}
       }
@@ -68,22 +72,24 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
   const getIdFromSiteName = () => {
       for(let i in siteJson_blob) {
           if(siteJson_blob[i].site==site){
-              console.log(i)
+              if(debugMode) console.log(i)
               return Number(i)
           }
       }
       return -1;
   }
   useEffect(() => {
-      var blobUrl = config.bloburl
-      var url = config.url
+      var blobUrl = configData.bloburl
+      var url = configData.url
       var getsitedata_api = "/GetSitedatadetials"
       axios
           .get(url+getsitedata_api)
           .then((res) => {
-              console.log(res);
-              console.log(res.data);
-              console.log(typeof(res))
+              if(debugMode) {
+                console.log(res);
+                console.log(res.data);
+                console.log(typeof(res)) 
+              }
               setSiteJson_blob(res.data)
               getOptionsArray(res.data)
               // let id_name_dict = constructDict()
@@ -99,11 +105,11 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
   }
   const getDataHandler = () => {
       let ans : number = getIdFromSiteName()
-      console.log(ans)
+      if(debugMode) console.log(ans)
       if (ans!==-1) setSiteId(ans+1)
       if(gender_prefilled==0 && site=="Breast cancer")
       {
-        console.log("na for men")
+        if(debugMode) console.log("na for men")
       }
       setGetData(true)
       async function hitEvent() {
@@ -120,7 +126,7 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
         
         let hitApiUrl = configData.url + "/Eventhandle"
         const response = await axios.post(hitApiUrl, inputDict);
-        console.log(response)
+        if(debugMode) console.log(response)
       }
       hitEvent()
   }
@@ -128,7 +134,7 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
   return (
       <Box>
           <>
-          {console.log(siteJson_blob)}
+          {(debugMode) && console.log(siteJson_blob)}
           </>
           
           <Box display="flex" gap={2} marginTop={4} >
@@ -141,12 +147,12 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
                     inputValue={inputValue}
                     onInputChange={(event, newInputValue) => {
                         setInputValue(newInputValue);
-                        console.log("new site chosen: " + newInputValue)
+                        if(debugMode) console.log("new site chosen: " + newInputValue)
                     }}
                     onChange={(e: any, newValue: string | null) => {
                         if(site!=null && site!=newValue)
                         {
-                            console.log("site changed")
+                          if(debugMode) console.log("site changed")
                             setSiteChanged(true)
                         }
                         setSite(newValue)
@@ -154,7 +160,7 @@ export function SiteJson_Func({age_prefilled, gender_prefilled, ...props} : Prop
                     }}
                     renderInput={(params) => <TextField {...params} label="Search" />}
                 />
-                <>{console.log(site)}</>
+                <>{(debugMode) && console.log(site)}</>
               </Box>
               {/* {site!==null &&
                 <Box mt={1} mb={3}>
@@ -205,46 +211,31 @@ export default function Dashboard() {
   }
   const fetchData = debounce((value) => {
     setColor("#800020")
-    console.log(topic + " : is the current topic!!")
+    if(debugMode) console.log(topic + " : is the current topic!!")
     if (ageV2 == 0 || isNaN(ageV2)) {
-      console.log('no age selected')
+      if(debugMode) console.log('no age selected')
       axios
         .get(url + `/Getgpdata?input=${topic}`)
         .then(result => {
           // debugger;
           setIsLoading(false)
           if (topic == "symptom") {
-            console.log(result.data)
+            if(debugMode) console.log(result.data)
             let symptomdata_Details = result.data.data_Details;
-            // console.log(symptomdata_Details)
             var symptoms_temp_dict: Record<string, string>[] = [];
             symptomdata_Details.forEach(function (value: any) {
-              // console.log(value);
-
-              // console.log(v)
-              // console.log(value.possible_cancer)
-              // console.log(value.step1_test)
-
               if (gender == null) {
-                // debugger;
-                //console.log("no gender no age bar")
 
                 let v = CreateDict("label", value.symp_id, value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
-                //console.log(value.rsponse1_1)
                 symptoms_temp_dict.push(v)
               }
               //male and others without male
               else if (gender != "female") {
-                // debugger;
                 let g: string = value.gender;
                 if (g !== null) {
-                  //remove redundant white spaces
-                  //console.log(g)
                   g = g.replace(/^\s+|\s+$/gm, '');
                 }
-                // console.log(g)
                 if (g != "F") {
-                  //console.log(value.symptom)
                   let v1 = CreateDict("label", value.symp_id, value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
                   symptoms_temp_dict.push(v1)
                 }
@@ -255,7 +246,6 @@ export default function Dashboard() {
                 if (g !== null) {
                   //remove redundant white spaces
                   g = g.replace(/^\s+|\s+$/gm, '');
-                  // console.log(g)
                 }
                 if (g != "M") {
                   let v1 = CreateDict("label", value.symp_id, value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
@@ -265,27 +255,22 @@ export default function Dashboard() {
               }
 
             });
-            console.log(symptoms_temp_dict)
+            if(debugMode) console.log(symptoms_temp_dict)
             // const a = [
             //   ...new Set(
             //     symptoms_temp_dict.map((person) => { return person.label; })
             //   ),
             // ];
-            console.log(symptoms_temp_dict.length)
-            // console.log(a.length)
-            // setTagsStrings(a)
+            if(debugMode) console.log(symptoms_temp_dict.length)
             setOptionsTags(symptoms_temp_dict)
             symptoms_temp_dict = []
           }
           else if (topic == "primary") {
-            // console.log(result.data.data_Details)
             let primaryData_details = result.data.data_Details;
-            //console.log(primaryData_details)
             var primary_temp_dict: Record<string, string>[] = [];
             primaryData_details.forEach(function (value: any) {
               if (gender == null) {
                 let v = CreateDict_PrimaryData("label", value.primary_id,value.findings, value.possible_cancer, value.gender, value.recommendation)
-                //console.log(value.rsponse1_1)
                 primary_temp_dict.push(v)
               }
               //male and others without male
@@ -294,12 +279,9 @@ export default function Dashboard() {
                 let g: string = value.gender;
                 if (g !== null) {
                   //remove redundant white spaces
-                  //console.log(g)
                   g = g.replace(/^\s+|\s+$/gm, '');
                 }
-                // console.log(g)
                 if (g != "F") {
-                  //console.log(value.symptom)
                   let v1 = CreateDict_PrimaryData("label", value.primary_id, value.findings, value.possible_cancer, value.gender, value.recommendation)
                   primary_temp_dict.push(v1)
                 }
@@ -310,7 +292,6 @@ export default function Dashboard() {
                 if (g !== null) {
                   //remove redundant white spaces
                   g = g.replace(/^\s+|\s+$/gm, '');
-                  // console.log(g)
                 }
                 if (g != "M") {
                   let v1 = CreateDict_PrimaryData("label", value.primary_id, value.findings, value.possible_cancer, value.gender, value.recommendation)
@@ -320,7 +301,7 @@ export default function Dashboard() {
               }
 
             });
-            console.log(primary_temp_dict)
+            if(debugMode) console.log(primary_temp_dict)
             setOptionsTags(primary_temp_dict)
             primary_temp_dict = []
           }
@@ -335,15 +316,14 @@ export default function Dashboard() {
         );
     }
     else if (ageV2 != 0 && !isNaN(ageV2)) {
-      console.log("age filter applied")
+      if(debugMode) console.log("age filter applied")
       axios
         .get(url + `/Getgpdata?input=${topic}&agegtlt=${ageV2}`)
         .then(result => {
-          console.log(result.data)
+          if(debugMode) console.log(result.data)
           setIsLoading(false)
           if (topic === "symptom") {
             let symptomdata_Details = result.data.data_Details
-            // console.log(symptomdata_Details)
             var symptoms_temp_dict: Record<string, string>[] = [];
             symptomdata_Details.forEach(function (value: any) {
 
@@ -351,23 +331,19 @@ export default function Dashboard() {
               setPossibleCancer(value.possible_cancer)
 
               if (gender == null) {
-                // console.log(typeof(value.age_gt))
                 let v = CreateDict("label", value.symp_id, value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
                 symptoms_temp_dict.push(v)
               }
               //male and others without male
               else if (gender != "female") {
-                // console.log("male and no-filter")
                 // debugger;
                 let g: string = value.gender;
                 if (g !== null) {
                   //remove redundant white spaces
-                  console.log(g)
+                  if(debugMode) console.log(g)
                   g = g.replace(/^\s+|\s+$/gm, '');
                 }
-                // console.log(g)
                 if (g != "F") {
-                  // console.log(value.symptom)
                   let v1 = CreateDict("label", value.symp_id, value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
                   symptoms_temp_dict.push(v1)
                 }
@@ -378,7 +354,6 @@ export default function Dashboard() {
                 if (g !== null) {
                   //remove redundant white spaces
                   g = g.replace(/^\s+|\s+$/gm, '');
-                  // console.log(g)
                 }
                 if (g != "M") {
                   let v1 = CreateDict("label", value.symp_id, value.symptom, value.possible_cancer, value.gender, value.sep1, value.rsponse1_1, value.rsponse1_2, value.steps, value.step2_1, value.step2_2, value.response2_1, value.response2_2, value.step3_1, value.step3_2, value.step1_test, value.step2_test)
@@ -388,18 +363,16 @@ export default function Dashboard() {
               }
 
             });
-            console.log(symptoms_temp_dict)
+            if(debugMode) console.log(symptoms_temp_dict)
             setOptionsTags(symptoms_temp_dict)
             symptoms_temp_dict = []
           }
           else if (topic === "primary") {
             let primaryData_Details = result.data.data_Details
-            // console.log(symptomdata_Details)
             var primary_temp_dict: Record<string, string>[] = [];
             primaryData_Details.forEach(function (value: any) {
               if (gender == null) {
                 let v = CreateDict_PrimaryData("label", value.primary_id, value.findings, value.possible_cancer, value.gender, value.recommendation)
-                //console.log(value.rsponse1_1)
                 primary_temp_dict.push(v)
               }
               //male and others without male
@@ -408,12 +381,9 @@ export default function Dashboard() {
                 let g: string = value.gender;
                 if (g !== null) {
                   //remove redundant white spaces
-                  //console.log(g)
                   g = g.replace(/^\s+|\s+$/gm, '');
                 }
-                // console.log(g)
                 if (g != "F") {
-                  //console.log(value.symptom)
                   let v1 = CreateDict_PrimaryData("label",value.primary_id, value.findings, value.possible_cancer, value.gender, value.recommendation)
                   primary_temp_dict.push(v1)
                 }
@@ -424,7 +394,6 @@ export default function Dashboard() {
                 if (g !== null) {
                   //remove redundant white spaces
                   g = g.replace(/^\s+|\s+$/gm, '');
-                  // console.log(g)
                 }
                 if (g != "M") {
                   let v1 = CreateDict_PrimaryData("label", value.primary_id,value.findings, value.possible_cancer, value.gender, value.recommendation)
@@ -434,7 +403,7 @@ export default function Dashboard() {
               }
 
             });
-            console.log(primary_temp_dict)
+            if(debugMode) console.log(primary_temp_dict)
             setOptionsTags(primary_temp_dict)
             primary_temp_dict = []
           }
@@ -454,7 +423,7 @@ export default function Dashboard() {
   // debounce
   useEffect(() => {
     setIsLoading(true)
-    console.log(topic + " : is the current topic!!")
+    if(debugMode) console.log(topic + " : is the current topic!!")
     fetchData(topic)
     if(topic=="site")
     {
@@ -468,7 +437,6 @@ export default function Dashboard() {
     setGender(null)
     // setTopic(topi)
     // setAgeV2(0)
-    // console.log(ageV2)
     // setAgeV2("")
     setSelectedFromMultiDict([])
     setNoOfSymptoms(0)
@@ -481,15 +449,15 @@ export default function Dashboard() {
   ) => {
     if(topic==newTopic) 
     {
-      console.log("same topic")
+      if(debugMode) console.log("same topic")
     }
     else if (newTopic!==null && topic!==newTopic)
     {
-      console.log(newTopic)
+      if(debugMode) console.log(newTopic)
       setNoOfSymptoms(0)
     }
     if (newTopic !== null) {
-      console.log("NEW TOPIC: " + newTopic)
+      if(debugMode) console.log("NEW TOPIC: " + newTopic)
       setTopic(newTopic);
     }
     // setTopic(newTopic)
@@ -500,7 +468,7 @@ export default function Dashboard() {
     newGender: string
   ) => {
     if (newGender !== null) {
-      console.log("gender is:" + newGender)
+      if(debugMode) console.log("gender is:" + newGender)
       setGender(newGender);
     }
     setOptionsTags([])
@@ -514,16 +482,16 @@ export default function Dashboard() {
     // refreshComponents()
   };
   const AGEhandleChange = debounce((event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("AGE:GT: " + event.target.value)
+    if(debugMode) console.log("AGE:GT: " + event.target.value)
     setOptionsTags([])
     setMultiSelectOptions([]);
     setSelectedFromMultiDict([])
     setNoOfSymptoms(0)
     if (isNaN(parseInt(event.target.value))) {
-      console.log("yes blank")
+      if(debugMode) console.log("yes blank")
     }
     else {
-      console.log("number is: " + parseInt(event.target.value))
+      if(debugMode) console.log("number is: " + parseInt(event.target.value))
     }
     setAgeV2(Number(event.target.value));
     // refreshComponents()
@@ -534,10 +502,10 @@ export default function Dashboard() {
   //     .then((json) => setSuggestions(json.data.items));
   // }, 500);
   const AGEhandleChange_Dropdown = debounce((event: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log("AGE:from dropdown" + event.target.value)
+    if(debugMode) console.log("AGE:from dropdown" + event.target.value)
     if(parseInt(event.target.value)==0)
     {
-      console.log("no age filter")
+      if(debugMode) console.log("no age filter")
     }
     
       setAgeV2(parseInt(event.target.value));
@@ -545,9 +513,8 @@ export default function Dashboard() {
   const handleSearchSymptom = () => {
     setColor("#ff0000")
     var tempDict: Record<string, string>[];
-    // console.log(multiSelectDict_global)
     // setSelectedFromMultiDict(multiSelectDict_global)
-    console.log(multiSelectDict_global_tags)
+    if(debugMode) console.log(multiSelectDict_global_tags)
     setSelectedFromMultiDict(multiSelectDict_global_tags)
     setNoOfSymptoms(multiSelectDict_global_tags.length)
     async function hitEvent() {
@@ -560,9 +527,11 @@ export default function Dashboard() {
         {
             symptom_array.push(multiSelectDict_global_tags[i].label)
         }
-        console.log(symptom_array)
-        console.log(JSON.stringify({"symptoms" : symptom_array}))
-        console.log(typeof(JSON.stringify({"symptoms" : symptom_array})))
+        if(debugMode) {
+          console.log(symptom_array)
+          console.log(JSON.stringify({"symptoms" : symptom_array}))
+          console.log(typeof(JSON.stringify({"symptoms" : symptom_array})))
+        }
         inputDict["prams"] = symptom_array
         inputDict["user_id"] = user
         inputDict["event_code"] = EventStatus.SYMPTOM
@@ -574,24 +543,25 @@ export default function Dashboard() {
         {
           primary_array.push(multiSelectDict_global_tags[i].label)
         }
-        console.log(primary_array)
-        console.log(JSON.stringify({"symptoms" : primary_array}))
-        console.log(typeof(JSON.stringify({"symptoms" : primary_array})))
+        if(debugMode) {
+          console.log(primary_array)
+          console.log(JSON.stringify({"symptoms" : primary_array}))
+          console.log(typeof(JSON.stringify({"symptoms" : primary_array})))
+        }
         inputDict["prams"] = primary_array
         inputDict["user_id"] = user
         inputDict["event_code"] = EventStatus.PRIMARY
       }
       let hitApiUrl = configData.url + "/Eventhandle"
       const response = await axios.post(hitApiUrl, inputDict);
-      console.log(response)
+      if(debugMode) console.log(response)
     }
     hitEvent()
-    // console.log(pswd)
   }
   const onTagsChange = (e: React.SyntheticEvent<Element, Event>, value: Record<string, string>[]) => {
-    console.log(value)
+    if(debugMode) console.log(value)
     multiSelectDict_global_tags = value
-    console.log("tags changes")
+    if(debugMode) console.log("tags changes")
   }
   const invokeSite = () => {
     return (
@@ -670,7 +640,7 @@ export default function Dashboard() {
                 placeholder="--"
                 onKeyPress={(event) => {
                   if (event.key == '-' || event.key === '+' || event.key == '.' || event.key === 'e') {
-                    console.log("prohibited")
+                    if(debugMode) console.log("prohibited")
                     // event.key=''
                     event.preventDefault();
                   }

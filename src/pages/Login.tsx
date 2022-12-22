@@ -8,12 +8,11 @@ import { Link } from "react-router-dom";
 import Snackbar from '@mui/material/Snackbar';
 import Spinner from "components/hooks/Spinner"
 import configData from "config.json"
-
+const debugMode = configData.debug
 interface Login {
   Username: string,
   Password: string
 }
-
 export default function Login() {
   const navigate = useNavigate();
   const [openLoginFail, setOpenLoginFail] = useState(false)
@@ -45,11 +44,13 @@ export default function Login() {
       .post(url1, input_dict)
       .then(result => {
         setIsLoading(false)
-        console.log(result);
-        console.log(result.data);
+        if(debugMode){
+          console.log(result);
+          console.log(result.data);
+        }
         let res_Dict = result.data
         let isSuccess = res_Dict.isSuccess
-        console.log(isSuccess)
+        if(debugMode) console.log(isSuccess)
         if (isSuccess) {
 
           sessionStorage.setItem("user", "true")

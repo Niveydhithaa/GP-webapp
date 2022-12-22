@@ -12,12 +12,12 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import configData from "config.json"
+const debugMode = configData.debug
 interface Props {
   possible_cancer: string
   // any props that come into the component
 }
-
-
 export default function VerticalLinearStepper({possible_cancer, ...props} : Props) {
   const steps = [
     {
@@ -56,7 +56,7 @@ export default function VerticalLinearStepper({possible_cancer, ...props} : Prop
     setActiveStep(0);
   };
   const handleSerumLess = () => {
-      console.log("less than click!!!!!!")
+      if(debugMode) console.log("less than click!!!!!!")
   }
 
   return (

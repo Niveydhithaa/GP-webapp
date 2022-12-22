@@ -11,6 +11,9 @@ import { useState, useReducer, useCallback, useMemo, useEffect } from "react"
 import siteJson from "../data/sites_master_mod.json"
 import FiltrexEval from "evaluation/FiltrexEval"
 import { isEqual } from "lodash"
+import configData from "config.json"
+
+const debugMode = configData.debug
 let initialState = { name: [] };
 enum ActionKind {
     STATE = "state",
@@ -40,8 +43,10 @@ const commonStyles = {
 export const reducer = (state: any, action: ActionProp) => {
     switch (action.type) {
         case ActionKind.STATE: {
-            debugger;
-            console.log(action)
+            if(debugMode) {
+                debugger;
+                console.log(action)
+            }
             // if(action.payload.title=='age')
             // {
             //     return {...state, name: [...state.name, ]}
@@ -58,7 +63,7 @@ export const reducer = (state: any, action: ActionProp) => {
         }
         case ActionKind.RESET: {
             state = initialState;
-            console.log(state)
+            if(debugMode) console.log(state)
             return { ...state };
         }
         default:
@@ -73,35 +78,38 @@ export default function RenderQuestions_MAIN({ condition, site, siteJson_blob, a
     const [inputFields, dispatch] = useReducer(reducer, initialState)
     let states: Record<string, any>[] = [];
     const age = 45;
-    console.log("Hello rendering!")
+    if(debugMode) console.log("Hello rendering!")
     const vals = Object.values(siteJson_blob[0].screens[0].values)
     useEffect(() => {
         renderQuestionsToggle()
     }, [site])
     const getResults = () => {
-        console.log("smoker val:" + smoker)
-        console.log("asbestos val:" + asbestos)
-        console.log("age: " + age)
+        if(debugMode) {
+            console.log("smoker val:" + smoker)
+            console.log("asbestos val:" + asbestos)
+            console.log("age: " + age)
+        }
         {
             Object.entries(siteJson_blob[0].screens[0].values).forEach(([k, v]) => {
-                console.log("The key: ", k)
-                console.log("The value: ", v)
+                if(debugMode) {
+                    console.log("The key: ", k)
+                    console.log("The value: ", v)
+                }
             })
         }
         if (smoker == false && asbestos == false) {
         }
         else if (smoker == true && asbestos == false) {
-            // console.log(siteJson_blob[0].screens)
-            console.log(siteJson_blob[0].screens[2])
+            if(debugMode) console.log(siteJson_blob[0].screens[2])
             localStorage.setItem("screenname", siteJson_blob[0].screens[2].screen_name)
-            console.log(siteJson_blob[0].screens[2].screen_name)
+            if(debugMode) console.log(siteJson_blob[0].screens[2].screen_name)
             let screen3obj = siteJson_blob[0].screens[2]
             // let total_symps = screen3obj.symptoms
         }
         setStartEval(true)
     }
     const handleAddMoreFields = useCallback((state_name: string, state_value: boolean | number, question: string) => {
-        console.log("to add to list")
+        if(debugMode) console.log("to add to list")
         //debugger;
         dispatch({
             type: ActionKind.STATE,
@@ -110,13 +118,13 @@ export default function RenderQuestions_MAIN({ condition, site, siteJson_blob, a
     }, [site]);
 
     const handleUpdateValueField = (index: number, state_name: string, state_value: boolean | number, question: string) => {
-        console.log("update value : index: " + index + " value: " + state_value)
+        if(debugMode) console.log("update value : index: " + index + " value: " + state_value)
         dispatch({
             type: ActionKind.UPDATE,
             payload: { title: state_name, value: state_value, question: question },
             index: index
         });
-        console.log(inputFields.name)
+        if(debugMode) console.log(inputFields.name)
     };
     //const toggleFn = useMemo(() => renderQuestionsToggle(), [inputFields]);
     const createDict = (key: string, value: any) => {
@@ -124,7 +132,7 @@ export default function RenderQuestions_MAIN({ condition, site, siteJson_blob, a
     }
     //function renderQuestionsToggle
     const renderQuestionsToggle = () => {
-        console.log("driver function enter")
+        if(debugMode) console.log("driver function enter")
         //make the inputFields epmty here. for each site it has to be made empty
         let questionsList: any[] = [];
         if (site != undefined) {
@@ -132,32 +140,36 @@ export default function RenderQuestions_MAIN({ condition, site, siteJson_blob, a
                 type: ActionKind.RESET,
                 payload: { title: 'dummy', value: 9, question: 'dummy' }
             })
-            console.log(site)
+            if(debugMode) console.log(site)
             let totalDict = siteJson_blob[site - 1].screens[0].values
             let keys: any[] = Object.keys(totalDict)
             let values: any[] = Object.values(totalDict)
-            console.log(" Initial state of input field:  " + JSON.stringify(initialState))
+            if(debugMode) console.log(" Initial state of input field:  " + JSON.stringify(initialState))
             for (var i in keys) {
-                console.log(i)
-                console.log(values[i])
-                console.log(keys[i])
-                console.log(totalDict.hasOwnProperty(keys[i]))
+                if(debugMode) {
+                    console.log(i)
+                    console.log(values[i])
+                    console.log(keys[i])
+                    console.log(totalDict.hasOwnProperty(keys[i]))
+                }
                 // #infinite loop problem
                 if (keys[i] == 'age') {
                     handleAddMoreFields(keys[i], age_prefilled, values[i].message)
                 }
                 else if (keys[i] == 'gender') {
-                    console.log(typeof (gender_prefilled))
+                    if(debugMode) console.log(typeof (gender_prefilled))
                     handleAddMoreFields(keys[i], gender_prefilled, values[i].message)
                 }
                 else {
                     handleAddMoreFields(keys[i], 0, values[i].message)
                 }
 
-                console.log(JSON.stringify(initialState))
+                if(debugMode) console.log(JSON.stringify(initialState))
             }
-            console.log(" Input field after loop: " + JSON.stringify(inputFields))
-            console.log("driver function exit")
+            if(debugMode) {
+                console.log(" Input field after loop: " + JSON.stringify(inputFields))
+                console.log("driver function exit")
+            }
         }
         return questionsList;
     }
@@ -176,7 +188,6 @@ export default function RenderQuestions_MAIN({ condition, site, siteJson_blob, a
                     {inputFields.name.map((item: any, index: number) => {
                         return (
                             <Box key={index} className="Wrapper">
-                                {/* {console.log(item.name.title)} */}
                                 <Typography className="question-display-name-site">{item.question}</Typography>
 
                                 {

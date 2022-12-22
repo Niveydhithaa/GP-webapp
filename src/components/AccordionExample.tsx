@@ -1,4 +1,5 @@
 import { useState , ReactNode} from "react";
+import configData from "config.json"
 import {
   Box,
   Typography,
@@ -48,7 +49,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { symptomOptions } from "pages/data";
 import CloseIcon from '@mui/icons-material/Close';
-
+const debugMode = configData.debug
 interface Props {
   selectedSymp: string  
   possible_cancer: string
@@ -91,7 +92,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 function createData(name: string, calories: string, fat: string) {
-    console.log(sessionStorage.getItem("noofsymptoms"))
+    if(debugMode) console.log(sessionStorage.getItem("noofsymptoms"))
     return { name, calories, fat };
   }
   function createData_StepTwo(name: string, result: string, action: string) {
@@ -138,6 +139,7 @@ function createData(name: string, calories: string, fat: string) {
   function disableRandomDates() {
     return Math.random() > 0.7;
   }
+
 export default function AccordionExample({selectedSymp, possible_cancer, gender_specific, step1, rsponse1_1, rsponse1_2, no_of_steps, step2_1, step2_2, response2_1, response2_2, step3_1, step3_2, step1_test, step2_test, ...props} : Props) {
     const [topic, setTopic] = useState("New Patient");
     const [patientDialogOpen, setPatientDialogOpen] = useState<boolean>(false);
@@ -174,26 +176,31 @@ export default function AccordionExample({selectedSymp, possible_cancer, gender_
     };
     const testClickHandler = (e: React.MouseEvent<HTMLSpanElement> | React.MouseEvent<HTMLAnchorElement>, test_name: string) => {
       setPatientDialogOpen(true)
-      console.log(selectedSymp)
-      console.log("Testname selected: " +test_name)
+      if(debugMode) {
+        console.log(selectedSymp)
+        console.log("Testname selected: " +test_name)
+      }
       localStorage.setItem("selected_test_for_prescription", test_name)
       // setTestNameSelected(test_name)
     }
     const testClick_AssessOtherSymptomsHandler = (e: React.MouseEvent<HTMLSpanElement> | React.MouseEvent<HTMLAnchorElement>, other_symp_action: string) => {
       setSuggestionsDialog(true)
-      console.log("Other symptom action " + other_symp_action)
+      if(debugMode) console.log("Other symptom action " + other_symp_action)
     }
     const testClick_OpenOncologistPopup = (e: React.MouseEvent<HTMLSpanElement> | React.MouseEvent<HTMLAnchorElement>, other_symp_action: string) => {
       setOncologyReferralPopup(true)
-      console.log("Other symptom action " + other_symp_action)
+      if(debugMode) console.log("Other symptom action " + other_symp_action)
     }
     const handleClosePrescribeDialog = () => {
       setPatientDialogOpen(false)
     }
     const handlePrescribeModuleOpen = () => {
-      console.log(document.getElementById("mobile_num"))
-      console.log(document.getElementById("name_input"))
-      console.log(localStorage.getItem("selected_test_for_prescription"))
+      if(debugMode)
+      {
+        console.log(document.getElementById("mobile_num"))
+        console.log(document.getElementById("name_input"))
+        console.log(localStorage.getItem("selected_test_for_prescription"))
+      }
 
       setPatientDialogOpen(false)
     }

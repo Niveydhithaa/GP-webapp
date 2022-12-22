@@ -25,6 +25,7 @@ import AccordionExample from "components/AccordionExample";
 import axios from "axios";
 import Spinner from "components/hooks/Spinner"
 
+const debugMode = configData.debug
 // let age_global : any = 0;
 // let age_global_lt : any = 0;
 const ageResult = () => [
@@ -94,7 +95,7 @@ export default function Dashboard() {
     event: React.MouseEvent<HTMLElement>,
     newTopic: string
   ) => {
-    console.log("NEW TOPIC: " + newTopic)
+    if(debugMode) console.log("NEW TOPIC: " + newTopic)
     setTopic(newTopic);
   };
   const CreateDictTemp = (label: string, primaryCare: string) =>
@@ -123,7 +124,7 @@ export default function Dashboard() {
     const url = configData.url
       if(ageV2==0 || isNaN(ageV2))
       {
-        console.log('no age selected')
+        if(debugMode) console.log('no age selected')
         axios
           .get(url +'/Getsymptomdata')
           .then(result => {
@@ -186,7 +187,7 @@ export default function Dashboard() {
                 }
                 
               });
-              console.log(symptoms_temp_dict)
+              if(debugMode) console.log(symptoms_temp_dict)
               setOptionsTags(symptoms_temp_dict)
               symptoms_temp_dict = []
               // ({
@@ -201,17 +202,17 @@ export default function Dashboard() {
       }
       else if(ageV2!=0 && !isNaN(ageV2))
       {
-        console.log("age filter applied")
+        if(debugMode) console.log("age filter applied")
         axios
           .get(url + `/GetSymptomdatafilter?agegtlt=${ageV2}`)
           .then(result => {
               // console.log(result.data)
               let symptomdata_Details1 = result.data.symptomdata_Details.symptomdatadetails1;
-              console.log(symptomdata_Details1.length)
+              if(debugMode) console.log(symptomdata_Details1.length)
               let symptomdata_Details2 = result.data.symptomdata_Details.symptomdatadetails2;
-              console.log(symptomdata_Details2.length)
+              if(debugMode) console.log(symptomdata_Details2.length)
               let symptomdata_Details3 = result.data.symptomdata_Details.symptomdatadetails3;
-              console.log(symptomdata_Details3.length)
+              if(debugMode) console.log(symptomdata_Details3.length)
               // let symptomdata_Details_old = result.data.symptomdata_Details
               let symptomdata_Details_part1 = symptomdata_Details1.concat(symptomdata_Details2)
               let symptomdata_Details_part2 = symptomdata_Details_part1.concat(symptomdata_Details3)
@@ -238,7 +239,7 @@ export default function Dashboard() {
                   if(g!==null)
                   {
                     //remove redundant white spaces
-                    console.log(g)
+                    if(debugMode) console.log(g)
                     g = g.replace(/^\s+|\s+$/gm,'');
                   }
                   // console.log(g)
@@ -268,7 +269,7 @@ export default function Dashboard() {
                 }
                 
               });
-              console.log(symptoms_temp_dict)
+              if(debugMode) console.log(symptoms_temp_dict)
               setOptionsTags(symptoms_temp_dict)
               symptoms_temp_dict = []
               // ({
@@ -287,7 +288,7 @@ export default function Dashboard() {
     const url = configData.url
       if(ageV2==0 || isNaN(ageV2))
       {
-        console.log('no age selected')
+        if(debugMode) console.log('no age selected')
         axios
           .get(url +'/Getsymptomdata')
           .then(result => {
@@ -350,7 +351,7 @@ export default function Dashboard() {
                 }
                 
               });
-              console.log(symptoms_temp_dict)
+              if(debugMode) console.log(symptoms_temp_dict)
               setMultiSelectOptions(symptoms_temp_dict)
               symptoms_temp_dict = []
               // ({
@@ -360,22 +361,22 @@ export default function Dashboard() {
               return String(result.data);
           })
           .catch(error =>
-              console.log(error)
+            console.log(error)
           );
       }
       else if(ageV2!=0 && !isNaN(ageV2))
       {
-        console.log("age filter applied")
+        if(debugMode) console.log("age filter applied")
         axios
           .get(url + `/GetSymptomdatafilter?agegtlt=${ageV2}`)
           .then(result => {
               // console.log(result.data)
               let symptomdata_Details1 = result.data.symptomdata_Details.symptomdatadetails1;
-              console.log(symptomdata_Details1.length)
+              if(debugMode) console.log(symptomdata_Details1.length)
               let symptomdata_Details2 = result.data.symptomdata_Details.symptomdatadetails2;
-              console.log(symptomdata_Details2.length)
+              if(debugMode) console.log(symptomdata_Details2.length)
               let symptomdata_Details3 = result.data.symptomdata_Details.symptomdatadetails3;
-              console.log(symptomdata_Details3.length)
+              if(debugMode) console.log(symptomdata_Details3.length)
               // let symptomdata_Details_old = result.data.symptomdata_Details
               let symptomdata_Details_part1 = symptomdata_Details1.concat(symptomdata_Details2)
               let symptomdata_Details_part2 = symptomdata_Details_part1.concat(symptomdata_Details3)
@@ -402,7 +403,7 @@ export default function Dashboard() {
                   if(g!==null)
                   {
                     //remove redundant white spaces
-                    console.log(g)
+                    if(debugMode) console.log(g)
                     g = g.replace(/^\s+|\s+$/gm,'');
                   }
                   // console.log(g)
@@ -432,7 +433,7 @@ export default function Dashboard() {
                 }
                 
               });
-              console.log(symptoms_temp_dict)
+              if(debugMode) console.log(symptoms_temp_dict)
               setMultiSelectOptions(symptoms_temp_dict)
               symptoms_temp_dict = []
               // ({
@@ -454,30 +455,30 @@ export default function Dashboard() {
     if(clr){
        clr.click();
     }
-    console.log(typeof(newGender))
+    if(debugMode) console.log(typeof(newGender))
     setOptionsTags([])
     setGender(newGender);
     setMultiSelectOptions([]);
-    console.log("gender is:" + newGender)
+    if(debugMode) console.log("gender is:" + newGender)
     setSelectedFromMultiDict([])
     setNoOfSymptoms(0)
   };
   const AGEhandleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("AGE:GT: "+event.target.value)
+    if(debugMode) console.log("AGE:GT: "+event.target.value)
     setOptionsTags([])
     if(isNaN(parseInt(event.target.value)))
     {
-      console.log("yes blank")
+      if(debugMode) console.log("yes blank")
     }
     else
     {
-      console.log("number is: "+parseInt(event.target.value))
+      if(debugMode) console.log("number is: "+parseInt(event.target.value))
     }
     setAgeV2(parseInt(event.target.value));
     
   };
   const AGEhandleChange_LT = (event: SelectChangeEvent) => {
-    console.log("AGE:LT: "+event.target.value)
+    if(debugMode) console.log("AGE:LT: "+event.target.value)
     setAgeV2_LT(parseInt(event.target.value));
   };
   const handleSearchSymptom = () => {
@@ -496,21 +497,21 @@ export default function Dashboard() {
     var tempDict : Record<string, string>[];
     // console.log(multiSelectDict_global)
     // setSelectedFromMultiDict(multiSelectDict_global)
-    console.log(multiSelectDict_global_tags)
+    if(debugMode) console.log(multiSelectDict_global_tags)
     setSelectedFromMultiDict(multiSelectDict_global_tags)
     setNoOfSymptoms(multiSelectDict_global_tags.length)
     // console.log(pswd)
   }
   
   const onMultiChange = (e: MultiValue<Record<string, string>>)=> {
-      console.log(e)
+    if(debugMode) console.log(e)
       var a = selectedFromMultiDict as Record<string, string>[];
       multiSelectDict_global = e
  }
  const onTagsChange = (e: React.SyntheticEvent<Element, Event>, value: Record<string, string>[]) => {
-    console.log(value)
+    if(debugMode) console.log(value)
     multiSelectDict_global_tags = value
-    console.log("tags changes")
+    if(debugMode) console.log("tags changes")
   }
   return (
     <Box

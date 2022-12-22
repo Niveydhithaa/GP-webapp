@@ -48,7 +48,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { symptomOptions } from "pages/data";
 import CloseIcon from '@mui/icons-material/Close';
-
+import configData from "config.json"
+const debugMode = configData.debug
 interface Props {
   findings: string
   possible_cancer: string
@@ -103,9 +104,11 @@ export default function AccordionExample({ findings, possible_cancer, gender_spe
     setPatientDialogOpen(false)
   }
   const handlePrescribeModuleOpen = () => {
-    console.log(document.getElementById("mobile_num"))
-    console.log(document.getElementById("name_input"))
-    console.log(localStorage.getItem("selected_test_for_prescription"))
+    if(debugMode) {
+      console.log(document.getElementById("mobile_num"))
+      console.log(document.getElementById("name_input"))
+      console.log(localStorage.getItem("selected_test_for_prescription"))
+    }
 
     setPatientDialogOpen(false)
   }
@@ -117,8 +120,11 @@ export default function AccordionExample({ findings, possible_cancer, gender_spe
   };
   const testClickHandler = (e: React.MouseEvent<HTMLSpanElement> | React.MouseEvent<HTMLAnchorElement>, test_name: string) => {
     setPatientDialogOpen(true)
-    console.log(recommendation)
-    console.log("Recommendation selected: " + test_name)
+    if(debugMode)
+    {
+      console.log(recommendation)
+      console.log("Recommendation selected: " + test_name)
+    }
     localStorage.setItem("selected_test_for_recommendation", test_name)
     // setTestNameSelected(test_name)
   }
